@@ -4,7 +4,7 @@ import { Container } from "native-base";
 import { useFocusEffect } from '@react-navigation/native'
 import baseUrl from "../../assets/common/baseUrl"
 import axios from 'axios';
-import { Icon } from 'react-native-elements'
+import { Icon, BottomSheet, withTheme } from 'react-native-elements'
 
 import ProductList from "./ProductList";
 import SearchedProduct from "./SearchedProducts";
@@ -23,6 +23,16 @@ const ProductContainer = (props) => {
   const [active, setActive] = useState();
   const [initialState, setInitialState] = useState([]);
   const [loading, setLoading] = useState(true)
+  const [showAddToCart, setShowAddToCart] = useState(false);
+
+  const showBottomSheet = () => {
+    setShowAddToCart(!showAddToCart);
+  }
+
+  const goToCheckout = () => {
+    setShowAddToCart(!showAddToCart);
+    props.navigation.navigate('Checkout');
+  }
 
   useFocusEffect((
     useCallback(
@@ -136,9 +146,39 @@ const ProductContainer = (props) => {
                       )
                     })}
                   </View>
+                  {
+                    showAddToCart &&
+                    <BottomSheet
+                        isVisible={showAddToCart}
+                        containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0.05)' }}
+                    >
+                        <View style={styles.bottomSheet}>
+                            <TouchableOpacity style={styles.addToCartBackBtn} onPress={showBottomSheet}>
+                                <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
+                            </TouchableOpacity>
+                            <View style={styles.itemDetailsContainer}>
+                              <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                <Text>Blue Dream</Text>
+                                <Text>35.00</Text>
+                              </View>
+                              <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                <Text>Jack Herer Pre-Rolls (2 pack)</Text>
+                                <Text>20.00</Text>
+                              </View>
+                              <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                <Text>Chocolate Shatter Bar</Text>
+                                <Text>35.00</Text>
+                              </View>
+                            </View>
+                            <TouchableOpacity style={styles.proceedToCheckout} onPress={goToCheckout}>
+                                <Text style={styles.proceedCheckoutText}>Proceed To Checkout</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </BottomSheet>
+                  }
                 </ScrollView>
             )}
-            <TouchableOpacity style={styles.viewCart}>
+            <TouchableOpacity style={styles.viewCart} onPress={showBottomSheet}>
               <View style={styles.cartIcon}>
                 <Icon name="shopping-cart" type="font-awesome-5" color="white" size={22} />
                 <View style={styles.cartNumItemsContainer}>
@@ -249,6 +289,40 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: -5,
     marginLeft: -6
+  },
+  addToCartBackBtn: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 10
+  },
+  bottomSheet: {
+      backgroundColor: 'white',
+      padding: 20,
+      borderTopLeftRadius: 30,
+      borderTopRightRadius: 30,
+  },
+  itemDetailsContainer: {
+      alignItems: "center"
+  },
+  proceedToCheckout: {
+    backgroundColor: "green",
+    width: "90%",
+    borderRadius: 30,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    marginTop: 25,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  proceedCheckoutText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 22
   }
 });
 
