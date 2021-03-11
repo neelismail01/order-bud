@@ -12,7 +12,7 @@ import Banner from "../../Shared/Banner";
 import CategoryFilter from "./CategoryFilter";
 import baseURL from "../../assets/common/baseUrl";
 
-var { height } = Dimensions.get('window')
+var { height, width } = Dimensions.get('window')
 
 const ProductContainer = (props) => {
   const [products, setProducts] = useState([]);
@@ -91,53 +91,63 @@ const ProductContainer = (props) => {
   return (
     <>
       {loading == false ? (
-        <Container>
+        <Container style={{justifyContent: "center"}}>
           {focus == true ? (
             <SearchedProduct
               navigation={props.navigation}
               productsFiltered={productsFiltered} />
           ) : (
-              <ScrollView>
-                <SafeAreaView>
-                  <Banner />
-                </SafeAreaView>
-                <CategoryFilter
-                  categories={categories}
-                  categoryFilter={changeCtg}
-                  productsCtg={productsCtg}
-                  active={active}
-                  setActive={setActive}
-                />
-                <View style={styles.listContainer}>
-                  <View style={styles.deliverPickup}>
-                    <TouchableOpacity style={styles.deliverPickupDetails}>
-                      <Text style={styles.deliverPickupDetailsText}>Deliver</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.deliverPickupDetails}>
-                      <Text style={styles.deliverPickupDetailsText}>400B Albert Street</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.deliverPickupDetails}>
-                      <Text style={styles.deliverPickupDetailsText}>Now</Text>
-                    </TouchableOpacity>
+                <ScrollView>
+                  <SafeAreaView>
+                    <Banner />
+                  </SafeAreaView>
+                  <CategoryFilter
+                    categories={categories}
+                    categoryFilter={changeCtg}
+                    productsCtg={productsCtg}
+                    active={active}
+                    setActive={setActive}
+                  />
+                  <View style={styles.listContainer}>
+                    <View style={styles.deliverPickup}>
+                      <TouchableOpacity style={styles.deliverPickupDetails}>
+                        <Text style={styles.deliverPickupDetailsText}>Deliver</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.deliverPickupDetails}>
+                        <Text style={styles.deliverPickupDetailsText}>400B Albert Street</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.deliverPickupDetails}>
+                        <Text style={styles.deliverPickupDetailsText}>Now</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.searchContainer}>
+                      <TextInput style={styles.searchBar} placeholder="Search..."></TextInput>
+                      <TouchableOpacity style={styles.filterBtn}>
+                        <Icon name="sliders-h" type="font-awesome-5" size={30} />
+                      </TouchableOpacity>
+                    </View>
+                    {productsCtg.map((item) => {
+                      return (
+                        <ProductList
+                          navigation={props.navigation}
+                          key={item.name}
+                          item={item}
+                        />
+                      )
+                    })}
                   </View>
-                  <View style={styles.searchContainer}>
-                    <TextInput style={styles.searchBar} placeholder="Search..."></TextInput>
-                    <TouchableOpacity style={styles.filterBtn}>
-                      <Icon name="sliders-h" type="font-awesome-5" size={30} />
-                    </TouchableOpacity>
-                  </View>
-                  {productsCtg.map((item) => {
-                    return (
-                      <ProductList
-                        navigation={props.navigation}
-                        key={item.name}
-                        item={item}
-                      />
-                    )
-                  })}
-                </View>
-              </ScrollView>
+                </ScrollView>
             )}
+            <TouchableOpacity style={styles.viewCart}>
+              <View style={styles.cartIcon}>
+                <Icon name="shopping-cart" type="font-awesome-5" color="white" size={22} />
+                <View style={styles.cartNumItemsContainer}>
+                  <Text style={styles.cartNumItems}>3</Text>
+                </View>
+              </View>
+              <Text style={styles.viewCartText}>View Cart</Text>
+              <Text style={styles.viewCartText}>$90.00</Text>
+            </TouchableOpacity>
         </Container>
       ) : (
           // Loading
@@ -204,6 +214,41 @@ const styles = StyleSheet.create({
   center: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  viewCart: {
+    position: "absolute",
+    backgroundColor: "green",
+    borderRadius: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    width: "95%",
+    bottom: 15,
+    left: (width - 0.95 * width) / 2
+  },
+  viewCartText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 18,
+    marginLeft: 10
+  },
+  cartNumItems: {
+    color: "green",
+    fontWeight: "bold",
+  },
+  cartIcon: {
+    flexDirection: "row"
+  },
+  cartNumItemsContainer: {
+    backgroundColor: "white",
+    height: 18,
+    width: 18,
+    borderRadius: 9,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: -5,
+    marginLeft: -6
   }
 });
 
