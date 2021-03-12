@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { Text, View, StyleSheet, ActivityIndicator, ScrollView, Dimensions, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, ActivityIndicator, ScrollView, Dimensions, SafeAreaView, TextInput, TouchableOpacity, Animated, FlatList } from "react-native";
 import { Container } from "native-base";
 import { useFocusEffect } from '@react-navigation/native'
 import baseUrl from "../../assets/common/baseUrl"
 import axios from 'axios';
-import { Icon, BottomSheet, withTheme } from 'react-native-elements'
+import { Icon, BottomSheet, withTheme } from 'react-native-elements';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import ProductList from "./ProductList";
 import SearchedProduct from "./SearchedProducts";
@@ -101,93 +102,111 @@ const ProductContainer = (props) => {
   return (
     <>
       {loading == false ? (
-        <Container style={{justifyContent: "center"}}>
+        <Container style={{ justifyContent: "center" }}>
           {focus == true ? (
             <SearchedProduct
               navigation={props.navigation}
               productsFiltered={productsFiltered} />
           ) : (
-                <ScrollView>
-                  <SafeAreaView>
-                    <Banner />
-                  </SafeAreaView>
-                  <CategoryFilter
-                    categories={categories}
-                    categoryFilter={changeCtg}
-                    productsCtg={productsCtg}
-                    active={active}
-                    setActive={setActive}
-                  />
-                  <View style={styles.listContainer}>
-                    <View style={styles.deliverPickup}>
-                      <TouchableOpacity style={styles.deliverPickupDetails}>
-                        <Text style={styles.deliverPickupDetailsText}>Deliver</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.deliverPickupDetails}>
-                        <Text style={styles.deliverPickupDetailsText}>400B Albert Street</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.deliverPickupDetails}>
-                        <Text style={styles.deliverPickupDetailsText}>Now</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.searchContainer}>
-                      <TextInput style={styles.searchBar} placeholder="Search..."></TextInput>
-                      <TouchableOpacity style={styles.filterBtn}>
-                        <Icon name="sliders-h" type="font-awesome-5" size={30} />
-                      </TouchableOpacity>
-                    </View>
-                    {productsCtg.map((item) => {
-                      return (
-                        <ProductList
-                          navigation={props.navigation}
-                          key={item.name}
-                          item={item}
-                        />
-                      )
-                    })}
+              <ScrollView>
+                <SafeAreaView>
+                  <Banner />
+                </SafeAreaView>
+                <CategoryFilter
+                  categories={categories}
+                  categoryFilter={changeCtg}
+                  productsCtg={productsCtg}
+                  active={active}
+                  setActive={setActive}
+                />
+                <View style={styles.listContainer}>
+                  <View style={styles.deliverPickup}>
+                    <TouchableOpacity style={styles.deliverPickupDetails}>
+                      <Text style={styles.deliverPickupDetailsText}>Deliver</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.deliverPickupDetails}>
+                      <Text style={styles.deliverPickupDetailsText}>400B Albert Street</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.deliverPickupDetails}>
+                      <Text style={styles.deliverPickupDetailsText}>Now</Text>
+                    </TouchableOpacity>
                   </View>
-                  {
-                    showAddToCart &&
-                    <BottomSheet
-                        isVisible={showAddToCart}
-                        containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0.05)' }}
-                    >
-                        <View style={styles.bottomSheet}>
-                            <TouchableOpacity style={styles.addToCartBackBtn} onPress={showBottomSheet}>
-                                <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
-                            </TouchableOpacity>
-                            <View style={styles.itemDetailsContainer}>
-                              <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-                                <Text>Blue Dream</Text>
-                                <Text>35.00</Text>
-                              </View>
-                              <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-                                <Text>Jack Herer Pre-Rolls (2 pack)</Text>
-                                <Text>20.00</Text>
-                              </View>
-                              <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-                                <Text>Chocolate Shatter Bar</Text>
-                                <Text>35.00</Text>
-                              </View>
-                            </View>
-                            <TouchableOpacity style={styles.proceedToCheckout} onPress={goToCheckout}>
-                                <Text style={styles.proceedCheckoutText}>Proceed To Checkout</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </BottomSheet>
-                  }
-                </ScrollView>
-            )}
-            <TouchableOpacity style={styles.viewCart} onPress={showBottomSheet}>
-              <View style={styles.cartIcon}>
-                <Icon name="shopping-cart" type="font-awesome-5" color="white" size={22} />
-                <View style={styles.cartNumItemsContainer}>
-                  <Text style={styles.cartNumItems}>3</Text>
+                  <View style={styles.searchContainer}>
+                    <TextInput style={styles.searchBar} placeholder="Search..."></TextInput>
+                    <TouchableOpacity style={styles.filterBtn}>
+                      <Icon name="sliders-h" type="font-awesome-5" size={30} />
+                    </TouchableOpacity>
+                  </View>
+                  {productsCtg.map((item) => {
+                    return (
+                      <ProductList
+                        navigation={props.navigation}
+                        key={item.name}
+                        item={item}
+                      />
+                    )
+                  })}
                 </View>
+                {
+                  showAddToCart &&
+                  <BottomSheet
+                    isVisible={showAddToCart}
+                    containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0)' }}
+                  >
+                    <View style={styles.bottomSheet}>
+                      <View style={styles.cartHeaderContainer}>
+                        <TouchableOpacity style={styles.cartBackBtn} onPress={showBottomSheet}>
+                          <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
+                        </TouchableOpacity>
+                        <Text style={styles.yourOrderHeader}>Your Order</Text>
+                      </View>
+                      <FlatList
+                        data={[{ id: 1, name: "Blue Dream", price: 55.00 }, { id: 2, name: "Jack Herer Pre-Rolls (3-pack)", price: 35.00 }]}
+                        renderItem={({ item }) => (
+                          <Swipeable
+                            keyExtractor={(item) => item.id}
+                            renderRightActions={() => (
+                              <TouchableOpacity onPress={() => alert("Deleted")}>
+                                <View style={styles.rightAction}>
+                                  <Animated.Text style={[styles.actionText]}>Delete</Animated.Text>
+                                </View>
+                              </TouchableOpacity>
+                            )}
+                          >
+                            <View style={styles.itemContainer}>
+                              <Text style={styles.cartItemText}>{item.name}</Text>
+                              <Text style={styles.cartItemText}>${item.price}</Text>
+                            </View>
+                          </Swipeable>
+                        )}
+                      />
+                      <View style={{ alignItems: "center" }}>
+                        <TouchableOpacity style={styles.checkoutBtn} onPress={goToCheckout}>
+                          <View style={styles.cartIcon}>
+                            <Icon name="shopping-cart" type="font-awesome-5" color="white" size={22} />
+                            <View style={styles.cartNumItemsContainer}>
+                              <Text style={styles.cartNumItems}>2</Text>
+                            </View>
+                          </View>
+                          <Text style={styles.viewCartText}>Continue</Text>
+                          <Text style={styles.viewCartText}>$90.00</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </BottomSheet>
+                }
+              </ScrollView>
+            )}
+          <TouchableOpacity style={styles.viewCart} onPress={showBottomSheet}>
+            <View style={styles.cartIcon}>
+              <Icon name="shopping-cart" type="font-awesome-5" color="white" size={22} />
+              <View style={styles.cartNumItemsContainer}>
+                <Text style={styles.cartNumItems}>2</Text>
               </View>
-              <Text style={styles.viewCartText}>View Cart</Text>
-              <Text style={styles.viewCartText}>$90.00</Text>
-            </TouchableOpacity>
+            </View>
+            <Text style={styles.viewCartText}>View Cart</Text>
+            <Text style={styles.viewCartText}>$90.00</Text>
+          </TouchableOpacity>
         </Container>
       ) : (
           // Loading
@@ -290,7 +309,7 @@ const styles = StyleSheet.create({
     marginTop: -5,
     marginLeft: -6
   },
-  addToCartBackBtn: {
+  cartBackBtn: {
     backgroundColor: "white",
     borderWidth: 1,
     height: 50,
@@ -298,16 +317,26 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 10
+    elevation: 10,
+    marginBottom: 15
   },
   bottomSheet: {
-      backgroundColor: 'white',
-      padding: 20,
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 30,
+    backgroundColor: 'white',
+    padding: 20,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
   },
-  itemDetailsContainer: {
-      alignItems: "center"
+  itemContainer: {
+    flexDirection: "row",
+    marginVertical: 10,
+    width: "100%",
+    backgroundColor: "#ededed",
+    justifyContent: "space-between",
+    paddingVertical: 15,
+    paddingHorizontal: 20
+  },
+  cartItemText: {
+    fontSize: 16
   },
   proceedToCheckout: {
     backgroundColor: "green",
@@ -323,6 +352,38 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 22
+  },
+  rightAction: {
+    backgroundColor: "red",
+    marginVertical: 10,
+    justifyContent: "center",
+    alignItems: "flex-end",
+    paddingVertical: 15,
+    paddingHorizontal: 20
+  },
+  actionText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16
+  },
+  checkoutBtn: {
+    backgroundColor: "green",
+    borderRadius: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 15,
+    paddingHorizontal: 25,
+    width: "95%",
+    marginTop: 20
+  },
+  yourOrderHeader: {
+    fontSize: 28,
+    fontWeight: "bold"
+  },
+  cartHeaderContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between"
   }
 });
 
