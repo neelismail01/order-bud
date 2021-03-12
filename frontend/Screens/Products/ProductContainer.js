@@ -328,9 +328,9 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     flexDirection: "row",
-    marginVertical: 10,
+    marginVertical: 2.5,
     width: "100%",
-    backgroundColor: "#ededed",
+    backgroundColor: "white",
     justifyContent: "space-between",
     paddingVertical: 15,
     paddingHorizontal: 20
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
   },
   rightAction: {
     backgroundColor: "red",
-    marginVertical: 10,
+    marginVertical: 2.5,
     justifyContent: "center",
     alignItems: "flex-end",
     paddingVertical: 15,
