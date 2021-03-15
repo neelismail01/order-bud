@@ -26,7 +26,7 @@ const SingleProduct = (props) => {
     }
 
     useEffect(() => {
-        if (props.route.params.item.countInStock == 0) {
+        /*if (props.route.params.item.countInStock == 0) {
             setAvailability(<TrafficLight unavailable></TrafficLight>);
             setAvailabilityText("Unvailable")
         } else if (props.route.params.item.countInStock <= 5) {
@@ -35,7 +35,7 @@ const SingleProduct = (props) => {
         } else {
             setAvailability(<TrafficLight available></TrafficLight>);
             setAvailabilityText("Available")
-        }
+        }*/
 
         return () => {
             setAvailability(null);

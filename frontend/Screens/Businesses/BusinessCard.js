@@ -1,5 +1,6 @@
-import React from 'react'
-import { StyleSheet, View, Dimensions, Image, Text} from 'react-native'
+import React from 'react';
+import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity} from 'react-native';
+import { Icon } from 'react-native-elements';
 
 var { width } = Dimensions.get("window");
 
@@ -7,44 +8,59 @@ const BusinessCard = (props) => {
     const { coverImage, name, address } = props.business;
 
     return (
-        <View style={styles.container}>
-            <Image
+        <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Business Page', props.business)}>
+             <Image 
                 style={styles.image}
-                source={require(coverImage)}
+                source={{uri: coverImage}}
             />
-            <View style={styles.productDetails}>
+            <View style={styles.businessDetails}>
                 <Text style={styles.title}>{name}</Text>
-                <Text styles={{marginBottom: "50"}}>{address}</Text>
+                <View style={styles.addressRatingContainer}>
+                    <Text style={{fontSize: 15}}>{address}</Text>
+                    <View style={styles.stars}>
+                        <Text style={{marginRight: 5, fontSize: 15}}>5</Text>
+                        <Icon name="star" type="font-awesome-5" color="green" size={15} />
+                    </View>
+                </View>
                 <Text style={styles.friendOrders}>Greg and 3 others have ordered from here</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         width: "90%",
-        height: width * 0.35,
-        borderRadius: 15,
-        alignItems: 'center',
+        borderRadius: 5,
         elevation: 8,
         backgroundColor: 'white',
+        marginVertical: 10
     },
     image: {
         width: "100%",
-        height: 200
+        height: 160
     },
-    productDetails: {
-        marginVertical: 20,
+    businessDetails: {
+        marginTop: 20,
+        marginBottom: 15,
+        paddingHorizontal: 15
     },
     title: {
         fontWeight: "bold",
         fontSize: 24,
-        width: "100%",
-        marginBottom: 5
+        marginBottom: 15
+    },
+    addressRatingContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    stars: {
+        flexDirection: "row",
+        marginTop: 3,
     },
     friendOrders: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
         marginTop: 10
     }

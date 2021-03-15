@@ -1,7 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity } from 'react-native'
-import { connect } from 'react-redux'
-import * as actions from '../../Redux/Actions/cartActions';
 
 var { width } = Dimensions.get("window");
 
@@ -32,13 +30,6 @@ const MenuCard = (props) => {
             </View>
         </TouchableOpacity>
     )
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addItemToCart: (product) =>
-            dispatch(actions.addToCart({ quantity: 1, product }))
-    }
 }
 
 const styles = StyleSheet.create({
@@ -83,4 +74,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(null, mapDispatchToProps)(MenuCard);
+export default MenuCard;

@@ -15,7 +15,7 @@ const SearchBar = () => {
 
 const styles = StyleSheet.create({
     searchContainer: {
-        width: '95%',
+        width: '90%',
         marginVertical: 20,
         height: 50,
         flexDirection: "row"

@@ -9,7 +9,7 @@ const Header = () => {
             <View style={styles.pickUpDelivery}>
                 <TouchableOpacity>
                     <View>
-                        <Text style={styles.pickUpDeliveryText}>Deliver</Text>
+                        <Text style={[styles.pickUpDeliveryText]}>Deliver</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -27,29 +27,32 @@ const Header = () => {
 const styles = StyleSheet.create({
     header: {
         width: "100%",
+        flexDirection: "row",
         alignContent: "center",
-        justifyContent: "center",
-        marginTop: 60,
+        justifyContent: "space-between",
+        marginTop: 10,
         marginBottom: 15
     },
     pickUpDelivery: {
         flexDirection: "row",
-        justifyContent: "center",
-        marginVertical: 10
+        justifyContent: "flex-start",
+        marginVertical: 10,
+        marginLeft: 15
     },
     pickUpDeliveryText: {
         fontWeight: "bold",
-        fontSize: 22,
-        marginHorizontal: 15
+        fontSize: 18,
+        marginHorizontal: 7.5
     },
     address: {
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        marginRight: 15
     },
     addressText: {
         color: "green",
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: "bold",
         marginHorizontal: 10
     },
