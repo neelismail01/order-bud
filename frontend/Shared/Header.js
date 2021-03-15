@@ -8,7 +8,9 @@ const Header = () => {
         <SafeAreaView style={styles.header}>
             <View style={styles.pickUpDelivery}>
                 <TouchableOpacity>
-                    <Text style={styles.pickUpDeliveryText}>Deliver</Text>
+                    <View>
+                        <Text style={styles.pickUpDeliveryText}>Deliver</Text>
+                    </View>
                 </TouchableOpacity>
                 <TouchableOpacity>
                     <Text style={styles.pickUpDeliveryText}>Pick-Up</Text>
