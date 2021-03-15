@@ -1,14 +1,23 @@
-import React from "react"
-import { StyleSheet, Image, SafeAreaView, View } from "react-native"
+import React from "react";
+import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text } from "react-native";
+
+import { Icon } from 'react-native-elements';
 
 const Header = () => {
     return(
         <SafeAreaView style={styles.header}>
-            <Image
-                source={require("../assets/Logo.png")}
-                resizeMode="contain"
-                style={{ height: 50 }}
-            />
+            <View style={styles.pickUpDelivery}>
+                <TouchableOpacity>
+                    <Text style={styles.pickUpDeliveryText}>Deliver</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styles.pickUpDeliveryText}>Pick-Up</Text>
+                </TouchableOpacity>
+            </View>
+            <View style={styles.address}>
+                <Text style={styles.addressText}>400B Albert Street</Text>
+                <Icon name="angle-down" type="font-awesome-5" color="green" size={20} />
+            </View>
         </SafeAreaView>
     )
 }
@@ -16,11 +25,32 @@ const Header = () => {
 const styles = StyleSheet.create({
     header: {
         width: "100%",
-        flexDirection: 'row',
         alignContent: "center",
         justifyContent: "center",
-        padding: 20
-    }
+        marginTop: 60,
+        marginBottom: 15
+    },
+    pickUpDelivery: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginVertical: 10
+    },
+    pickUpDeliveryText: {
+        fontWeight: "bold",
+        fontSize: 22,
+        marginHorizontal: 15
+    },
+    address: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    addressText: {
+        color: "green",
+        fontSize: 20,
+        fontWeight: "bold",
+        marginHorizontal: 10
+    },
 })
 
 export default Header;
