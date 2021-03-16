@@ -32,9 +32,9 @@ const BusinessPage = (props) => {
                     </View>
                     <View style={styles.businessNameUnderline} />
                     <View style={{ flexDirection: "row", marginBottom: 5 }}>
-                        <Text style={styles.businessDetails}>Open Now</Text>
+                        <Text style={styles.businessDetails}>800 meters</Text>
+                        <Text style={styles.businessDetails}> · </Text>
                         <Text style={styles.businessDetails}>{address}</Text>
-                        <Text style={styles.businessDetails}>5</Text>
                     </View>
                 </View>
             </View>
@@ -127,7 +127,7 @@ const BusinessPage = (props) => {
 const styles = StyleSheet.create({
     coverPhoto: {
         width: width,
-        height: height * 0.25,
+        height: height * 0.225,
     },
     profileContainer: {
         alignItems: "center",
@@ -147,20 +147,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     businessName: {
-        fontSize: 24,
+        fontSize: 30,
         fontWeight: "bold",
         marginBottom: 10,
         textAlign: "center"
     },
     businessNameUnderline: {
         height: 2,
-        width: 0.3 * width,
+        width: 0.4 * width,
         backgroundColor: "green",
         marginTop: -2.5,
         marginBottom: 15
     },
     businessDetails: {
-        fontSize: 16,
+        fontSize: 18,
         color: "grey"
     },
     menuFilters: {
