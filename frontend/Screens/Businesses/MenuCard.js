@@ -7,26 +7,26 @@ const MenuCard = (props) => {
     const { name, price, image, countInStock } = props;
 
     return (
-        <TouchableOpacity 
+        <TouchableOpacity
             style={styles.productContainer}
             onPress={props.handlePress}
         >
-            <View style={styles.container}>
-                <View style={styles.productDetails}>
-                    <Text style={styles.title}>Blue Dream</Text>
-                    <Text styles={{marginBottom: 50}}>20% THC · 0% CBD</Text>
-                    <Text styles={{marginTop: 50}}>Sativa-dominant</Text>
-                    <Text style={styles.friendOrders}>Greg and James have ordered this before</Text>
+            <View style={styles.productDetails}>
+                <Text style={styles.title}>Blue Dream</Text>
+                <View style={{marginVertical: 10}}>
+                    <Text style={styles.subText}>20% THC · 0% CBD</Text>
+                    <Text style={styles.subText}>Sativa-dominant</Text>
                 </View>
-                <Image
-                    style={styles.image}
-                    resizeMode="contain"
-                    source={{
-                        uri: image ?
-                            image : null
-                    }}
-                />
+                <Text style={styles.friendOrders}>Greg and James have ordered this before</Text>
             </View>
+            <Image
+                style={styles.image}
+                resizeMode="contain"
+                source={{
+                    uri: image ?
+                        image : null
+                }}
+            />
         </TouchableOpacity>
     )
 }
@@ -34,42 +34,38 @@ const MenuCard = (props) => {
 const styles = StyleSheet.create({
     productContainer: {
         width: '100%',
-        marginVertical: 1
-    },
-    container: {
-        width: "100%",
-        height: width * 0.35,
+        marginVertical: 1,
+        paddingVertical: 25,
         flexDirection: "row",
         borderRadius: 5,
         alignItems: 'center',
         elevation: 8,
         backgroundColor: 'white',
     },
-    image: {
-        width: "20%",
-        height: width * 0.225,
-        marginVertical: 20,
-        marginHorizontal: 10
-    },
     productDetails: {
-        marginVertical: 20,
         width: "70%",
         flexGrow: 1,
         flex: 1,
-        marginVertical: 20,
         marginLeft: 25,
     },
     title: {
         fontWeight: "bold",
-        fontSize: 24,
+        fontSize: 20,
         width: "100%",
-        marginBottom: 5
+    },
+    subText: {
+        color: "grey",
+        fontWeight: "bold"
+    },
+    image: {
+        width: "20%",
+        height: width * 0.225,
+        marginHorizontal: 10
     },
     friendOrders: {
         fontSize: 14,
         color: 'green',
         fontWeight: 'bold',
-        marginTop: 10
     }
 })
 

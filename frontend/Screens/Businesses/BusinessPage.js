@@ -77,15 +77,15 @@ const BusinessPage = (props) => {
                 showAddToCart &&
                 <BottomSheet
                     isVisible={showAddToCart}
-                    containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0.05)' }}
+                    containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0)' }}
                 >
                     <View style={styles.bottomSheet}>
                         <TouchableOpacity style={styles.addToCartBackBtn} onPress={showBottomSheet}>
                             <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
                         </TouchableOpacity>
+                        <Text style={styles.itemName}>Blue Dream</Text>
+                        <Text style={styles.itemDescription}>This sativa leaning varietal from Canna Farms has a mid-high THC (17.5-20%) content with virtually no CBD. Blue Dream is descended from Blueberry Haze and offers a bouquet of pine and citrus.</Text>
                         <View style={styles.itemDetailsContainer}>
-                            <Text style={styles.itemName}>Blue Dream</Text>
-                            <Text style={styles.itemDescription}>This sativa leaning varietal from Canna Farms has a mid-high THC (17.5-20%) content with virtually no CBD. Blue Dream is descended from Blueberry Haze and offers a bouquet of pine and citrus.</Text>
                             <View style={styles.selectSize}>
                                 <TouchableOpacity style={styles.leftSelectSize}>
                                     <Text style={styles.selectSizeText}>1g</Text>
@@ -164,15 +164,15 @@ const styles = StyleSheet.create({
         color: "grey"
     },
     menuFilters: {
-        marginVertical: 25,
-        marginHorizontal: 15
+        marginHorizontal: 15,
+        marginTop: 20,
     },
     menuFilterTextContainer: {
         marginHorizontal: 5,
         paddingHorizontal: 20,
         paddingVertical: 7.5,
-        borderRadius: 15,
-        backgroundColor: "green"
+        borderRadius: 5,
+        backgroundColor: 'rgba(0, 128, 0, 0.75)',
     },
     menuFilterText: {
         color: "white",
@@ -182,26 +182,26 @@ const styles = StyleSheet.create({
     listContainer: {
         flex: 1,
         alignItems: "center",
-        backgroundColor: "#ededed",
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
         elevation: 8,
     },
     categoryHeader: {
-        marginVertical: 2,
+        marginBottom: -1,
+        marginTop: 9,
         width: "100%",
         backgroundColor: "white",
         paddingVertical: 10,
         borderRadius: 5,
     },
     categoryHeaderText: {
-        fontSize: 24,
+        fontSize: 30,
         fontWeight: "bold",
-        marginLeft: 25
+        marginLeft: 25,
+        marginTop: 10
     },
     addToCartBackBtn: {
         backgroundColor: "white",
-        borderWidth: 1,
         height: 50,
         width: 50,
         borderRadius: 25,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 20,
         borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
+        borderTopRightRadius: 5
     },
     itemDetailsContainer: {
         alignItems: "center"
@@ -225,12 +225,12 @@ const styles = StyleSheet.create({
     },
     itemDescription: {
         fontSize: 17,
-        marginHorizontal: 10
+        color: "grey",
     },
     addToCart: {
         backgroundColor: "green",
         width: "90%",
-        borderRadius: 30,
+        borderRadius: 5,
         paddingVertical: 15,
         paddingHorizontal: 30,
         marginTop: 25,
@@ -248,8 +248,8 @@ const styles = StyleSheet.create({
     },
     leftSelectSize: {
         backgroundColor: "#e6e6e6",
-        borderTopLeftRadius: 30,
-        borderBottomLeftRadius: 30,
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
         paddingVertical: 15,
         width: 80,
         alignItems: "center",
@@ -258,8 +258,8 @@ const styles = StyleSheet.create({
     },
     rightSelectSize: {
         backgroundColor: "#e6e6e6",
-        borderTopRightRadius: 30,
-        borderBottomRightRadius: 30,
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
         paddingVertical: 15,
         width: 80,
         alignItems: "center"
