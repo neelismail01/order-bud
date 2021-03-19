@@ -1,6 +1,8 @@
-const {Product} = require('../models/product');
+const { Product } = require('../models/product');
 const express = require('express');
 const { Category } = require('../models/category');
+const { Business } = require('../models/business');
+
 const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
@@ -57,7 +59,14 @@ router.get(`/:id`, async (req, res) =>{
 
 router.post(`/`, uploadOptions.single('image'), async (req, res) =>{
     const category = await Category.findById(req.body.category);
-    if(!category) return res.status(400).send('Invalid Category')
+    if(!category) {
+        return res.status(400).send('Invalid Category');
+    }
+
+    const business = await Business.findById(req.body.business);
+    if (!business) {
+        return res.status(400).send('Invalid Business');
+    }
 
     const file = req.file;
     if(!file) return res.status(400).send('No image in the request')
@@ -67,9 +76,9 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) =>{
     let product = new Product({
         name: req.body.name,
         description: req.body.description,
-        richDescription: req.body.richDescription,
-        image: `${basePath}${fileName}`,// "http://localhost:3000/public/upload/image-2323232"
+        image: `${basePath}${fileName}`,
         brand: req.body.brand,
+        business: req.body.business,
         price: req.body.price,
         category: req.body.category,
         countInStock: req.body.countInStock,
