@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Image, View, StyleSheet, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Icon, BottomSheet } from 'react-native-elements';
 
-import MenuCard from './MenuCard'
+import MenuCard from '../MenuCard'
+import SearchBar from "../../../Shared/SearchBar";
+import BusinessPageFilter from '../BusinessPageFilter';
 
-import SearchBar from "../../Shared/SearchBar";
+import BlueDream from './blue-dream.png';
 
 var { width, height } = Dimensions.get('window')
 
@@ -12,11 +14,31 @@ var { width, height } = Dimensions.get('window')
 const BusinessPage = (props) => {
 
     const [showAddToCart, setShowAddToCart] = useState(false);
-
+    const [showFilter, setShowFilter] = useState(false);
+    const [showFilterIcon, setShowFilterIcon] = useState(false);
+    const [counter, setCounter] = useState(1);
     const { coverImage, profileImage, name, address } = props.route.params;
+    const [love, setLove] = useState(false);
+
+    const handleLove = () => {
+        setLove(!love);
+    }
 
     const showBottomSheet = () => {
         setShowAddToCart(!showAddToCart);
+        setCounter(1);
+    }
+
+    const handleFilter = () => {
+        setShowFilter(!showFilter);
+    }
+
+    const handlePlusCounter = () => {
+        setCounter(counter + 1);
+    }
+
+    const handleMinusCounter = () => {
+        setCounter(counter - 1);
     }
 
     return (
@@ -31,16 +53,27 @@ const BusinessPage = (props) => {
                         <Text style={styles.businessName}>{name}</Text>
                     </View>
                     <View style={styles.businessNameUnderline} />
-                    <View style={{ flexDirection: "row", marginBottom: 5 }}>
-                        <Text style={styles.businessDetails}>800 meters</Text>
-                        <Text style={styles.businessDetails}> · </Text>
+                    <TouchableOpacity style={{ flexDirection: "row", marginBottom: 6 }}>
                         <Text style={styles.businessDetails}>{address}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: "row", marginBottom: 6 }}>
+                            <Text style={styles.businessDetails}>9:00 AM - 10:00 PM</Text>
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: "row"}}>
+                        <Text style={styles.businessDetails}>2.99 Delivery Fee • </Text>
+                        <Text style={styles.businessDetails}>30-40 min</Text>
                     </View>
                 </View>
             </View>
             <ScrollView style={styles.menuFilters} horizontal={true}>
                 <TouchableOpacity style={styles.menuFilterTextContainer}>
                     <Text style={styles.menuFilterText}>All</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Deals</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Favourites</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuFilterTextContainer}>
                     <Text style={styles.menuFilterText}>Bud</Text>
@@ -52,11 +85,36 @@ const BusinessPage = (props) => {
                     <Text style={styles.menuFilterText}>Edibles</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Beverages</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Vape Pens</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Extracts</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Topicals</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Oils</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
+                    <Text style={styles.menuFilterText}>Capsules</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.menuFilterTextContainer}>
                     <Text style={styles.menuFilterText}>Accessories</Text>
                 </TouchableOpacity>
             </ScrollView>
             <View style={styles.listContainer}>
-                <SearchBar />
+                <SearchBar handleFilter={handleFilter} showFilterIcon={showFilterIcon} />
+                {showFilter &&
+                    <BusinessPageFilter showFilter={showFilter} handleFilter={handleFilter} />
+                }
+                <View style={styles.categoryHeader}>
+                    <Text style={styles.categoryHeaderText}>Deals</Text>
+                </View>
+                <MenuCard handlePress={showBottomSheet} />
                 <View style={styles.categoryHeader}>
                     <Text style={styles.categoryHeaderText}>Bud</Text>
                 </View>
@@ -80,9 +138,27 @@ const BusinessPage = (props) => {
                     containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0)' }}
                 >
                     <View style={styles.bottomSheet}>
-                        <TouchableOpacity style={styles.addToCartBackBtn} onPress={showBottomSheet}>
-                            <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
-                        </TouchableOpacity>
+                        <View style={styles.separator} />
+                        {love ?
+                        <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                            <TouchableOpacity style={styles.addToCartBackBtn} onPress={showBottomSheet}>
+                                <Icon name="arrow-left" type="font-awesome-5" color="black" size={25} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginTop: 15}} onPress={handleLove}>
+                                <Icon name="heart" type="font-awesome-5" color="red" size={25} />
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                            <TouchableOpacity style={styles.addToCartBackBtn} onPress={showBottomSheet}>
+                                <Icon name="arrow-left" type="font-awesome-5" color="black" size={25} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{marginTop: 15}} onPress={handleLove}>
+                                <Icon name="heart" type="font-awesome-5" color="black" size={25} />
+                            </TouchableOpacity>
+                        </View>
+                        }
+                        <Image style={styles.itemImage} source={BlueDream} />
                         <Text style={styles.itemName}>Blue Dream</Text>
                         <Text style={styles.itemDescription}>This sativa leaning varietal from Canna Farms has a mid-high THC (17.5-20%) content with virtually no CBD. Blue Dream is descended from Blueberry Haze and offers a bouquet of pine and citrus.</Text>
                         <View style={styles.itemDetailsContainer}>
@@ -101,13 +177,13 @@ const BusinessPage = (props) => {
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.selectQuantity}>
-                                <TouchableOpacity style={styles.leftSelectQuantity}>
+                                <TouchableOpacity onPress={handleMinusCounter} style={styles.leftSelectQuantity}>
                                     <Icon name="minus" type="font-awesome-5" color="black" size={17.5} />
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.quantity}>
-                                    <Text style={styles.selectSizeText}>1</Text>
+                                    <Text style={styles.selectSizeText}>{counter}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.rightSelectQuantity}>
+                                <TouchableOpacity onPress={handlePlusCounter} style={styles.rightSelectQuantity}>
                                     <Icon name="plus" type="font-awesome-5" color="black" size={17.5} />
                                 </TouchableOpacity>
                             </View>
@@ -143,8 +219,8 @@ const styles = StyleSheet.create({
         padding: 20
     },
     businessNameContainer: {
-        width: 0.7 * width,
         justifyContent: "center",
+        alignItems: "center"
     },
     businessName: {
         fontSize: 30,
@@ -157,10 +233,10 @@ const styles = StyleSheet.create({
         width: 0.4 * width,
         backgroundColor: "green",
         marginTop: -2.5,
-        marginBottom: 15
+        marginBottom: 10
     },
     businessDetails: {
-        fontSize: 18,
+        fontSize: 16,
         color: "grey"
     },
     menuFilters: {
@@ -171,13 +247,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         paddingHorizontal: 20,
         paddingVertical: 7.5,
-        borderRadius: 5,
+        borderRadius: 15,
         backgroundColor: 'rgba(0, 128, 0, 0.75)',
     },
     menuFilterText: {
         color: "white",
         fontWeight: "bold",
-        fontSize: 18
+        fontSize: 16
     },
     listContainer: {
         flex: 1,
@@ -213,7 +289,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 20,
         borderTopLeftRadius: 5,
-        borderTopRightRadius: 5
+        borderTopRightRadius: 5,
+        height: height
+    },
+    separator: {
+        backgroundColor: "grey",
+        height: 1,
+        marginVertical: 15
     },
     itemDetailsContainer: {
         alignItems: "center"
@@ -226,6 +308,12 @@ const styles = StyleSheet.create({
     itemDescription: {
         fontSize: 17,
         color: "grey",
+    },
+    itemImage: {
+        height: "30%",
+        width: "50%",
+        marginBottom: 10,
+        justifyContent: "center"
     },
     addToCart: {
         backgroundColor: "green",

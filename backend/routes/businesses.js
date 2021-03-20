@@ -48,7 +48,7 @@ router.get(`/`, async (req, res) =>{
     res.status(200).send(businessList);
 })
 
-router.get('/:id', async (req,res)=>{
+router.get('/:id', async (req, res) => {
     const business = await Business.findById(req.params.id).populate("products");
 
     if(!business) {
