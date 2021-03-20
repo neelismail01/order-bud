@@ -2,11 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Image, View, StyleSheet, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Icon, BottomSheet } from 'react-native-elements';
 
-import MenuCard from '../MenuCard'
+import MenuCard from './MenuCard'
 import SearchBar from "../../../Shared/SearchBar";
-import BusinessPageFilter from '../BusinessPageFilter';
-
-import BlueDream from './blue-dream.png';
+import BusinessPageFilter from '../Home/BusinessPageFilter';
 
 var { width, height } = Dimensions.get('window')
 
@@ -17,6 +15,7 @@ const BusinessPage = (props) => {
     const [showFilter, setShowFilter] = useState(false);
     const [showFilterIcon, setShowFilterIcon] = useState(false);
     const [counter, setCounter] = useState(1);
+    
     const { coverImage, profileImage, name, address } = props.route.params;
     const [love, setLove] = useState(false);
 
@@ -158,7 +157,6 @@ const BusinessPage = (props) => {
                             </TouchableOpacity>
                         </View>
                         }
-                        <Image style={styles.itemImage} source={BlueDream} />
                         <Text style={styles.itemName}>Blue Dream</Text>
                         <Text style={styles.itemDescription}>This sativa leaning varietal from Canna Farms has a mid-high THC (17.5-20%) content with virtually no CBD. Blue Dream is descended from Blueberry Haze and offers a bouquet of pine and citrus.</Text>
                         <View style={styles.itemDetailsContainer}>

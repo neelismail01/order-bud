@@ -9,10 +9,10 @@ import Banner from "../../../Shared/Banner";
 import SearchBar from "../../../Shared/SearchBar";
 import ViewCartButton from "../../../Shared/ViewCartButton";
 
-import CategoryFilter from "../CategoryFilter";
+import CategoryFilter from "./CategoryFilter";
 import BusinessCard from "./BusinessCard";
 import Cart from "../Cart";
-import HomeFilter from "../HomeFilter";
+import HomeFilter from "./HomeFilter";
 
 import baseURL from "../../../assets/common/baseUrl";
 
