@@ -1,5 +1,7 @@
 const { Business } = require('../models/business');
 const { Product } = require('../models/product');
+const { Category } = require('../models/category');
+
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
@@ -47,7 +49,7 @@ router.get(`/`, async (req, res) =>{
 })
 
 router.get('/:id', async (req,res)=>{
-    const business = await Business.findById(req.params.id);
+    const business = await Business.findById(req.params.id).populate("products");
 
     if(!business) {
         res.status(500).json({message: 'The business with the given ID was not found.'})
@@ -89,7 +91,6 @@ router.post('/', multipleFieldUpload, async (req,res)=>{
     res.send(business);
 })
 
-
 router.put('/:id', multipleFieldUpload, async (req, res) => {
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
@@ -108,7 +109,8 @@ router.put('/:id', multipleFieldUpload, async (req, res) => {
         profilePhoto = req.body.profilePhoto;
     }
 
-    const business = await Business.findByIdAndUpdate(req.params.id,
+    const business = await Business.findByIdAndUpdate(
+        req.params.id,
         {
             name: req.body.name,
             address: req.body.address,
