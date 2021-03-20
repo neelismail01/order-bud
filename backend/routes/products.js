@@ -52,6 +52,17 @@ router.get(`/:id`, async (req, res) => {
     res.send(product);
 })
 
+router.get('/business/:id', async (req, res) => {
+    const products = await Product.find({ business: req.param.id });
+
+    if (!products) {
+        res.status(500).json({ success: false })
+    }
+
+    res.send(products);
+})
+
+
 router.post(`/`, uploadOptions.single('image'), async (req, res) => {
     const category = await Category.findById(req.body.category);
     if (!category) {
@@ -64,7 +75,9 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
     }
 
     const file = req.file;
-    if (!file) return res.status(400).send('No image in the request')
+    if (!file) {
+        return res.status(400).send('No image in the request')
+    }
 
     const fileName = file.filename
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
@@ -82,6 +95,8 @@ router.post(`/`, uploadOptions.single('image'), async (req, res) => {
     })
 
     product = await product.save();
+
+
 
     if (!product) {
         return res.status(500).send('The product cannot be created')

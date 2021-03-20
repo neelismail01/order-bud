@@ -17,10 +17,6 @@ const businessSchema = mongoose.Schema({
         type: String,
         default: ''
     },
-    products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
-    }],
     rating: {
         type: Number,
         default: 0,

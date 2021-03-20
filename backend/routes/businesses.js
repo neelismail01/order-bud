@@ -1,4 +1,5 @@
-const {Business} = require('../models/business');
+const { Business } = require('../models/business');
+const { Product } = require('../models/product');
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
@@ -45,7 +46,7 @@ router.get(`/`, async (req, res) =>{
     res.status(200).send(businessList);
 })
 
-router.get('/:id', async(req,res)=>{
+router.get('/:id', async (req,res)=>{
     const business = await Business.findById(req.params.id);
 
     if(!business) {
@@ -57,8 +58,7 @@ router.get('/:id', async(req,res)=>{
 router.post('/', multipleFieldUpload, async (req,res)=>{
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
-    let coverPhotoPath;
-    let profilePhotoPath;
+    let coverPhotoPath, profilePhotoPath;
 
     if (req.files.coverPhoto) {
         coverPhotoPath = `${basePath}${req.files.coverPhoto[0].filename}`;
@@ -77,14 +77,14 @@ router.post('/', multipleFieldUpload, async (req,res)=>{
         address: req.body.address,
         coverImage: coverPhotoPath,
         profileImage: profilePhotoPath,
-        products: [],
         rating: req.body.rating,
         dateCreated: req.body.dateCreated
     })
     business = await business.save();
 
-    if(!business)
-    return res.status(400).send('the business cannot be created!')
+    if(!business) {
+        return res.status(400).send('the business cannot be created!')
+    }
 
     res.send(business);
 })
@@ -114,7 +114,6 @@ router.put('/:id', multipleFieldUpload, async (req, res) => {
             address: req.body.address,
             coverImage: coverPhotoPath,
             profileImage: profilePhotoPath,
-            products: [],
             rating: req.body.rating,
             dateCreated: req.body.dateCreated
         },
@@ -135,7 +134,7 @@ router.delete('/:id', (req, res)=>{
         } else {
             return res.status(404).json({success: false , message: "business not found!"})
         }
-    }).catch(err=>{
+    }).catch(err => {
        return res.status(500).json({success: false, error: err}) 
     })
 })
