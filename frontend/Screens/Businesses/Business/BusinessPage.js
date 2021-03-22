@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import React from 'react'
+import { View, ScrollView, StyleSheet } from 'react-native';
 
 import Menu from './Menu';
-import MenuCard from './MenuCard';
-import SearchBar from "../../../Shared/SearchBar";
 import BusinessInfo from './BusinessInfo';
 import BusinessCategories from './BusinessCategories';
-import ItemBottomSheet from '../Item/ItemBottomSheet';
-
-var { width, height } = Dimensions.get('window')
-
 
 const BusinessPage = (props) => {
     
-    const { coverImage, name, address, categories, products } = props.route.params;
-    const businessDetails = { coverImage, name, address};
+    const { coverImage, name, address, rating, categories, products } = props.route.params;
+    const businessDetails = { coverImage, name, address, rating };
 
     return (
         <ScrollView>
             <BusinessInfo businessDetails={businessDetails} />
-            <View style={{alignItems: "center"}}>
+            <View style={styles.categoriesContainer}>
                 <BusinessCategories categories={categories} />
-                <SearchBar showFilterIcon={false} />
             </View>
             <Menu categories={categories} products={products} />
         </ScrollView>
     )
 }
+
+const styles = StyleSheet.create({
+    categoriesContainer: {
+        alignItems: "center",
+        backgroundColor: "white",
+        paddingLeft: 15
+    }
+})
 
 export default BusinessPage;

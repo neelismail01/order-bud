@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, ScrollView, TouchableOpacity } from 'react-native';
 
 const BusinessCategories = (props) => {
 
@@ -7,7 +7,7 @@ const BusinessCategories = (props) => {
         <ScrollView
             horizontal={true}
             bounces={true}
-            style={{ marginTop: 25 }}
+            contentContainerStyle={styles.horizontalScrollContainer}
         >
             {props.categories.map(category => {
                 return (
@@ -21,6 +21,10 @@ const BusinessCategories = (props) => {
 }
 
 const styles = StyleSheet.create({
+    horizontalScrollContainer: {
+        backgroundColor: "white",
+        paddingBottom: 15,
+    },
     menuFilterTextContainer: {
         marginHorizontal: 5,
         paddingHorizontal: 20,

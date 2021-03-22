@@ -5,28 +5,30 @@ var { width, height } = Dimensions.get('window')
 
 const BusinessInfo = (props) => {
 
-    const { coverImage, name, address } = props.businessDetails
+    const { coverImage, name, address, rating } = props.businessDetails
 
     return (
-        <View style={styles.profileContainer}>
+        <View>
             <Image
                 style={styles.coverPhoto}
                 source={{ uri: coverImage }}
             />
             <View style={styles.profileTextContainer}>
-                <View style={styles.businessNameContainer}>
+                <View style={styles.businessNameAndRating}>
                     <Text style={styles.businessName}>{name}</Text>
+                    <View style={styles.ratingContainer}>
+                        <Text style={styles.ratingText}>{rating}</Text>
+                    </View>
                 </View>
-                <View style={styles.businessNameUnderline} />
-                <TouchableOpacity style={{ flexDirection: "row", marginBottom: 6 }}>
+                <View style={{ flexDirection: "row", marginBottom: 6 }}>
+                    <Text style={styles.businessDetails}>Open Now</Text>
+                    <Text style={styles.businessDetails}> • </Text>
                     <Text style={styles.businessDetails}>{address}</Text>
                     <Text style={styles.businessDetails}> • </Text>
-                    <Text style={styles.businessDetails}>Open Now</Text>
-                </TouchableOpacity>
-                <View style={{ flexDirection: "row" }}>
-                    <Text style={styles.businessDetails}>2.99 Delivery Fee</Text>
-                    <Text style={styles.businessDetails}> • </Text>
                     <Text style={styles.businessDetails}>30-40 min</Text>
+                </View>
+                <View style={{ flexDirection: "row", marginBottom: 6 }}>
+                    <Text style={styles.businessDetails}>2.99 Delivery Fee</Text>
                 </View>
             </View>
         </View>
@@ -39,35 +41,34 @@ const styles = StyleSheet.create({
         width: width,
         height: height * 0.225,
     },
-    profileContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-    },
     profileTextContainer: {
         flexDirection: "column",
-        alignItems: "center",
-        marginTop: -60,
         backgroundColor: 'white',
-        width: "70%",
+        width: "100%",
         borderRadius: 5,
         padding: 20
     },
-    businessNameContainer: {
-        justifyContent: "center",
-        alignItems: "center"
+    businessNameAndRating: {
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     businessName: {
         fontSize: 30,
         fontWeight: "bold",
         marginBottom: 10,
-        textAlign: "center"
     },
-    businessNameUnderline: {
-        height: 2,
-        width: 0.4 * width,
-        backgroundColor: "green",
-        marginTop: -2.5,
-        marginBottom: 10
+    ratingContainer: {
+        backgroundColor: 'rgba(0, 128, 0, 0.75)',
+        height: 30,
+        width: 30,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 5
+    },
+    ratingText: {
+        fontWeight: "bold",
+        color: "white"
     },
     businessDetails: {
         fontSize: 16,
