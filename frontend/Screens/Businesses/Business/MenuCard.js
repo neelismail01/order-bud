@@ -36,7 +36,7 @@ const MenuCard = (props) => {
             </TouchableOpacity>
             {
                 showItemPage &&
-                <ItemBottomSheet handleShowItemPage={handleShowItemPage} showItemPage={showItemPage} />
+                <ItemBottomSheet product={props.product} handleShowItemPage={handleShowItemPage} showItemPage={showItemPage} />
             }
         </View>
     )

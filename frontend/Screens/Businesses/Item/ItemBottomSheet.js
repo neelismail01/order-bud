@@ -1,16 +1,22 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Icon, BottomSheet } from 'react-native-elements';
+
+var { height, width } = Dimensions.get("window");
 
 const BusinessPage = (props) => {
     const [counter, setCounter] = useState(1);
+
+    const { image, name, description } = props.product;
 
     const handlePlusCounter = () => {
         setCounter(counter + 1);
     }
 
     const handleMinusCounter = () => {
-        setCounter(counter - 1);
+        if (counter > 1) {
+            setCounter(counter - 1);
+        }
     }
 
     return (
@@ -18,12 +24,23 @@ const BusinessPage = (props) => {
             isVisible={props.showItemPage}
             containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0)' }}
         >
+            <TouchableOpacity style={styles.cartBackBtn} onPress={props.handleShowItemPage}>
+                <Icon name="times" type="font-awesome-5" color="black" size={17.5} />
+            </TouchableOpacity>
+            <View style={styles.productImageContainer}>
+                <Image
+                    style={styles.image}
+                    resizeMode="contain"
+                    source={{
+                        uri: image
+                    }}
+                />
+            </View>
             <View style={styles.bottomSheet}>
-                <TouchableOpacity style={styles.cartBackBtn} onPress={props.handleShowItemPage}>
-                    <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
-                </TouchableOpacity>
-                <Text style={styles.itemName}>Blue Dream</Text>
-                <Text style={styles.itemDescription}>This sativa leaning varietal from Canna Farms has a mid-high THC (17.5-20%) content with virtually no CBD. Blue Dream is descended from Blueberry Haze and offers a bouquet of pine and citrus.</Text>
+                <View style={{justifyContent: "center"}}>
+                    <Text style={styles.itemName}>{name}</Text>
+                </View>
+                <Text style={styles.itemDescription}>{description}</Text>
                 <View style={styles.itemDetailsContainer}>
                     <View style={styles.selectSize}>
                         <TouchableOpacity style={styles.leftSelectSize}>
@@ -61,25 +78,36 @@ const BusinessPage = (props) => {
 }
 
 const styles = StyleSheet.create({
-    addToCartBackBtn: {
+    cartBackBtn: {
+        position: "absolute",
+        zIndex: 100,
+        bottom: 15,
         backgroundColor: "white",
+        borderColor: "black",
+        borderWidth: 1,
         height: 50,
         width: 50,
+        top: 20,
+        left: 20,
         borderRadius: 25,
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 10
+        elevation: 10,
+    },
+    productImageContainer: {
+        width: width,
+        backgroundColor: "white"
+    },
+    image: {
+        width: width,
+        height: 0.3 * height,
+        marginTop: 50
     },
     bottomSheet: {
-        backgroundColor: 'white',
-        padding: 20,
+        backgroundColor: "white",
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
-    },
-    separator: {
-        backgroundColor: "grey",
-        height: 1,
-        marginVertical: 15
+        padding: 20
     },
     itemDetailsContainer: {
         alignItems: "center"
@@ -92,12 +120,6 @@ const styles = StyleSheet.create({
     itemDescription: {
         fontSize: 17,
         color: "grey",
-    },
-    itemImage: {
-        height: "30%",
-        width: "50%",
-        marginBottom: 10,
-        justifyContent: "center"
     },
     addToCart: {
         backgroundColor: "green",
@@ -112,7 +134,7 @@ const styles = StyleSheet.create({
     addToCartText: {
         color: "white",
         fontWeight: "bold",
-        fontSize: 22
+        fontSize: 18
     },
     selectSize: {
         flexDirection: "row",
