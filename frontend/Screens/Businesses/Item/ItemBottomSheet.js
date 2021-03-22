@@ -5,19 +5,36 @@ import { Icon, BottomSheet } from 'react-native-elements';
 var { height, width } = Dimensions.get("window");
 
 const BusinessPage = (props) => {
-    const [counter, setCounter] = useState(1);
+    const [quantity, setQuantity] = useState(1);
 
-    const { image, name, description } = props.product;
+    const { image, name, description, brand, price } = props.product;
 
     const handlePlusCounter = () => {
-        setCounter(counter + 1);
+        setQuantity(quantity + 1);
     }
 
     const handleMinusCounter = () => {
-        if (counter > 1) {
-            setCounter(counter - 1);
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
         }
     }
+
+    /*
+        <View style={styles.selectSize}>
+            <TouchableOpacity style={styles.leftSelectSize}>
+                <Text style={styles.selectSizeText}>1g</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.middleSelectSize}>
+                <Text style={styles.selectSizeText}>2g</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.middleSelectSize}>
+                <Text style={styles.selectSizeText}>1/8oz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.rightSelectSize}>
+                <Text style={styles.selectSizeText}>1/4oz</Text>
+            </TouchableOpacity>
+        </View>
+    */
 
     return (
         <BottomSheet
@@ -25,7 +42,7 @@ const BusinessPage = (props) => {
             containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0)' }}
         >
             <TouchableOpacity style={styles.cartBackBtn} onPress={props.handleShowItemPage}>
-                <Icon name="times" type="font-awesome-5" color="black" size={17.5} />
+                <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
             </TouchableOpacity>
             <View style={styles.productImageContainer}>
                 <Image
@@ -37,39 +54,34 @@ const BusinessPage = (props) => {
                 />
             </View>
             <View style={styles.bottomSheet}>
-                <View style={{justifyContent: "center"}}>
+                <View style={styles.itemNameContainer}>
                     <Text style={styles.itemName}>{name}</Text>
+                </View>
+                <View style={styles.subItemDetailsContainer}>
+                    <Text style={styles.subItemDetailsText}>{brand}</Text>
+                    <Text style={styles.subItemDetailsText}>·</Text>
+                    <Text style={styles.subItemDetailsText}>15% THC</Text>
+                    <Text style={styles.subItemDetailsText}>·</Text>
+                    <Text style={styles.subItemDetailsText}>0.2% CBD</Text>
                 </View>
                 <Text style={styles.itemDescription}>{description}</Text>
                 <View style={styles.itemDetailsContainer}>
-                    <View style={styles.selectSize}>
-                        <TouchableOpacity style={styles.leftSelectSize}>
-                            <Text style={styles.selectSizeText}>1g</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.middleSelectSize}>
-                            <Text style={styles.selectSizeText}>2g</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.middleSelectSize}>
-                            <Text style={styles.selectSizeText}>1/8oz</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.rightSelectSize}>
-                            <Text style={styles.selectSizeText}>1/4oz</Text>
-                        </TouchableOpacity>
-                    </View>
                     <View style={styles.selectQuantity}>
                         <TouchableOpacity onPress={handleMinusCounter} style={styles.leftSelectQuantity}>
-                            <Icon name="minus" type="font-awesome-5" color="black" size={17.5} />
+                            <Icon name="minus" type="font-awesome-5" color="green" size={17.5} />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.quantity}>
-                            <Text style={styles.selectSizeText}>{counter}</Text>
+                            <Text style={styles.selectSizeText}>{quantity}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handlePlusCounter} style={styles.rightSelectQuantity}>
-                            <Icon name="plus" type="font-awesome-5" color="black" size={17.5} />
+                            <Icon name="plus" type="font-awesome-5" color="green" size={17.5} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.addToCart}>
                         <Text style={styles.addToCartText}>Add To Cart</Text>
-                        <Text style={styles.addToCartText}>$35.00</Text>
+                        <View style={styles.cartPrice}>
+                            <Text style={styles.addToCartText}>{price ? `$${price * quantity}.00` : `$8.99`}</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -96,11 +108,16 @@ const styles = StyleSheet.create({
     },
     productImageContainer: {
         width: width,
-        backgroundColor: "white"
+        backgroundColor: "white",
+        borderTopWidth: 0.5,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderTopRightRadius: 15,
+        borderTopLeftRadius: 15
     },
     image: {
         width: width,
-        height: 0.3 * height,
+        height: 0.2 * height,
         marginTop: 50
     },
     bottomSheet: {
@@ -110,35 +127,36 @@ const styles = StyleSheet.create({
         padding: 20
     },
     itemDetailsContainer: {
-        alignItems: "center"
+        alignItems: "center",
+        marginTop: 25
+    },
+    itemNameContainer: {
+        alignItems: "center",
     },
     itemName: {
-        fontSize: 32,
+        fontSize: 28,
         fontWeight: "bold",
-        marginBottom: 15
+        textAlign: "center",
+        marginVertical: 2.5
+    },
+    subItemDetailsContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginBottom: 2.5
+    },
+    subItemDetailsText: {
+        color: "grey",
+        fontSize: 18,
+        fontWeight: "bold",
+        padding: 5
     },
     itemDescription: {
         fontSize: 17,
         color: "grey",
-    },
-    addToCart: {
-        backgroundColor: "green",
-        width: "90%",
-        borderRadius: 5,
-        paddingVertical: 15,
-        paddingHorizontal: 30,
-        marginTop: 25,
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    addToCartText: {
-        color: "white",
-        fontWeight: "bold",
-        fontSize: 18
+        marginVertical: 10
     },
     selectSize: {
         flexDirection: "row",
-        marginTop: 20,
     },
     leftSelectSize: {
         backgroundColor: "#e6e6e6",
@@ -175,7 +193,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 30,
         flexDirection: "row",
-        marginTop: 25
     },
     quantity: {
         width: 80,
@@ -191,6 +208,26 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         width: 80,
         alignItems: "center",
+    },
+    addToCart: {
+        backgroundColor: "green",
+        width: "90%",
+        borderRadius: 5,
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 25
+    },
+    addToCartText: {
+        color: "white",
+        fontWeight: "bold",
+        fontSize: 18
+    },
+    cartPrice: {
+        right: 25,
+        position: "absolute",
+        paddingVertical: 15,
     }
 })
 

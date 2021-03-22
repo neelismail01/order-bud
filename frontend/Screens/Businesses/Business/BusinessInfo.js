@@ -46,9 +46,9 @@ const styles = StyleSheet.create({
     profileTextContainer: {
         flexDirection: "column",
         alignItems: "center",
-        marginTop: -80,
+        marginTop: -60,
         backgroundColor: 'white',
-        width: 0.7 * width,
+        width: "70%",
         borderRadius: 5,
         padding: 20
     },
