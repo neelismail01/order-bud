@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
         const isValid = FILE_TYPE_MAP[file.mimetype];
         let uploadError = new Error('invalid image type');
 
-        if(isValid) {
+        if (isValid) {
             uploadError = null
         }
         cb(uploadError, 'public/uploads')
@@ -29,35 +29,45 @@ const storage = multer.diskStorage({
 })
 
 const uploadOptions = multer({ storage: storage });
-const multipleFieldUpload = uploadOptions.fields([
-    {
-        name: "profilePhoto"
-    },
-    {
-        name: "coverPhoto"
+const multipleFieldUpload = uploadOptions.fields([{ name: "profilePhoto" }, { name: "coverPhoto" }]);
+
+router.get(`/`, async (req, res) => {
+    const businessList = await Business.find()
+    .populate('categories', 'name')
+    .populate({ 
+        path: 'products', populate: {
+            path : 'category', select: 'name'
+        }
+    })
+    .populate({
+        path: 'products', populate: {
+            path : 'business', select: 'name'
+        }
+    });
+
+    if (!businessList) {
+        res.status(500).json({ success: false })
     }
-]);
-
-
-router.get(`/`, async (req, res) =>{
-    const businessList = await Business.find();
-
-    if(!businessList) {
-        res.status(500).json({success: false})
-    } 
+    
     res.status(200).send(businessList);
 })
 
 router.get('/:id', async (req, res) => {
-    const business = await Business.findById(req.params.id).populate("products");
+    const business = await Business.find()
+    .populate('categories', 'name')
+    .populate({ 
+        path: 'products', populate: {
+            path : 'category', select: 'name'
+        }
+    });
 
-    if(!business) {
-        res.status(500).json({message: 'The business with the given ID was not found.'})
-    } 
+    if (!business) {
+        res.status(500).json({ message: 'The business with the given ID was not found.' })
+    }
     res.status(200).send(business);
 })
 
-router.post('/', multipleFieldUpload, async (req,res)=>{
+router.post('/', multipleFieldUpload, async (req, res) => {
     const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
 
     let coverPhotoPath, profilePhotoPath;
@@ -80,11 +90,13 @@ router.post('/', multipleFieldUpload, async (req,res)=>{
         coverImage: coverPhotoPath,
         profileImage: profilePhotoPath,
         rating: req.body.rating,
+        categories: req.body.categories,
         dateCreated: req.body.dateCreated
     })
+
     business = await business.save();
 
-    if(!business) {
+    if (!business) {
         return res.status(400).send('the business cannot be created!')
     }
 
@@ -117,27 +129,28 @@ router.put('/:id', multipleFieldUpload, async (req, res) => {
             coverImage: coverPhotoPath,
             profileImage: profilePhotoPath,
             rating: req.body.rating,
+            categories: req.body.categories,
             dateCreated: req.body.dateCreated
         },
-        { new: true}
+        { new: true }
     )
 
-    if(!business) {
+    if (!business) {
         return res.status(400).send('the business cannot be updated!')
     }
 
     res.send(business);
 })
 
-router.delete('/:id', (req, res)=>{
-    Business.findByIdAndRemove(req.params.id).then(business =>{
-        if(business) {
-            return res.status(200).json({success: true, message: 'the business is deleted!'})
+router.delete('/:id', (req, res) => {
+    Business.findByIdAndRemove(req.params.id).then(business => {
+        if (business) {
+            return res.status(200).json({ success: true, message: 'the business is deleted!' })
         } else {
-            return res.status(404).json({success: false , message: "business not found!"})
+            return res.status(404).json({ success: false, message: "business not found!" })
         }
     }).catch(err => {
-       return res.status(500).json({success: false, error: err}) 
+        return res.status(500).json({ success: false, error: err })
     })
 })
 

@@ -5,7 +5,7 @@ var { width, height } = Dimensions.get('window')
 
 const BusinessInfo = (props) => {
 
-    const { coverImage, profileImage, name, address } = props.route.params;
+    const { coverImage, name, address } = props.businessDetails
 
     return (
         <View style={styles.profileContainer}>
@@ -21,7 +21,7 @@ const BusinessInfo = (props) => {
                 <TouchableOpacity style={{ flexDirection: "row", marginBottom: 6 }}>
                     <Text style={styles.businessDetails}>{address}</Text>
                     <Text style={styles.businessDetails}> • </Text>
-                    <Text style={styles.businessDetails}>9:00 AM - 10:00 PM</Text>
+                    <Text style={styles.businessDetails}>Open Now</Text>
                 </TouchableOpacity>
                 <View style={{ flexDirection: "row" }}>
                     <Text style={styles.businessDetails}>2.99 Delivery Fee</Text>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     profileTextContainer: {
         flexDirection: "column",
         alignItems: "center",
-        marginTop: -40,
+        marginTop: -80,
         backgroundColor: 'white',
         width: 0.7 * width,
         borderRadius: 5,

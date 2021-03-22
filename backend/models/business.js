@@ -26,6 +26,11 @@ const businessSchema = mongoose.Schema({
         ref: 'Product',
         default: []
     }],
+    categories: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        default: []
+    }],
     dateCreated: {
         type: Date,
         default: Date.now,

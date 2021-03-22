@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
-import { Icon } from 'react-native-elements';
 
 const BusinessCard = (props) => {
-    const { coverImage, name, address } = props.business;
+    const { coverImage, name, rating, address } = props.business;
 
     return (
         <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Business Page', props.business)}>
-             <Image 
+            <Image 
                 style={styles.image}
                 source={{uri: coverImage}}
             />
@@ -15,7 +14,7 @@ const BusinessCard = (props) => {
                 <View style={styles.businessDetailsHeaderRow}>
                     <Text style={styles.title}>{name}</Text>
                     <View style={styles.ratingContainer}>
-                        <Text style={styles.ratingText}>4.7</Text>
+                        <Text style={styles.ratingText}>{rating}</Text>
                     </View>
                 </View>
                 <View style={styles.businessDetailsSubRow}>
