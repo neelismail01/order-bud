@@ -6,17 +6,17 @@ import ItemBottomSheet from '../Item/ItemBottomSheet';
 var { width } = Dimensions.get("window");
 
 const MenuCard = (props) => {
-    const [showAddToCart, setShowAddToCart] = useState(false);
+    const [showItemPage, setShowItemPage] = useState(false);
 
     const { name, image, brand } = props.product;
 
-    const showBottomSheet = () => {
-        setShowAddToCart(!showAddToCart);
+    const handleShowItemPage = () => {
+        setShowItemPage(!showItemPage);
     }
 
     return (
         <View>
-            <TouchableOpacity style={styles.productContainer} onPress={showBottomSheet}>
+            <TouchableOpacity style={styles.productContainer} onPress={handleShowItemPage}>
                 <View style={styles.productDetails}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <Text style={styles.title}>{name}</Text>
@@ -35,8 +35,8 @@ const MenuCard = (props) => {
                 />
             </TouchableOpacity>
             {
-                showAddToCart &&
-                <ItemBottomSheet />
+                showItemPage &&
+                <ItemBottomSheet handleShowItemPage={handleShowItemPage} showItemPage={showItemPage} />
             }
         </View>
     )
