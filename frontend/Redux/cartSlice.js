@@ -29,7 +29,7 @@ export const cartItemsReducer = (state = initialState, action) => {
         case ADD_TO_CART:
             return [...state, action.payload]
         case REMOVE_FROM_CART:
-            return state.filter(cartItem => cartItem.name !== action.payload)
+            return state.filter(cartItem => cartItem.id !== action.payload)
         case CLEAR_CART:
             return state = []
     }

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { View, StyleSheet, Text, ScrollView, Dimensions } from 'react-native';
 
 import MenuCard from './MenuCard'
 
 var { height } = Dimensions.get('window')
-
 
 const BusinessPage = (props) => {
 

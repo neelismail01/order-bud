@@ -19,6 +19,7 @@ const ItemBottomSheet = (props) => {
 
     const handleAddToCart = () => {
         dispatch(addToCart({
+            id: Date.now(),
             name: name,
             price: price,
             quantity: quantity,
