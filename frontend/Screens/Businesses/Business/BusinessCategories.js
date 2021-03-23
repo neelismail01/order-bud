@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
         paddingHorizontal: 20,
         paddingVertical: 7.5,
-        borderRadius: 5,
+        borderRadius: 15,
         backgroundColor: 'rgba(0, 128, 0, 0.75)',
     },
     menuFilterText: {
