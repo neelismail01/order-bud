@@ -14,7 +14,6 @@ import ViewCartButton from "../../../Shared/ViewCartButton";
 
 import CategoryFilter from "./CategoryFilter";
 import BusinessCard from "./BusinessCard";
-import Cart from "../Cart/Cart";
 import HomeFilter from "./HomeFilter";
 
 import baseURL from "../../../assets/common/baseUrl";
@@ -23,22 +22,12 @@ const ProductContainer = (props) => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true)
-  const [showCart, setShowCart] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
-  const cartItems = useSelector(selectCartItems);
-
-  const showBottomSheet = () => {
-    setShowCart(!showCart);
-  }
+  const cart = useSelector(selectCartItems);
 
   const handleFilter = () => {
     setShowFilter(!showFilter);
-  }
-
-  const goToCheckout = () => {
-    setShowCart(!showCart);
-    props.navigation.navigate('Checkout');
   }
 
   useFocusEffect(
@@ -70,11 +59,6 @@ const ProductContainer = (props) => {
       }, [])
   )
 
-  const viewCartBtn = {
-    position: "absolute",
-    bottom: 15
-  }
-
   return (
     <>
       {loading == false ? (
@@ -94,14 +78,10 @@ const ProductContainer = (props) => {
                 )
               })}
             </View>
-            {
-              showCart &&
-              <Cart showBottomSheet={showBottomSheet} showCart={showCart} goToCheckout={goToCheckout}/>
-            }
           </ScrollView>
           {
-            cartItems.length > 0 &&
-            <ViewCartButton parentStyle={viewCartBtn} showBottomSheet={showBottomSheet} />
+            cart.length > 0 &&
+            <ViewCartButton navigation={props.navigation} />
           }
         </SafeAreaView>
       ) : (
