@@ -3,11 +3,24 @@ import { Text, View, TouchableOpacity, Animated, FlatList, StyleSheet, Dimension
 import { Icon, BottomSheet } from 'react-native-elements';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
+import { useDispatch } from 'react-redux';
+import { removeFromCart } from '../../../Redux/cartSlice';
+
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../../../Redux/cartSlice';
 
 const Cart = props => {
+
+    const cartItems = useSelector(selectCartItems);
+    const dispatch = useDispatch();
+
+    const handleDeleteCartItem = (itemName) => {
+        dispatch(removeFromCart(itemName))
+    }
+
     return (
         <BottomSheet
-            isVisible={props.showAddToCart}
+            isVisible={props.showCart}
             containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0)' }}
         >
             <View style={styles.bottomSheet}>
@@ -19,12 +32,12 @@ const Cart = props => {
                 </View>
                 <View style={styles.separator} />
                 <FlatList
-                    data={[{ id: 1, name: "Blue Dream", price: 55.00 }, { id: 2, name: "Jack Herer Pre-Rolls (3-pack)", price: 35.00 }]}
+                    data={cartItems}
                     renderItem={({ item }) => (
                         <Swipeable
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item) => item.name}
                             renderRightActions={() => (
-                                <TouchableOpacity onPress={() => alert("Deleted")}>
+                                <TouchableOpacity onPress={() => handleDeleteCartItem(item.name)}>
                                     <View style={styles.rightAction}>
                                         <Animated.Text style={[styles.actionText]}>Delete</Animated.Text>
                                     </View>
@@ -116,7 +129,7 @@ const styles = StyleSheet.create({
     proceedToCheckout: {
         backgroundColor: "green",
         width: "90%",
-        borderRadius: 30,
+        borderRadius: 5,
         paddingVertical: 15,
         paddingHorizontal: 30,
         marginTop: 25,

@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { View, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, Alert } from "react-native";
+import { View, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView } from "react-native";
 import { Container } from "native-base";
 import { useFocusEffect } from '@react-navigation/native'
 import axios from 'axios';
+
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../../../Redux/cartSlice';
 
 import Header from "../../../Shared/Header";
 import Banner from "../../../Shared/Banner";
@@ -11,22 +14,22 @@ import ViewCartButton from "../../../Shared/ViewCartButton";
 
 import CategoryFilter from "./CategoryFilter";
 import BusinessCard from "./BusinessCard";
-import Cart from "../Cart";
+import Cart from "../Cart/Cart";
 import HomeFilter from "./HomeFilter";
 
 import baseURL from "../../../assets/common/baseUrl";
-
 
 const ProductContainer = (props) => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true)
-  const [showAddToCart, setShowAddToCart] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
-  const [showFilterIcon, setShowFilterIcon] = useState(true);
+
+  const cartItems = useSelector(selectCartItems);
 
   const showBottomSheet = () => {
-    setShowAddToCart(!showAddToCart);
+    setShowCart(!showCart);
   }
 
   const handleFilter = () => {
@@ -34,7 +37,7 @@ const ProductContainer = (props) => {
   }
 
   const goToCheckout = () => {
-    setShowAddToCart(!showAddToCart);
+    showCart(!showCart);
     props.navigation.navigate('Checkout');
   }
 
@@ -81,7 +84,7 @@ const ProductContainer = (props) => {
             <Banner />
             <CategoryFilter categories={categories} />
             <View style={styles.listContainer}>
-              <SearchBar handleFilter={handleFilter} showFilterIcon={showFilterIcon} />
+              <SearchBar handleFilter={handleFilter} showFilterIcon={true} />
               {showFilter &&
                 <HomeFilter showFilter={showFilter} handleFilter={handleFilter} />
               }
@@ -92,11 +95,14 @@ const ProductContainer = (props) => {
               })}
             </View>
             {
-              showAddToCart &&
-              <Cart showBottomSheet={showBottomSheet} showAddToCart={showAddToCart} goToCheckout={goToCheckout}/>
+              showCart &&
+              <Cart showBottomSheet={showBottomSheet} showCart={showCart} goToCheckout={goToCheckout}/>
             }
           </ScrollView>
-          <ViewCartButton parentStyle={viewCartBtn} showBottomSheet={showBottomSheet} />
+          {
+            cartItems.length > 0 &&
+            <ViewCartButton parentStyle={viewCartBtn} showBottomSheet={showBottomSheet} />
+          }
         </SafeAreaView>
       ) : (
           // Loading

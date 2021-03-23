@@ -5,7 +5,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 const AddToCartButton = (props) => {
 
     return (
-        <TouchableOpacity style={styles.addToCart}>
+        <TouchableOpacity style={styles.addToCart} onPress={props.handlePress}>
             <Text style={styles.addToCartText}>Add To Cart</Text>
             <View style={styles.cartPrice}>
                 <Text style={styles.addToCartText}>{`$${props.price * props.quantity}.00`}</Text>

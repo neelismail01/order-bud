@@ -7,10 +7,25 @@ import ItemDetails from './ItemDetails';
 import QuantitySetter from './QuantitySetter';
 import AddToCartButton from './AddToCartButton';
 
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../../Redux/cartSlice';
+
 const ItemBottomSheet = (props) => {
     const [quantity, setQuantity] = useState(1);
 
-    const { image, name, description, brand, price } = props.product;
+    const { image, name, description, brand, price, business } = props.product;
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({
+            name: name,
+            price: price,
+            quantity: quantity,
+            business: business.name
+        }))
+        props.handleShowItemPage();
+    }
 
     const handlePlusCounter = () => {
         setQuantity(quantity + 1);
@@ -31,7 +46,7 @@ const ItemBottomSheet = (props) => {
                 <ItemImage image={image} handleShowItemPage={props.handleShowItemPage} />
                 <ItemDetails name={name} brand={brand} description={description} />
                 <QuantitySetter quantity={quantity} onPlus={handlePlusCounter} onMinus={handleMinusCounter} />
-                <AddToCartButton price={price} quantity={quantity} />
+                <AddToCartButton handlePress={handleAddToCart} price={price} quantity={quantity} />
             </View>
         </BottomSheet>
     )

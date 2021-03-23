@@ -2,19 +2,29 @@ import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { Icon } from 'react-native-elements';
 
+import { useSelector } from 'react-redux';
+import { selectCartItems } from '../Redux/cartSlice';
+
 var { width } = Dimensions.get("window");
 
 const Cart = props => {
+
+    const cartItems = useSelector(selectCartItems);
+
+    const cartSize = cartItems.length;
+    const cartValue = cartItems.map(item => item.price * item.quantity)
+                               .reduce((total, next) => total + next);
+
     return (
         <TouchableOpacity style={[styles.viewCart, props.parentStyle]} onPress={props.showBottomSheet}>
             <View style={styles.cartIcon}>
                 <Icon name="shopping-cart" type="font-awesome-5" color="white" size={22} />
                 <View style={styles.cartNumItemsContainer}>
-                    <Text style={styles.cartNumItems}>2</Text>
+                    <Text style={styles.cartNumItems}>{cartSize}</Text>
                 </View>
             </View>
             <Text style={styles.viewCartText}>View Cart</Text>
-            <Text style={styles.viewCartText}>$90.00</Text>
+            <Text style={styles.viewCartText}>{`$${cartValue}`}</Text>
         </TouchableOpacity>
     )
 }
