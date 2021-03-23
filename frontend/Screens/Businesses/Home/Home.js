@@ -37,7 +37,7 @@ const ProductContainer = (props) => {
   }
 
   const goToCheckout = () => {
-    showCart(!showCart);
+    setShowCart(!showCart);
     props.navigation.navigate('Checkout');
   }
 

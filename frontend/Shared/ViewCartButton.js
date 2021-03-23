@@ -3,17 +3,14 @@ import { Text, View, TouchableOpacity, StyleSheet, Dimensions } from "react-nati
 import { Icon } from 'react-native-elements';
 
 import { useSelector } from 'react-redux';
-import { selectCartItems } from '../Redux/cartSlice';
+import { selectCartValue, selectCartSize } from '../Redux/cartSlice';
 
 var { width } = Dimensions.get("window");
 
 const Cart = props => {
 
-    const cartItems = useSelector(selectCartItems);
-
-    const cartSize = cartItems.length;
-    const cartValue = cartItems.map(item => item.price * item.quantity)
-                               .reduce((total, next) => total + next);
+    const cartValue = useSelector(selectCartValue);
+    const cartSize = useSelector(selectCartSize)
 
     return (
         <TouchableOpacity style={[styles.viewCart, props.parentStyle]} onPress={props.showBottomSheet}>
