@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ScrollView, StyleSheet, SafeAreaView, Modal, Dimensions } from 'react-native';
+import { View, ScrollView, StyleSheet, Modal, Dimensions } from 'react-native';
 
 import { useSelector } from 'react-redux';
 import { selectCartItems } from '../../../Redux/cartSlice';
@@ -33,7 +33,7 @@ const BusinessPage = (props) => {
     const cart = useSelector(selectCartItems);
 
     return (
-        <SafeAreaView>
+        <View>
             <ScrollView>
                 <BusinessInfo businessDetails={businessDetails} />
                 <View style={styles.categoriesContainer}>
@@ -58,7 +58,7 @@ const BusinessPage = (props) => {
                     cartType="Add"
                 />
             </Modal>
-        </SafeAreaView>
+        </View>
     )
 }
 
