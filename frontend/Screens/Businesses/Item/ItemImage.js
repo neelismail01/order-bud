@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
-import { Icon, BottomSheet } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 
 var { height, width } = Dimensions.get("window");
 
@@ -10,7 +10,7 @@ const ItemImage = (props) => {
 
     return (
         <View>
-            <TouchableOpacity style={styles.cartBackBtn} onPress={props.handleShowItemPage}>
+            <TouchableOpacity style={styles.cartBackBtn} onPress={props.handleRemoveItemModal}>
                 <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
             </TouchableOpacity>
             <View style={styles.productImageContainer}>

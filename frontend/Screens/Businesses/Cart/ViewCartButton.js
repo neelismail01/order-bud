@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { Text, View, TouchableOpacity, StyleSheet, Dimensions, Modal } from "react-native";
 import { Icon } from 'react-native-elements';
 
-import Cart from "../Screens/Businesses/Cart/Cart";
+import Cart from "./Cart";
 
 import { useSelector } from 'react-redux';
-import { selectCartValue, selectCartSize } from '../Redux/cartSlice';
+import { selectCartValue, selectCartSize } from '../../../Redux/cartSlice';
 
-var { width } = Dimensions.get("window");
+var { height, width } = Dimensions.get("window");
 
 const ViewCartButton = props => {
     const [showCart, setShowCart] = useState(false);
@@ -15,18 +15,18 @@ const ViewCartButton = props => {
     const cartValue = useSelector(selectCartValue);
     const cartSize = useSelector(selectCartSize);
 
-    const showBottomSheet = () => {
+    const handleShowCartModal = () => {
         setShowCart(!showCart);
     }
 
-    const goToCheckout = () => {
+    const handleGoToCheckout = () => {
         setShowCart(!showCart);
         props.navigation.navigate('Checkout');
     }
 
     return (
         <View>
-            <TouchableOpacity style={styles.viewCart} onPress={showBottomSheet}>
+            <TouchableOpacity style={styles.viewCart} onPress={handleShowCartModal}>
                 <View style={styles.cartIcon}>
                     <Icon name="shopping-cart" type="font-awesome-5" color="white" size={22} />
                     <View style={styles.cartNumItemsContainer}>
@@ -36,10 +36,17 @@ const ViewCartButton = props => {
                 <Text style={styles.viewCartText}>View Cart</Text>
                 <Text style={styles.viewCartText}>{`$${cartValue}`}</Text>
             </TouchableOpacity>
-            {
-                showCart &&
-                <Cart showBottomSheet={showBottomSheet} showCart={showCart} goToCheckout={goToCheckout} />
-            }
+            <Modal
+                visible={showCart}
+                animationType='none'
+                transparent={true}
+            >
+                <View style={styles.modalBackground} />
+                <Cart
+                    handleShowCartModal={handleShowCartModal}
+                    handleGoToCheckout={handleGoToCheckout}
+                />
+            </Modal>
         </View>
     )
 }
@@ -79,6 +86,11 @@ const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: -5,
         marginLeft: -6
+    },
+    modalBackground: {
+        backgroundColor: 'rgba(0, 0, 0, 0.66)',
+        height: height,
+        width: width
     }
 });
 

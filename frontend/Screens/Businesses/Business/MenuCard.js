@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity } from 'react-native';
-
-import ItemBottomSheet from '../Item/ItemBottomSheet';
 
 var { width } = Dimensions.get("window");
 
 const MenuCard = (props) => {
-    const [showItemPage, setShowItemPage] = useState(false);
 
     const { name, image, brand } = props.product;
 
-    const handleShowItemPage = () => {
-        setShowItemPage(!showItemPage);
+    const handlePress = () => {
+        props.handleShowItemModal(props.product)
     }
 
     return (
         <View>
-            <TouchableOpacity style={styles.productContainer} onPress={handleShowItemPage}>
+            <TouchableOpacity style={styles.productContainer} onPress={handlePress}>
                 <View style={styles.productDetails}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
                         <Text style={styles.title}>{name}</Text>
@@ -34,10 +31,6 @@ const MenuCard = (props) => {
                     }}
                 />
             </TouchableOpacity>
-            {
-                showItemPage &&
-                <ItemBottomSheet product={props.product} handleShowItemPage={handleShowItemPage} showItemPage={showItemPage} />
-            }
         </View>
     )
 }

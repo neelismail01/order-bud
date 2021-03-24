@@ -7,7 +7,7 @@ const CartHeader = props => {
     return (
         <View>
             <View style={styles.cartHeaderContainer}>
-                <TouchableOpacity style={styles.cartBackBtn} onPress={props.showBottomSheet}>
+                <TouchableOpacity style={styles.cartBackBtn} onPress={props.handleShowCartModal}>
                     <Icon name="arrow-left" type="font-awesome-5" color="black" size={17.5} />
                 </TouchableOpacity>
                 <Text style={styles.yourOrderHeader}>Your Order</Text>

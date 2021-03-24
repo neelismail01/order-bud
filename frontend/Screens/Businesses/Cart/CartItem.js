@@ -1,11 +1,18 @@
-import React from "react";
-import { Text, View, TouchableOpacity, Animated, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { Text, View, TouchableOpacity, Animated, StyleSheet, Modal, Dimensions } from "react-native";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+
+import ItemBottomSheet from '../Item/ItemBottomSheet';
+
 
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../../../Redux/cartSlice';
 
+var { height, width } = Dimensions.get("window");
+
 const CartItem = props => {
+
+    const [showItemModal, setShowItemModal] = useState(false);
 
     const { item } = props;
 
@@ -15,22 +22,43 @@ const CartItem = props => {
         dispatch(removeFromCart(itemName))
     }
 
+    const handleShowItemModal = (product) => {
+        setShowItemModal(true);
+    }
+
+    const handleRemoveItemModal = () => {
+        setShowItemModal(false);
+    }
+
     return (
-        <Swipeable
-            keyExtractor={(item) => item.name}
-            renderRightActions={() => (
-                <TouchableOpacity onPress={() => handleDeleteCartItem(item.id)}>
-                    <View style={styles.rightAction}>
-                        <Animated.Text style={[styles.actionText]}>Delete</Animated.Text>
-                    </View>
+        <View>
+            <Swipeable
+                keyExtractor={(item) => item.name}
+                renderRightActions={() => (
+                    <TouchableOpacity onPress={() => handleDeleteCartItem(item.id)}>
+                        <View style={styles.rightAction}>
+                            <Animated.Text style={[styles.actionText]}>Delete</Animated.Text>
+                        </View>
+                    </TouchableOpacity>
+                )}
+            >
+                <TouchableOpacity style={styles.itemContainer} onPress={handleShowItemModal}>
+                    <Text style={styles.cartItemText}>{item.name}</Text>
+                    <Text style={styles.cartItemText}>${item.price}</Text>
                 </TouchableOpacity>
-            )}
-        >
-            <View style={styles.itemContainer}>
-                <Text style={styles.cartItemText}>{item.name}</Text>
-                <Text style={styles.cartItemText}>${item.price}</Text>
-            </View>
-        </Swipeable>
+            </Swipeable>
+            <Modal
+                visible={showItemModal}
+                animationType='none'
+                transparent={true}
+            >
+                <ItemBottomSheet
+                    product={item}
+                    quantity={item.quantity}
+                    handleRemoveItemModal={handleRemoveItemModal}
+                />
+            </Modal>
+        </View>
     )
 }
 

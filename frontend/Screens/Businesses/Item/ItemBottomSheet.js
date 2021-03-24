@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native';
-import { BottomSheet } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
 
 import ItemImage from './ItemImage';
 import ItemDetails from './ItemDetails';
@@ -11,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../Redux/cartSlice';
 
 const ItemBottomSheet = (props) => {
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(props.quantity ? props.quantity : 1);
 
     const { image, name, description, brand, price, business } = props.product;
 
@@ -20,12 +19,15 @@ const ItemBottomSheet = (props) => {
     const handleAddToCart = () => {
         dispatch(addToCart({
             id: Date.now(),
+            image: image,
             name: name,
+            brand: brand,
+            description,
             price: price,
             quantity: quantity,
             business: business.name
         }))
-        props.handleShowItemPage();
+        props.handleRemoveItemModal();
     }
 
     const handlePlusCounter = () => {
@@ -39,25 +41,26 @@ const ItemBottomSheet = (props) => {
     }
 
     return (
-        <BottomSheet
-            isVisible={props.showItemPage}
-            containerStyle={{ backgroundColor: 'rgba(0.5, 0.25, 0, 0)' }}
-        >
-            <View style={styles.container}>
-                <ItemImage image={image} handleShowItemPage={props.handleShowItemPage} />
-                <ItemDetails name={name} brand={brand} description={description} />
-                <QuantitySetter quantity={quantity} onPlus={handlePlusCounter} onMinus={handleMinusCounter} />
-                <AddToCartButton handlePress={handleAddToCart} price={price} quantity={quantity} />
-            </View>
-        </BottomSheet>
+        <View style={styles.container}>
+            <ItemImage image={image} handleRemoveItemModal={props.handleRemoveItemModal} />
+            <ItemDetails name={name} brand={brand} description={description} />
+            <QuantitySetter quantity={quantity} onPlus={handlePlusCounter} onMinus={handleMinusCounter} />
+            <AddToCartButton handlePress={handleAddToCart} price={price} quantity={quantity} />
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
-        alignItems: "center"
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        position: "absolute",
+        bottom: 2,
+        width: "100%",
+        alignItems: "center",
+        paddingBottom: 40
     }
-})
+});
 
 export default ItemBottomSheet;

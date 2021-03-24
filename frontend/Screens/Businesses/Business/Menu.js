@@ -1,12 +1,10 @@
 import React from 'react'
-import { View, StyleSheet, Text, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
 
-import MenuCard from './MenuCard'
+import MenuCard from './MenuCard';
 
-var { height } = Dimensions.get('window')
-
-const BusinessPage = (props) => {
-
+const Menu = (props) => {
+    
     return (
         <ScrollView>
             <View style={styles.listContainer}>
@@ -21,7 +19,7 @@ const BusinessPage = (props) => {
                                     <View>
                                         {
                                             product.category.name === category.name &&
-                                            <MenuCard product={product} />
+                                            <MenuCard product={product} handleShowItemModal={props.handleShowItemModal} />
                                         }
                                     </View>
                                 );
@@ -55,46 +53,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginLeft: 25,
         marginTop: 10
-    },
-    addToCartBackBtn: {
-        backgroundColor: "white",
-        height: 50,
-        width: 50,
-        borderRadius: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-        elevation: 10
-    },
-    bottomSheet: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
-        height: height
-    },
-    separator: {
-        backgroundColor: "grey",
-        height: 1,
-        marginVertical: 15
-    },
-    itemDetailsContainer: {
-        alignItems: "center"
-    },
-    itemName: {
-        fontSize: 32,
-        fontWeight: "bold",
-        marginBottom: 15
-    },
-    itemDescription: {
-        fontSize: 17,
-        color: "grey",
-    },
-    itemImage: {
-        height: "30%",
-        width: "50%",
-        marginBottom: 10,
-        justifyContent: "center"
     }
 })
 
-export default BusinessPage;
+export default Menu;

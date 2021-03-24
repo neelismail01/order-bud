@@ -10,11 +10,11 @@ import { selectCartItems } from '../../../Redux/cartSlice';
 import Header from "../../../Shared/Header";
 import Banner from "../../../Shared/Banner";
 import SearchBar from "../../../Shared/SearchBar";
-import ViewCartButton from "../../../Shared/ViewCartButton";
 
 import CategoryFilter from "./CategoryFilter";
 import BusinessCard from "./BusinessCard";
 import HomeFilter from "./HomeFilter";
+import ViewCartButton from "../Cart/ViewCartButton";
 
 import baseURL from "../../../assets/common/baseUrl";
 

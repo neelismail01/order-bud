@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, StyleSheet } from "react-native";
 const ProceedToCheckoutButton = props => {
 
     return (
-        <TouchableOpacity style={styles.checkoutBtn} onPress={props.goToCheckout}>
+        <TouchableOpacity style={styles.checkoutBtn} onPress={props.handleGoToCheckout}>
             <Text style={styles.viewCartText}>Proceed To Checkout</Text>
         </TouchableOpacity>
     )
