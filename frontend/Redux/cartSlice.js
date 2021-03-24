@@ -37,10 +37,7 @@ export const cartItemsReducer = (state = initialState, action) => {
             return [...state, action.payload]
         case UPDATE_ITEM_QUANTITY:
             return state.map(cartItem => {
-                console.log(`payload quantity: ${action.payload.quantity}`)
-
                 if (cartItem.id === action.payload.id) {
-                    console.log("MATCH")
                     return {
                         ...cartItem,
                         ...action.payload

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Animated, StyleSheet, Modal, Dimensions } from "react-native";
+import { Text, View, TouchableOpacity, Animated, StyleSheet, Modal } from "react-native";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 import ItemBottomSheet from '../Item/ItemBottomSheet';
@@ -7,8 +7,6 @@ import ItemBottomSheet from '../Item/ItemBottomSheet';
 
 import { useDispatch } from 'react-redux';
 import { removeFromCart } from '../../../Redux/cartSlice';
-
-var { height, width } = Dimensions.get("window");
 
 const CartItem = props => {
 
@@ -43,8 +41,18 @@ const CartItem = props => {
                 )}
             >
                 <TouchableOpacity style={styles.itemContainer} onPress={handleShowItemModal}>
-                    <Text style={styles.cartItemText}>{item.name}</Text>
-                    <Text style={styles.cartItemText}>${item.price}</Text>
+                    <View style={styles.quantityContainer}>
+                        <View style={styles.quantity}>
+                            <Text style={styles.quantityText}>{item.quantity}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.itemNameContainer}>
+                        <Text style={styles.cartItemText}>{item.name}</Text>
+                    </View>
+                    <View style={styles.priceContainer}>
+                        <Text style={styles.cartItemText}>${item.price * item.quantity}</Text>
+                    </View>
+                    
                 </TouchableOpacity>
             </Swipeable>
             <Modal
@@ -67,15 +75,10 @@ const CartItem = props => {
 const styles = StyleSheet.create({
     itemContainer: {
         flexDirection: "row",
-        marginVertical: 2.5,
+        marginVertical: 5,
         width: "100%",
-        backgroundColor: "#f2f2f2",
+        backgroundColor: "white",
         justifyContent: "space-between",
-        paddingVertical: 15,
-        paddingHorizontal: 20
-    },
-    cartItemText: {
-        fontSize: 16
     },
     rightAction: {
         backgroundColor: "red",
@@ -89,6 +92,40 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "bold",
         fontSize: 16
+    },
+    quantityContainer: {
+        width: "10%",
+        alignItems: "flex-start",
+        justifyContent: "center",
+        paddingVertical: 10
+    },
+    quantity: {
+        backgroundColor: "black",
+        height: 28,
+        width: 28,
+        borderRadius: 2.5,
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 5
+    },
+    quantityText: {
+        fontSize: 16,
+        color: "white",
+        fontWeight: "bold"
+    },
+    itemNameContainer: {
+        width: "70%",
+        justifyContent: "center",
+        paddingVertical: 10
+    },
+    priceContainer: {
+        width: "10%",
+        justifyContent: "center",
+        alignItems: "flex-end",
+        paddingVertical: 10
+    },
+    cartItemText: {
+        fontSize: 18
     }
 });
 

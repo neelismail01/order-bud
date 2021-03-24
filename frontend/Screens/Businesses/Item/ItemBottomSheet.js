@@ -17,6 +17,7 @@ const ItemBottomSheet = (props) => {
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
+        console.log(business)
         if (props.cartType === "Add") {
             dispatch(addToCart({
                 id: Date.now(),
@@ -29,6 +30,7 @@ const ItemBottomSheet = (props) => {
                 business: business.name
             }))
         } else {
+            console.log(business)
             dispatch(updateItemQuantity({
                 id: props.product.id,
                 image: image,
@@ -37,7 +39,7 @@ const ItemBottomSheet = (props) => {
                 description,
                 price: price,
                 quantity: quantity,
-                business: business.name
+                business: business
             }))
         }
         props.handleRemoveItemModal();

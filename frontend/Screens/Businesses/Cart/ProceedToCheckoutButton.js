@@ -1,11 +1,19 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
+import { useSelector } from 'react-redux';
+import { selectCartValue } from '../../../Redux/cartSlice';
+
 const ProceedToCheckoutButton = props => {
+
+    const cartValue = useSelector(selectCartValue);
+
 
     return (
         <TouchableOpacity style={styles.checkoutBtn} onPress={props.handleGoToCheckout}>
             <Text style={styles.viewCartText}>Proceed To Checkout</Text>
+            <Text style={styles.viewCartText}>·</Text>
+            <Text style={styles.viewCartText}>{`$${cartValue}`}</Text>
         </TouchableOpacity>
     )
 }
