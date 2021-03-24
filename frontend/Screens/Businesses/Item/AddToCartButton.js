@@ -6,7 +6,13 @@ const AddToCartButton = (props) => {
 
     return (
         <TouchableOpacity style={styles.addToCart} onPress={props.handlePress}>
-            <Text style={styles.addToCartText}>Add To Cart</Text>
+            {
+                props.cartType === "Update"
+                ?
+                <Text style={styles.addToCartText}>Update Cart</Text>
+                :
+                <Text style={styles.addToCartText}>Add To Cart</Text>
+            }
             <View style={styles.cartPrice}>
                 <Text style={styles.addToCartText}>{`$${props.price * props.quantity}.00`}</Text>
             </View>

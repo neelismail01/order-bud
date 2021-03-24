@@ -7,7 +7,7 @@ import QuantitySetter from './QuantitySetter';
 import AddToCartButton from './AddToCartButton';
 
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../../Redux/cartSlice';
+import { addToCart, updateItemQuantity } from '../../../Redux/cartSlice';
 
 const ItemBottomSheet = (props) => {
     const [quantity, setQuantity] = useState(props.quantity ? props.quantity : 1);
@@ -17,16 +17,29 @@ const ItemBottomSheet = (props) => {
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
-        dispatch(addToCart({
-            id: Date.now(),
-            image: image,
-            name: name,
-            brand: brand,
-            description,
-            price: price,
-            quantity: quantity,
-            business: business.name
-        }))
+        if (props.cartType === "Add") {
+            dispatch(addToCart({
+                id: Date.now(),
+                image: image,
+                name: name,
+                brand: brand,
+                description,
+                price: price,
+                quantity: quantity,
+                business: business.name
+            }))
+        } else {
+            dispatch(updateItemQuantity({
+                id: props.product.id,
+                image: image,
+                name: name,
+                brand: brand,
+                description,
+                price: price,
+                quantity: quantity,
+                business: business.name
+            }))
+        }
         props.handleRemoveItemModal();
     }
 
@@ -45,7 +58,7 @@ const ItemBottomSheet = (props) => {
             <ItemImage image={image} handleRemoveItemModal={props.handleRemoveItemModal} />
             <ItemDetails name={name} brand={brand} description={description} />
             <QuantitySetter quantity={quantity} onPlus={handlePlusCounter} onMinus={handleMinusCounter} />
-            <AddToCartButton handlePress={handleAddToCart} price={price} quantity={quantity} />
+            <AddToCartButton handlePress={handleAddToCart} price={price} quantity={quantity} cartType={props.cartType} />
         </View>
     )
 }
@@ -53,8 +66,8 @@ const ItemBottomSheet = (props) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
         position: "absolute",
         bottom: 2,
         width: "100%",

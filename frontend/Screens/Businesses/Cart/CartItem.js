@@ -56,6 +56,7 @@ const CartItem = props => {
                     product={item}
                     quantity={item.quantity}
                     handleRemoveItemModal={handleRemoveItemModal}
+                    cartType="Update"
                 />
             </Modal>
         </View>

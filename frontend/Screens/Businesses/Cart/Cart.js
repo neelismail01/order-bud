@@ -11,6 +11,7 @@ import { selectCartItems } from '../../../Redux/cartSlice';
 const Cart = props => {
 
     const cartItems = useSelector(selectCartItems);
+    console.log(cartItems);
 
     return (
         <View style={styles.bottomSheet}>

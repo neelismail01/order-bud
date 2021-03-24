@@ -55,6 +55,7 @@ const BusinessPage = (props) => {
                     product={product}
                     quantity={null}
                     handleRemoveItemModal={handleRemoveItemModal}
+                    cartType="Add"
                 />
             </Modal>
         </SafeAreaView>
