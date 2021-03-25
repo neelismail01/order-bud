@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
         width: width
     },
     categoriesContainer: {
-        alignItems: "center",
         backgroundColor: "white",
         paddingLeft: 15
     }

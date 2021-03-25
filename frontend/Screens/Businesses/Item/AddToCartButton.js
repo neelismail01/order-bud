@@ -14,7 +14,7 @@ const AddToCartButton = (props) => {
                 <Text style={styles.addToCartText}>Add To Cart</Text>
             }
             <View style={styles.cartPrice}>
-                <Text style={styles.addToCartText}>{`$${props.price * props.quantity}.00`}</Text>
+                <Text style={styles.addToCartText}>{`$${(props.price * props.quantity).toFixed(2)}`}</Text>
             </View>
         </TouchableOpacity>
     )

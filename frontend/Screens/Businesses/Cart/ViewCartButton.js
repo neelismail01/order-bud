@@ -34,7 +34,7 @@ const ViewCartButton = props => {
                     </View>
                 </View>
                 <Text style={styles.viewCartText}>View Cart</Text>
-                <Text style={styles.viewCartText}>{`$${cartValue}`}</Text>
+                <Text style={styles.viewCartText}>{`$${cartValue.toFixed(2)}`}</Text>
             </TouchableOpacity>
             <Modal
                 visible={showCart}
@@ -79,9 +79,9 @@ const styles = StyleSheet.create({
     },
     cartNumItemsContainer: {
         backgroundColor: "white",
-        height: 18,
-        width: 18,
-        borderRadius: 9,
+        height: 20,
+        width: 20,
+        borderRadius: 10,
         justifyContent: "center",
         alignItems: "center",
         marginTop: -5,
