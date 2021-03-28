@@ -8,14 +8,14 @@ const Login = (props) => {
         <View style={styles.container}>
             <SafeAreaView style={styles.safeContainer}>
                 <View style={styles.headerContainer}>
-                    <Text style={styles.headerText}>OrderBud</Text>
+                    <Text style={styles.headerText}>Welcome Back</Text>
+                    <Text style={styles.welcomeText}>Sign in to continue</Text>
                 </View>
                 <View style={styles.bodyContainer}>
-                <Text style={styles.welcomeText}>Welcome Back</Text>
                     <View style={styles.mainContainer}>
                         <View style={styles.inputContainer}>
                             <TextInput style={styles.input} placeholder="Email" />
-                            <TextInput style={styles.input} placeholder="Password" />
+                            <TextInput style={styles.input} placeholder="Name" />
                         </View>
                         <TouchableOpacity style={styles.loginButton}>
                             <Text style={styles.loginText}>Login</Text>
@@ -35,7 +35,7 @@ const Login = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "green",
+        backgroundColor: "white",
     },
     safeContainer: {
         height: height,
@@ -43,12 +43,16 @@ const styles = StyleSheet.create({
     headerContainer: {
         height: "25%",
         justifyContent: "center",
-        alignItems: "center"
+        padding: 20
     },
     headerText: {
-        fontSize: 56,
+        fontSize: 40,
         fontWeight: "bold",
-        color: "white",
+    },
+    welcomeText: {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: "grey"
     },
     bodyContainer: {
         justifyContent: "flex-start",
@@ -64,19 +68,16 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
     },
-    welcomeText: {
-        fontSize: 32,
-        fontWeight: "bold"
-    },
     inputContainer: {
         marginVertical: 25,
         width: "100%"
     },
     input: {
         width: '100%',
-        backgroundColor: "#ededed",
+        backgroundColor: "white",
+        borderBottomWidth: 2.5,
+        borderBottomColor: "green",
         borderRadius: 5,
-        paddingHorizontal: 20,
         paddingVertical: 20,
         fontSize: 18,
         marginVertical: 15,
