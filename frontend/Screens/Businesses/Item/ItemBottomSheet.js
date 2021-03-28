@@ -75,7 +75,7 @@ const ItemBottomSheet = (props) => {
         if (response === 'cancel') {
             setShowDisclaimer(false);
         } else {
-            dispatch(clearCart);
+            dispatch(clearCart());
             dispatch(addToCart({
                 id: Date.now(),
                 image: image,
@@ -86,6 +86,8 @@ const ItemBottomSheet = (props) => {
                 quantity: quantity,
                 business: business.name
             }))
+            setShowDisclaimer(false);
+            props.handleRemoveItemModal();
         }
     }
 
