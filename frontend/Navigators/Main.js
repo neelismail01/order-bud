@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
 import { Icon } from 'react-native-elements'
 
 // Stacks
 import HomeNavigator from "./HomeNavigator";
-import CartNavigator from "./CartNavigator";
+import OrdersNavigator from "./OrdersNavigator";
 import LearnNavigator from "./LearnNavigator";
 import UserNavigator from "./UserNavigator";
 import AdminNavigator from "./AdminNavigator";
@@ -36,8 +36,8 @@ const Main = () => {
         }}
       />
       <Tab.Screen
-        name="Cart"
-        component={CartNavigator}
+        name="Orders"
+        component={OrdersNavigator}
         options={{
           tabBarIcon: ({ color }) => (
             <View>
