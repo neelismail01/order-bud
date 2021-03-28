@@ -1,10 +1,11 @@
 import React, { useState, useCallback } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, TouchableOpacity, Dimensions } from "react-native";
 import { Container } from "native-base";
-
 
 import OrderCard from './OrderCard';
 import FriendOrderCard from './FriendOrderCard';
+
+var { height } = Dimensions.get("window");
 
 const Orders = (props) => {
   const [loading, setLoading] = useState(false);
@@ -17,57 +18,59 @@ const Orders = (props) => {
   return (
     <>
       {loading == false ? (
-        <View>
-          <ScrollView>
-            { myOrdersToggle ?
-            <View>
-                <View style={styles.headerContainer}>
+        <View style={styles.container}>
+          <SafeAreaView>
+            <ScrollView>
+              {myOrdersToggle ?
+                <View>
+                  <View style={styles.headerContainer}>
                     <Text style={styles.title}>Orders</Text>
                     <View style={styles.ordersToggle}>
-                        <TouchableOpacity style={styles.myOrdersSelected}>
-                            <Text style={styles.ordersToggleSelected}>My Orders</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.friendsOrderUnSelected}>
-                            <Text style={styles.ordersToggleUnSelected}>Friend Orders</Text>
-                        </TouchableOpacity>
+                      <TouchableOpacity style={styles.myOrdersSelected}>
+                        <Text style={styles.ordersToggleSelected}>My Orders</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.friendsOrderUnSelected}>
+                        <Text style={styles.ordersToggleUnSelected}>Friend Orders</Text>
+                      </TouchableOpacity>
                     </View>
+                  </View>
+                  <View style={{ backgroundColor: "white", marginTop: 10 }}>
+                    <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Current</Text>
+                    <OrderCard />
+                  </View>
+                  <View style={{ backgroundColor: "white", marginTop: 10 }}>
+                    <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Completed</Text>
+                    <OrderCard />
+                    <OrderCard />
+                    <OrderCard />
+                    <OrderCard />
+                    <OrderCard />
+                  </View>
                 </View>
-                <View style={{backgroundColor: "white", marginTop: 10}}>
-                    <Text style={{fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15}}>Current</Text>
-                    <OrderCard />
-                </View>
-                <View style={{backgroundColor: "white", marginTop: 10}}>
-                    <Text style={{fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15}}>Completed</Text>
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                </View>
-            </View>
-            :
-            <View>
-                <View style={styles.headerContainer}>
+                :
+                <View>
+                  <View style={styles.headerContainer}>
                     <Text style={styles.title}>Orders</Text>
                     <View style={styles.ordersToggle}>
-                        <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.myOrdersUnSelected}>
-                            <Text style={styles.ordersToggleUnSelected}>My Orders</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.friendsOrderSelected}>
-                            <Text style={styles.ordersToggleSelected}>Friend Orders</Text>
-                        </TouchableOpacity>
+                      <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.myOrdersUnSelected}>
+                        <Text style={styles.ordersToggleUnSelected}>My Orders</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.friendsOrderSelected}>
+                        <Text style={styles.ordersToggleSelected}>Friend Orders</Text>
+                      </TouchableOpacity>
                     </View>
+                  </View>
+                  <View style={{ backgroundColor: "white", marginTop: 20 }}>
+                    <FriendOrderCard />
+                    <FriendOrderCard />
+                    <FriendOrderCard />
+                    <FriendOrderCard />
+                    <FriendOrderCard />
+                  </View>
                 </View>
-                <View style={{backgroundColor: "white", marginTop: 20}}>
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                </View>
-            </View>
-            }
-          </ScrollView>
+              }
+            </ScrollView>
+          </SafeAreaView>
         </View>
       ) : (
           // Loading
@@ -80,6 +83,10 @@ const Orders = (props) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "white",
+    height: height
+  },
   headerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -89,7 +96,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 34,
     fontWeight: "bold",
-    marginTop: 65
+    marginTop: 15
   },
   ordersToggle: {
     flexDirection: "row",
