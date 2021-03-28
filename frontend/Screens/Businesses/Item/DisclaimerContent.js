@@ -19,10 +19,16 @@ const Disclaimer = (props) => {
             </Text>
             </View>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={props.handleCloseDisclaimer}>
+                <TouchableOpacity
+                    style={[styles.button, styles.cancelButton]}
+                    onPress={() => props.handleCloseDisclaimer("cancel")}
+                >
                     <Text style={[styles.buttonText, styles.cancelText]}>CANCEL</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button]}>
+                <TouchableOpacity
+                    style={[styles.button]}
+                    onPress={() => props.handleCloseDisclaimer("new")}
+                >
                     <Text style={[styles.buttonText, styles.newCartText]}>NEW CART</Text>
                 </TouchableOpacity>
             </View>

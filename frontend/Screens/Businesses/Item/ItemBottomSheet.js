@@ -8,7 +8,7 @@ import AddToCartButton from './AddToCartButton';
 import Disclaimer from './Disclaimer';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart, updateItemQuantity, selectCartItems } from '../../../Redux/cartSlice';
+import { addToCart, updateItemQuantity, selectCartItems, clearCart } from '../../../Redux/cartSlice';
 
 const ItemBottomSheet = (props) => {
     const [quantity, setQuantity] = useState(props.quantity ? props.quantity : 1);
@@ -71,8 +71,22 @@ const ItemBottomSheet = (props) => {
         }
     }
 
-    const handleCloseDisclaimer = () => {
-        setShowDisclaimer(false);
+    const handleCloseDisclaimer = (response) => {
+        if (response === 'cancel') {
+            setShowDisclaimer(false);
+        } else {
+            dispatch(clearCart);
+            dispatch(addToCart({
+                id: Date.now(),
+                image: image,
+                name: name,
+                brand: brand,
+                description,
+                price: price,
+                quantity: quantity,
+                business: business.name
+            }))
+        }
     }
 
     return (
