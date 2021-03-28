@@ -1,31 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, SafeAreaView, TextInput, StyleSheet, Dimensions, Text, TouchableOpacity, Touchable } from "react-native";
 
-var { height, width } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 
 const Login = (props) => {
+    const [page, setPage] = useState('Register');
+    const [emailFocus, setEmailFocus] = useState(false);
+    const [nameFocus, setNameFocus] = useState(false);
+    const [passwordFocus, setPasswordFocus] = useState(false);
+    const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false);
+
     return (
-        <View style={styles.container}>
+        <View
+            style={styles.container}
+        >
             <SafeAreaView style={styles.safeContainer}>
                 <View style={styles.headerContainer}>
-                    <Text style={styles.headerText}>Welcome Back</Text>
-                    <Text style={styles.welcomeText}>Sign in to continue</Text>
+                    <Text style={styles.header}>Welcome To OrderBud</Text>
+                    <Text style={styles.subHeader}>Order weed from top dispensaries near you.</Text>
                 </View>
                 <View style={styles.bodyContainer}>
-                    <View style={styles.mainContainer}>
-                        <View style={styles.inputContainer}>
-                            <TextInput style={styles.input} placeholder="Email" />
-                            <TextInput style={styles.input} placeholder="Name" />
-                        </View>
-                        <TouchableOpacity style={styles.loginButton}>
-                            <Text style={styles.loginText}>Login</Text>
+                    <View style={styles.buttonGroupContainer}>
+                        <TouchableOpacity
+                            style={[styles.button, page === 'Register' && styles.highlightedContainer]}
+                            onPress={() => setPage('Register')}
+                        >
+                            <Text style={[styles.buttonGroupText, page === 'Register' && styles.highlightedText]}>Register</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={[styles.button, page === 'Login' && styles.highlightedContainer]}
+                            onPress={() => setPage('Login')}
+                        >
+                            <Text style={[styles.buttonGroupText, page === 'Login' && styles.highlightedText]}>Login</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.registerContainer}>
-                        <TouchableOpacity style={styles.registerLinkContainer} onPress={() => props.navigation.navigate('Register')}>
-                            <Text style={styles.registerLinkText}>Register</Text>
-                        </TouchableOpacity>
+                    <View style={styles.inputContainer}>
+                        <TextInput
+                            style={[styles.textInput, emailFocus && styles.focusInputStyle]}
+                            placeholder="Email"
+                            onFocus={() => setEmailFocus(true)}
+                            onBlur={() => setEmailFocus(false)}
+                        />
+                        {
+                            page === 'Register' &&
+                            <TextInput
+                                style={[styles.textInput, nameFocus && styles.focusInputStyle]}
+                                placeholder="Name"
+                                onFocus={() => setNameFocus(true)}
+                                onBlur={() => setNameFocus(false)}
+                            />
+                        }
+                        <TextInput
+                            style={[styles.textInput, passwordFocus && styles.focusInputStyle]}
+                            placeholder="Password"
+                            onFocus={() => setPasswordFocus(true)}
+                            onBlur={() => setPasswordFocus(false)}
+                        />
+                        {
+                            page === 'Register' &&
+                            <TextInput
+                                style={[styles.textInput, confirmPasswordFocus && styles.focusInputStyle]}
+                                placeholder="Confirm Password"
+                                onFocus={() => setConfirmPasswordFocus(true)}
+                                onBlur={() => setConfirmPasswordFocus(false)}
+                            />
+                        }
                     </View>
+                    <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.buttonText}>{page === 'Login' ? 'Login' : 'Create Account'}</Text>
+                    </TouchableOpacity>
                 </View>
             </SafeAreaView>
         </View>
@@ -35,85 +78,88 @@ const Login = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "white",
+        height: height,
+        backgroundColor: "white"
     },
     safeContainer: {
-        height: height,
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
     },
     headerContainer: {
-        height: "25%",
-        justifyContent: "center",
-        padding: 20
+        marginBottom: 20,
+        paddingHorizontal: 20
     },
-    headerText: {
-        fontSize: 40,
+    header: {
+        fontSize: 36,
         fontWeight: "bold",
+        color: "green",
     },
-    welcomeText: {
-        fontSize: 24,
+    subHeader: {
+        color: "grey",
+        fontSize: 22,
         fontWeight: "bold",
-        color: "grey"
+        marginTop: 10
     },
     bodyContainer: {
-        justifyContent: "flex-start",
-        backgroundColor: "white",
-        borderTopRightRadius: 5,
-        borderTopLeftRadius: 5,
-        width: width,
-        height: "75%",
-        padding: 20,
-    },
-    mainContainer: {
-        height: "70%",
-        width: "100%",
+        width: "95%",
+        justifyContent: "center",
         alignItems: "center",
+        padding: 20,
+        borderRadius: 5,
     },
-    inputContainer: {
-        marginVertical: 25,
+    buttonGroupContainer: {
+        flexDirection: "row",
+        borderColor: "green",
+        borderWidth: 2,
+        borderRadius: 5,
         width: "100%"
     },
-    input: {
-        width: '100%',
-        backgroundColor: "white",
-        borderBottomWidth: 2.5,
-        borderBottomColor: "green",
-        borderRadius: 5,
-        paddingVertical: 20,
+    button: {
+        width: "50%",
+        padding: 20,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    buttonGroupText: {
         fontSize: 18,
-        marginVertical: 15,
+        fontWeight: "bold",
     },
-    loginButton: {
-        width: "100%",
-        borderRadius: 5,
-        paddingVertical: 20,
-        paddingHorizontal: 15,
+    highlightedContainer: {
         backgroundColor: "green",
-        justifyContent: "center",
-        alignItems: "center",
     },
-    loginText: {
-        fontSize: 22,
-        color: "white",
-        fontWeight: "bold"
+    highlightedText: {
+        color: "white"
     },
-    registerContainer: {
-        height: "30%",
+    inputContainer: {
         width: "100%",
-        alignItems: "center",
+        marginVertical: 30
     },
-    registerLinkContainer: {
-        width: "100%",
+    textInput: {
+        marginVertical: 10,
+        height: 50,
         borderRadius: 5,
-        paddingVertical: 20,
-        paddingHorizontal: 15,
-        borderWidth: 1,
+        borderColor: "#e6e6e6",
+        borderWidth: 2,
+        width: "100%",
+        paddingHorizontal: 20,
+        fontSize: 18
+    },
+    focusInputStyle: {
         borderColor: "green",
+        borderWidth: 2
+    },
+    buttonContainer: {
+        backgroundColor: "green",
+        padding: 20,
+        width: "100%",
         justifyContent: "center",
         alignItems: "center",
+        borderRadius: 5
     },
-    registerLinkText: {
-        fontSize: 22,
-        color: "green",
+    buttonText: {
+        color: "white",
+        fontSize: 20,
         fontWeight: "bold"
     }
 })

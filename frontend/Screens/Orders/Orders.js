@@ -16,70 +16,59 @@ const Orders = (props) => {
   }
 
   return (
-    <>
-      {loading == false ? (
-        <View style={styles.container}>
-          <SafeAreaView style={styles.safeContainer}>
-            <ScrollView>
-              {myOrdersToggle ?
-                <View>
-                  <View style={styles.headerContainer}>
-                    <Text style={styles.title}>Orders</Text>
-                    <View style={styles.ordersToggle}>
-                      <TouchableOpacity style={styles.myOrdersSelected}>
-                        <Text style={styles.ordersToggleSelected}>My Orders</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.friendsOrderUnSelected}>
-                        <Text style={styles.ordersToggleUnSelected}>Friend Orders</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={{ backgroundColor: "white", marginTop: 10 }}>
-                    <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Current</Text>
-                    <OrderCard />
-                  </View>
-                  <View style={{ backgroundColor: "white", marginTop: 10 }}>
-                    <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Completed</Text>
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                    <OrderCard />
-                  </View>
+    <View style={styles.container}>
+      <SafeAreaView>
+        <ScrollView>
+          {myOrdersToggle ?
+            <View>
+              <View style={styles.headerContainer}>
+                <View style={styles.ordersToggle}>
+                  <TouchableOpacity style={styles.myOrdersSelected}>
+                    <Text style={styles.ordersToggleSelected}>My Orders</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.friendsOrderUnSelected}>
+                    <Text style={styles.ordersToggleUnSelected}>Friend Orders</Text>
+                  </TouchableOpacity>
                 </View>
-                :
-                <View>
-                  <View style={styles.headerContainer}>
-                    <Text style={styles.title}>Orders</Text>
-                    <View style={styles.ordersToggle}>
-                      <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.myOrdersUnSelected}>
-                        <Text style={styles.ordersToggleUnSelected}>My Orders</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.friendsOrderSelected}>
-                        <Text style={styles.ordersToggleSelected}>Friend Orders</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  <View style={{ backgroundColor: "white", marginTop: 20 }}>
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                    <FriendOrderCard />
-                  </View>
+              </View>
+              <View style={{ backgroundColor: "white", marginTop: 10 }}>
+                <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Current</Text>
+                <OrderCard />
+              </View>
+              <View style={{ backgroundColor: "white", marginTop: 10 }}>
+                <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Completed</Text>
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+              </View>
+            </View>
+            :
+            <View>
+              <View style={styles.headerContainer}>
+                <View style={styles.ordersToggle}>
+                  <TouchableOpacity onPress={handleMyOrdersToggle} style={styles.myOrdersUnSelected}>
+                    <Text style={styles.ordersToggleUnSelected}>My Orders</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.friendsOrderSelected}>
+                    <Text style={styles.ordersToggleSelected}>Friend Orders</Text>
+                  </TouchableOpacity>
                 </View>
-              }
-            </ScrollView>
-          </SafeAreaView>
-        </View>
-      ) : (
-          // Loading
-          <Container style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
-            <ActivityIndicator size="large" color="green" />
-          </Container>
-        )}
-    </>
-  );
+              </View>
+              <View style={{ backgroundColor: "white", marginTop: 20 }}>
+                <FriendOrderCard />
+                <FriendOrderCard />
+                <FriendOrderCard />
+                <FriendOrderCard />
+                <FriendOrderCard />
+              </View>
+            </View>
+          }
+        </ScrollView>
+      </SafeAreaView>
+    </View>
+  )
 };
 
 const styles = StyleSheet.create({
@@ -87,19 +76,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: height
   },
-  safeContainer: {
-
-  },
   headerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: "white",
     paddingBottom: 15
-  },
-  title: {
-    fontSize: 34,
-    fontWeight: "bold",
-    marginTop: 15
   },
   ordersToggle: {
     flexDirection: "row",
