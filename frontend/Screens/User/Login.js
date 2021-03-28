@@ -3,12 +3,29 @@ import { View, SafeAreaView, TextInput, StyleSheet, Dimensions, Text, TouchableO
 
 const { height } = Dimensions.get("window");
 
-const Login = (props) => {
+const Login = () => {
     const [page, setPage] = useState('Register');
     const [emailFocus, setEmailFocus] = useState(false);
     const [nameFocus, setNameFocus] = useState(false);
     const [passwordFocus, setPasswordFocus] = useState(false);
     const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false);
+
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    const handleTabSwitch = () => {
+        setPage('Register');
+        setEmailFocus(true);
+        setNameFocus(false);
+        setPasswordFocus(false);
+        setConfirmPasswordFocus(false);
+    }
+
+    const handleSubmit = () => {
+        console.log("hello");
+    }
 
     return (
         <View
@@ -23,7 +40,7 @@ const Login = (props) => {
                     <View style={styles.buttonGroupContainer}>
                         <TouchableOpacity
                             style={[styles.button, page === 'Register' && styles.highlightedContainer]}
-                            onPress={() => setPage('Register')}
+                            onPress={handleTabSwitch}
                         >
                             <Text style={[styles.buttonGroupText, page === 'Register' && styles.highlightedText]}>Register</Text>
                         </TouchableOpacity>
@@ -37,36 +54,58 @@ const Login = (props) => {
                     <View style={styles.inputContainer}>
                         <TextInput
                             style={[styles.textInput, emailFocus && styles.focusInputStyle]}
+                            name="email"
+                            value={email}
+                            onChangeText={text => setEmail(text)}
                             placeholder="Email"
                             onFocus={() => setEmailFocus(true)}
                             onBlur={() => setEmailFocus(false)}
+                            blurOnSubmit={false}
+                            autoCapitalize={false}
                         />
                         {
                             page === 'Register' &&
                             <TextInput
                                 style={[styles.textInput, nameFocus && styles.focusInputStyle]}
+                                name="name"
+                                value={name}
+                                onChangeText={text => setName(text)}
                                 placeholder="Name"
                                 onFocus={() => setNameFocus(true)}
                                 onBlur={() => setNameFocus(false)}
+                                blurOnSubmit={false}
+                                autoCapitalize={false}
                             />
                         }
                         <TextInput
                             style={[styles.textInput, passwordFocus && styles.focusInputStyle]}
+                            name="password"
+                            value={password}
+                            onChangeText={text => setPassword(text)}
                             placeholder="Password"
                             onFocus={() => setPasswordFocus(true)}
                             onBlur={() => setPasswordFocus(false)}
+                            blurOnSubmit={false}
+                            autoCapitalize={false}
+                            secureTextEntry={true}
                         />
                         {
                             page === 'Register' &&
                             <TextInput
                                 style={[styles.textInput, confirmPasswordFocus && styles.focusInputStyle]}
+                                name="confirm password"
+                                value={confirmPassword}
+                                onChangeText={text => setConfirmPassword(text)}
                                 placeholder="Confirm Password"
                                 onFocus={() => setConfirmPasswordFocus(true)}
                                 onBlur={() => setConfirmPasswordFocus(false)}
+                                blurOnSubmit={false}
+                                autoCapitalize={false}
+                                secureTextEntry={true}
                             />
                         }
                     </View>
-                    <TouchableOpacity style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={handleSubmit}>
                         <Text style={styles.buttonText}>{page === 'Login' ? 'Login' : 'Create Account'}</Text>
                     </TouchableOpacity>
                 </View>
