@@ -8,20 +8,21 @@ const Login = (props) => {
         <View style={styles.container}>
             <SafeAreaView style={styles.safeContainer}>
                 <View style={styles.headerContainer}>
-                    <Text style={styles.headerText}>Hello,</Text>
-                    <Text style={styles.headerText}>Welcome Back.</Text>
+                    <Text style={styles.headerText}>OrderBud</Text>
                 </View>
                 <View style={styles.bodyContainer}>
-                    <View style={styles.inputContainer}>
-                        <TextInput style={styles.input} placeholder="Email" />
-                        <TextInput style={styles.input} placeholder="Password" />
+                <Text style={styles.welcomeText}>Welcome Back</Text>
+                    <View style={styles.mainContainer}>
+                        <View style={styles.inputContainer}>
+                            <TextInput style={styles.input} placeholder="Email" />
+                            <TextInput style={styles.input} placeholder="Password" />
+                        </View>
+                        <TouchableOpacity style={styles.loginButton}>
+                            <Text style={styles.loginText}>Login</Text>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.loginButton}>
-                        <Text style={styles.loginText}>Login</Text>
-                    </TouchableOpacity>
-                    <View style={styles.registerLinkContainer}>
-                        <Text style={styles.registerLinkText}>Don't have an account?</Text>
-                        <TouchableOpacity onPress={() => props.navigation.navigate('Register')}>
+                    <View style={styles.registerContainer}>
+                        <TouchableOpacity style={styles.registerLinkContainer} onPress={() => props.navigation.navigate('Register')}>
                             <Text style={styles.registerLinkText}>Register</Text>
                         </TouchableOpacity>
                     </View>
@@ -40,24 +41,32 @@ const styles = StyleSheet.create({
         height: height,
     },
     headerContainer: {
-        height: "33%",
-        justifyContent: "center"
+        height: "25%",
+        justifyContent: "center",
+        alignItems: "center"
     },
     headerText: {
-        fontSize: 40,
+        fontSize: 56,
         fontWeight: "bold",
         color: "white",
-        marginLeft: 20
     },
     bodyContainer: {
-        alignItems: "center",
         justifyContent: "flex-start",
         backgroundColor: "white",
-        borderTopRightRadius: 30,
-        borderTopLeftRadius: 30,
+        borderTopRightRadius: 5,
+        borderTopLeftRadius: 5,
         width: width,
-        height: "66%",
+        height: "75%",
         padding: 20,
+    },
+    mainContainer: {
+        height: "70%",
+        width: "100%",
+        alignItems: "center",
+    },
+    welcomeText: {
+        fontSize: 32,
+        fontWeight: "bold"
     },
     inputContainer: {
         marginVertical: 25,
@@ -74,7 +83,7 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         width: "100%",
-        borderRadius: 50,
+        borderRadius: 5,
         paddingVertical: 20,
         paddingHorizontal: 15,
         backgroundColor: "green",
@@ -86,13 +95,25 @@ const styles = StyleSheet.create({
         color: "white",
         fontWeight: "bold"
     },
+    registerContainer: {
+        height: "30%",
+        width: "100%",
+        alignItems: "center",
+    },
     registerLinkContainer: {
-        flexDirection: "row",
-        marginTop: 20
+        width: "100%",
+        borderRadius: 5,
+        paddingVertical: 20,
+        paddingHorizontal: 15,
+        borderWidth: 1,
+        borderColor: "green",
+        justifyContent: "center",
+        alignItems: "center",
     },
     registerLinkText: {
-        fontSize: 18,
-        marginHorizontal: 2
+        fontSize: 22,
+        color: "green",
+        fontWeight: "bold"
     }
 })
 

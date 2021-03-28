@@ -19,7 +19,7 @@ const Orders = (props) => {
     <>
       {loading == false ? (
         <View style={styles.container}>
-          <SafeAreaView>
+          <SafeAreaView style={styles.safeContainer}>
             <ScrollView>
               {myOrdersToggle ?
                 <View>
@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     height: height
+  },
+  safeContainer: {
+
   },
   headerContainer: {
     justifyContent: 'center',
