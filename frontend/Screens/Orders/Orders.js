@@ -5,15 +5,41 @@ import { Container } from "native-base";
 import OrderCard from './OrderCard';
 import FriendOrderCard from './FriendOrderCard';
 
+import { useFocusEffect } from '@react-navigation/native'
+import axios from 'axios';
+
+import baseURL from "../../assets/common/baseUrl";
+
 var { height } = Dimensions.get("window");
 
 const Orders = (props) => {
   const [loading, setLoading] = useState(false);
   const [myOrdersToggle, setMyOrdersToggle] = useState(true);
 
+  const [orders, setOrders] = useState([]);
+
   const handleMyOrdersToggle = () => {
     setMyOrdersToggle(!myOrdersToggle);
   }
+
+  useFocusEffect(
+    useCallback(() => {
+
+        // Orders
+        axios.get(`${baseURL}orders`)
+        .then((res) => {
+          setOrders(res.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log('Api call error')
+        })
+
+        return () => {
+          setOrders([]);
+        };
+      }, [])
+  )
 
   return (
     <View style={styles.container}>
@@ -33,14 +59,16 @@ const Orders = (props) => {
               </View>
               <View style={{ backgroundColor: "white", marginTop: 10 }}>
                 <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Current</Text>
-                <OrderCard />
+                {
+                  orders.map(order => {
+                    <OrderCard
+                      order={order}
+                    />
+                  })
+                }
               </View>
               <View style={{ backgroundColor: "white", marginTop: 10 }}>
                 <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Completed</Text>
-                <OrderCard />
-                <OrderCard />
-                <OrderCard />
-                <OrderCard />
                 <OrderCard />
               </View>
             </View>
