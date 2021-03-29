@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import Home from "../Screens/Businesses/Home/Home";
 import BusinessPage from "../Screens/Businesses/Business/BusinessPage";
 import Checkout from "../Screens/Businesses/Checkout/Checkout";
-
+import Login from '../Screens/User/Login';
 
 const Stack = createStackNavigator()
 
@@ -30,6 +30,13 @@ function MyStack() {
                 component={Checkout}
                 options={{
                     headerShown: false,
+                }}
+            />
+            <Stack.Screen 
+                name='Login'
+                component={Login}
+                options={{
+                    headerShown: false
                 }}
             />
         </Stack.Navigator>
