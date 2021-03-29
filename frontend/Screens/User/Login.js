@@ -86,7 +86,7 @@ const Login = (props) => {
                 setError('You passwords did not match. Please try again.')
             }
         }
-        if (props.route.params) {
+        if (props.route.params !== undefined) {
             props.navigation.navigate('Business Page');
         }
     }

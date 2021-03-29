@@ -96,7 +96,7 @@ router.post('/register', async (req, res) => {
         passwordHash: bcrypt.hashSync(req.body.password, 10),
         isAdmin: false,
     })
-    newUser = await user.save();
+    newUser = await newUser.save();
 
     if(!newUser) {
         return res.status(400).send('The user cannot be created!');

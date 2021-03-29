@@ -5,6 +5,7 @@ import Home from "../Screens/Businesses/Home/Home";
 import BusinessPage from "../Screens/Businesses/Business/BusinessPage";
 import Checkout from "../Screens/Businesses/Checkout/Checkout";
 import Login from '../Screens/User/Login';
+import Search from '../Screens/Businesses/Search/Search';
 
 const Stack = createStackNavigator()
 
@@ -14,6 +15,13 @@ function MyStack() {
             <Stack.Screen 
                 name='Home'
                 component={Home}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen 
+                name='Search Results'
+                component={Search}
                 options={{
                     headerShown: false,
                 }}

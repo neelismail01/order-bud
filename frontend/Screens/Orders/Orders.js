@@ -41,6 +41,8 @@ const Orders = (props) => {
       }, [])
   )
 
+console.log(orders);
+
   return (
     <View style={styles.container}>
       <SafeAreaView>
@@ -61,15 +63,12 @@ const Orders = (props) => {
                 <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Current</Text>
                 {
                   orders.map(order => {
-                    <OrderCard
-                      order={order}
-                    />
+                    return <OrderCard order={order} />
                   })
                 }
               </View>
               <View style={{ backgroundColor: "white", marginTop: 10 }}>
                 <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Completed</Text>
-                <OrderCard />
               </View>
             </View>
             :
