@@ -9,6 +9,7 @@ import { selectIsLoggedIn } from "../../Redux/userSlice";
 
 const User = () => {
     const isLoggedIn = useSelector(selectIsLoggedIn);
+    console.log(isLoggedIn);
 
     const params = { goToBusinessPage: true }
 
