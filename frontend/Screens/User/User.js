@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 import Login from './Login';
 import Profile from './Profile';
@@ -9,7 +9,6 @@ import { selectIsLoggedIn } from "../../Redux/userSlice";
 
 const User = () => {
     const isLoggedIn = useSelector(selectIsLoggedIn);
-    console.log(isLoggedIn);
 
     const params = { goToBusinessPage: true }
 
@@ -18,9 +17,9 @@ const User = () => {
             {
                 isLoggedIn
                 ?
-                <Login route={params} />
-                :
                 <Profile />
+                :
+                <Login route={params} />
             }
         </View>
     )
