@@ -17,9 +17,9 @@ const User = () => {
             {
                 isLoggedIn
                 ?
-                <Profile />
-                :
                 <Login route={params} />
+                :
+                <Profile />
             }
         </View>
     )

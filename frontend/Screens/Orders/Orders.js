@@ -17,6 +17,7 @@ const Orders = (props) => {
   const [myOrdersToggle, setMyOrdersToggle] = useState(true);
 
   const [orders, setOrders] = useState([]);
+  const [businesses, setBusinesses] = useState([]);
 
   const handleMyOrdersToggle = () => {
     setMyOrdersToggle(!myOrdersToggle);
@@ -32,16 +33,26 @@ const Orders = (props) => {
           setLoading(false);
         })
         .catch((error) => {
-          console.log('Api call error')
+          console.log('Api call error - orders')
+        })
+
+        //Businesses
+        axios.get(`${baseURL}businesses`)
+        .then((res) => {
+          setBusinesses(res.data);
+          setLoading(false)
+        })
+        .catch((error) => {
+          console.log('Api call error - businesses')
         })
 
         return () => {
           setOrders([]);
+          setBusinesses([]);
         };
+
       }, [])
   )
-
-console.log(orders);
 
   return (
     <View style={styles.container}>
@@ -63,12 +74,17 @@ console.log(orders);
                 <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Current</Text>
                 {
                   orders.map(order => {
-                    return <OrderCard order={order} />
+                    return <OrderCard businesses={businesses} navigation={props.navigation} order={order} />
                   })
                 }
               </View>
               <View style={{ backgroundColor: "white", marginTop: 10 }}>
                 <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 25, marginTop: 15 }}>Completed</Text>
+                {
+                  orders.map(order => {
+                    return <OrderCard businesses={businesses} navigation={props.navigation} order={order} />
+                  })
+                }
               </View>
             </View>
             :
@@ -84,11 +100,11 @@ console.log(orders);
                 </View>
               </View>
               <View style={{ backgroundColor: "white", marginTop: 20 }}>
-                <FriendOrderCard />
-                <FriendOrderCard />
-                <FriendOrderCard />
-                <FriendOrderCard />
-                <FriendOrderCard />
+                <FriendOrderCard businesses={businesses} navigation={props.navigation} />
+                <FriendOrderCard businesses={businesses} navigation={props.navigation} />
+                <FriendOrderCard businesses={businesses} navigation={props.navigation} />
+                <FriendOrderCard businesses={businesses} navigation={props.navigation} />
+                <FriendOrderCard businesses={businesses} navigation={props.navigation} />
               </View>
             </View>
           }

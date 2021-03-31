@@ -19,7 +19,7 @@ const OrderCard = (props) => {
                         <Text style={styles.subText}>${order.totalPrice}</Text>
                     </View>
                 </View>
-                <TouchableOpacity style={styles.viewMenu}>
+                <TouchableOpacity style={styles.viewMenu} onPress={() => props.navigation.navigate('Business Page', props.businesses[0])}>
                     <Text>View Menu</Text>
                 </TouchableOpacity>
             </TouchableOpacity>

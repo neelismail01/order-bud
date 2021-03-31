@@ -30,4 +30,4 @@ export const userReducer = (state = initialState, action) => {
 
 // SELECTOR
 export const selectIsLoggedIn = (state) => state.userDetails.length > 0;
-export const selectUserDetails = (state) => state.userDetails[0].user;
+export const selectUserDetails = (state) => state.userDetails.length > 0 ? state.userDetails[0].user : null;
