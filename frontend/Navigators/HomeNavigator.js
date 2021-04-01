@@ -6,6 +6,7 @@ import BusinessPage from "../Screens/Businesses/Business/BusinessPage";
 import Checkout from "../Screens/Businesses/Checkout/Checkout";
 import Login from '../Screens/User/Login';
 import Search from '../Screens/Businesses/Search/Search';
+import CategoryFilterResults from "../Screens/Businesses/Search/CategoryFilterResults";
 
 const Stack = createStackNavigator()
 
@@ -29,6 +30,13 @@ function MyStack() {
             <Stack.Screen 
                 name='Business Page'
                 component={BusinessPage}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen 
+                name='Category Filter Results'
+                component={CategoryFilterResults}
                 options={{
                     headerShown: false,
                 }}

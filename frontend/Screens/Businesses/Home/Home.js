@@ -61,7 +61,7 @@ const ProductContainer = (props) => {
 
   return (
     <>
-      {loading == false ? (
+      {loading === false ? (
         <SafeAreaView>
           <ScrollView>
             <Header />
