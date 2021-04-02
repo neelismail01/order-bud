@@ -29,6 +29,8 @@ const SearchResults = (props) => {
 
   const cart = useSelector(selectCartItems);
 
+  let numMatches = !loading && results.businessMatches.length + results.productMatches.length;
+
   const handleFilter = () => {
     setShowFilter(!showFilter);
   }
@@ -69,61 +71,56 @@ const SearchResults = (props) => {
         loading === false ?
           <SafeAreaView>
             <ScrollView>
-              <View style={{ marginTop: 15 }}>
-                <SearchBar placeholder={query} handleFilter={handleFilter} showFilterIcon={true} />
-                {showFilter &&
-                  <SearchFilter showFilter={showFilter} handleFilter={handleFilter} />
-                }
-              </View>
-              <View style={styles.titleContainer}>
-                <Text style={styles.title}>{results.businessMatches.length + results.productMatches.length} results for "{query}"</Text>
-              </View>
+              <SearchBar placeholder={query} handleFilter={handleFilter} showFilterIcon={true} />
               {
-                results.businessMatches.length > 0 && results.productMatches.length &&
-                <View style={styles.matchesHeaderContainer}>
-                  <Text style={styles.matchesHeader}>Business Matches</Text>
-                </View>
+                showFilter && <SearchFilter showFilter={showFilter} handleFilter={handleFilter} />
               }
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>{numMatches} {numMatches === 1 ? "result" : "results"} for "{query}"</Text>
+              </View>
               {
                 results.businessMatches.length > 0 &&
-                <ScrollView
-                  horizontal={results.productMatches.length === 0 ? false : true}
-                  contentContainerStyle={{ paddingLeft: 10 }}
-                >
-                  {
-                    results.businessMatches.length > 0 &&
-                    (
-                      results.businessMatches.map(business => {
-                        return (
-                          <View>
+                <View>
+                  <View style={styles.matchesHeaderContainer}>
+                    <Text style={styles.matchesHeader}>Business Matches</Text>
+                  </View>
+                  <ScrollView
+                    horizontal={results.productMatches.length === 0 ? false : true}
+                    contentContainerStyle={{ paddingLeft: 10 }}
+                  >
+                    {
+                      (
+                        results.businessMatches.map(business => {
+                          console.log(business);
+                          return (
                             <BusinessCard key={business.name} business={business} navigation={props.navigation} />
-                          </View>
-                        )
-                      })
-                    )
-                  }
-                </ScrollView>
-              }
-              {
-                results.businessMatches.length > 0 && results.productMatches.length &&
-                <View style={[styles.matchesHeaderContainer, { marginTop: 10, marginBottom: -1 }]}>
-                  <Text style={styles.matchesHeader}>Product Matches</Text>
+                          )
+                        })
+                      )
+                    }
+                  </ScrollView>
                 </View>
               }
-              <View>
-                {
-                  results.productMatches.length > 0 &&
-                  results.productMatches.map(product => {
-                    <Text>{product.name}</Text>
-                    return (
-                      <MenuCard
-                        product={product}
-                        handleShowItemModal={handleShowItemModal}
-                      />
-                    )
-                  })
-                }
-              </View>
+              {
+                results.productMatches.length > 0 &&
+                <View>
+                  <View style={[styles.matchesHeaderContainer, { marginTop: 10, marginBottom: -1 }]}>
+                    <Text style={styles.matchesHeader}>Product Matches</Text>
+                  </View>
+                  <View>
+                    {
+                      results.productMatches.map(product => {
+                        return (
+                          <MenuCard
+                            product={product}
+                            handleShowItemModal={handleShowItemModal}
+                          />
+                        )
+                      })
+                    }
+                  </View>
+                </View>
+              }
             </ScrollView>
             <Item
               showItemModal={showItemModal}

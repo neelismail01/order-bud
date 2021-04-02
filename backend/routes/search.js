@@ -50,6 +50,30 @@ router.get('/', (req, res) => {
                     }
                 },
                 {
+                    $lookup: {
+                        from: Category.collection.name,
+                        localField: "categories",
+                        foreignField: "_id",
+                        as: "categories"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: Product.collection.name,
+                        localField: "products",
+                        foreignField: "_id",
+                        as: "products"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: Category.collection.name,
+                        localField: "products.category",
+                        foreignField: "_id",
+                        as: "category"
+                    }
+                },
+                {
                     $sort: {
                         "rating": -1
                     }
