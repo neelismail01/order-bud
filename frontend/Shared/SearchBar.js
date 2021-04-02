@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
   searchBarFilterIcon: {
     width: '85%',
     height: 50,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
     paddingHorizontal: 20,
     fontSize: 18,
     borderRightWidth: 1,
@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
   searchBar: {
     width: '100%',
     height: 50,
-    borderTopLeftRadius: 5,
-    borderBottomLeftRadius: 5,
+    borderTopLeftRadius: 15,
+    borderBottomLeftRadius: 15,
     paddingHorizontal: 20,
     fontSize: 16,
   },
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     width: '15%',
     height: 50,
     backgroundColor: "white",
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
     justifyContent: "center",
     backgroundColor: "#ededed"
   }
