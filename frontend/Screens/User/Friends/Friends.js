@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { View, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Icon } from 'react-native-elements';
+import React, { useState, useCallback } from "react";
+import { View, SafeAreaView, ScrollView, StyleSheet, Dimensions, Text, TouchableOpacity } from "react-native";
+import { Icon, BottomSheet } from 'react-native-elements';
 
 import SearchBar from '../../../Shared/SearchBar';
 
