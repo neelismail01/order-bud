@@ -32,12 +32,8 @@ const BusinessPage = (props) => {
 
     const { coverImage, name, address, rating, categories } = props.route.params;
     const businessDetails = { coverImage, name, address, rating };
-
     const id = props.route.params.id ? props.route.params.id : props.route.params._id;
-
     const cart = useSelector(selectCartItems);
-
-    console.log(props.route.params.business);
 
     useFocusEffect(
         useCallback(() => {

@@ -5,8 +5,6 @@ import MenuCard from './MenuCard';
 
 
 const Menu = (props) => {
-
-    console.log(props.products);
      
     return (
             <View style={styles.listContainer}>

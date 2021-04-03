@@ -7,6 +7,7 @@ import baseURL from "../../assets/common/baseUrl";
 
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserDetails, clearUser } from "../../Redux/userSlice";
+import { clearCart } from "../../Redux/cartSlice";
 
 const Profile = (props) => {
     const userDetails = useSelector(selectUserDetails);
@@ -20,6 +21,11 @@ const Profile = (props) => {
         .catch((error) => {
           console.log('Api call error - user could not be deleted');
         })
+    }
+
+    const handleLogoutUser = () => {
+        dispatch(clearCart());
+        dispatch(clearUser());
     }
 
     return (
@@ -56,7 +62,7 @@ const Profile = (props) => {
                         <Icon name="lock" type="font-awesome-5" color="black" size={30} />
                         <Text style={styles.categoryText}>Privacy</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.category} onPress={() => dispatch(clearUser())}>
+                    <TouchableOpacity style={styles.category} onPress={handleLogoutUser}>
                         <Icon name="sign-out-alt" type="font-awesome-5" color="black" size={30} />
                         <Text style={styles.categoryText}>Log Out</Text>
                     </TouchableOpacity>
