@@ -64,7 +64,7 @@ const SearchResults = (props) => {
       }
     }, [])
   )
-
+  
   return (
     <>
       {
@@ -91,9 +91,10 @@ const SearchResults = (props) => {
                     {
                       (
                         results.businessMatches.map(business => {
-                          console.log(business);
                           return (
-                            <BusinessCard key={business.name} business={business} navigation={props.navigation} />
+                            <View>
+                              <BusinessCard key={business.name} business={business} navigation={props.navigation} />
+                            </View>
                           )
                         })
                       )

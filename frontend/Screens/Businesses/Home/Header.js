@@ -5,7 +5,7 @@ import { Icon } from 'react-native-elements';
 
 const Header = (props) => {
 
-    return(
+    return (
         <SafeAreaView style={styles.header}>
             <View>
                 <View style={styles.pickUpDelivery}>

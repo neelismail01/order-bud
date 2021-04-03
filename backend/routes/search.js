@@ -58,22 +58,6 @@ router.get('/', (req, res) => {
                     }
                 },
                 {
-                    $lookup: {
-                        from: Product.collection.name,
-                        localField: "products",
-                        foreignField: "_id",
-                        as: "products"
-                    }
-                },
-                {
-                    $lookup: {
-                        from: Category.collection.name,
-                        localField: "products.category",
-                        foreignField: "_id",
-                        as: "category"
-                    }
-                },
-                {
                     $sort: {
                         "rating": -1
                     }
@@ -81,9 +65,10 @@ router.get('/', (req, res) => {
             ])
                 .exec((err, businessMatches) => {
                     if (err) {
-                        res.status(500).send({ msg: "Unable to reconcile business names" });
+                        return res.status(500).send({ msg: "Unable to reconcile business names" });
                     }
 
+                    console.log(businessMatches)
                     return res.status(200).send({
                         productMatches,
                         businessMatches
@@ -111,8 +96,9 @@ router.get('/category', (req, res) => {
         }
     ]).exec((err, matches) => {
         if (err) {
-            res.send(500).send({ msg: "Unable to reconcile categories" });
+            return res.send(500).send({ msg: "Unable to reconcile categories" });
         }
+        console.log(matches);
         res.status(200).send(matches);
     });
 })
