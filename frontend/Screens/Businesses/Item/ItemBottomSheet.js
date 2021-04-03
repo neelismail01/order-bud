@@ -98,7 +98,7 @@ const ItemBottomSheet = (props) => {
 
     const handleGoToLogin = () => {
         props.handleRemoveItemModal();
-        props.navigation.navigate('Login', { goToBusinessPage: true });
+        props.navigation.navigate('Login', { goBack: true });
     }
 
     return (
