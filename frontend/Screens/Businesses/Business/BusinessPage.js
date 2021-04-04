@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import { View, ScrollView, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, ScrollView, StyleSheet, ActivityIndicator, Image, Dimensions } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native'
 import axios from 'axios';
 
@@ -13,6 +13,8 @@ import BusinessInfo from './BusinessInfo';
 import BusinessCategories from './BusinessCategories';
 import ViewCartButton from "../Cart/ViewCartButton";
 import Item from '../Item/Item';
+
+const { width, height } = Dimensions.get('window')
 
 const BusinessPage = (props) => {
     const [loading, setLoading] = useState(true);
@@ -31,20 +33,20 @@ const BusinessPage = (props) => {
     }
 
     const { coverImage, name, address, rating, categories } = props.route.params;
-    const businessDetails = { coverImage, name, address, rating };
+    const businessDetails = { name, address, rating };
     const id = props.route.params.id ? props.route.params.id : props.route.params._id;
     const cart = useSelector(selectCartItems);
 
     useFocusEffect(
         useCallback(() => {
             axios.get(`${baseURL}products/${id}`)
-            .then(res => {
-                setMenuItems(res.data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.log(err)
-            })
+                .then(res => {
+                    setMenuItems(res.data);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }, [])
     )
 
@@ -54,6 +56,10 @@ const BusinessPage = (props) => {
                 loading === false ?
                     <View>
                         <ScrollView scrollIndicatorInsets={{ right: 1 }}>
+                            <Image
+                                style={styles.coverPhoto}
+                                source={{ uri: coverImage }}
+                            />
                             <BusinessInfo businessDetails={businessDetails} />
                             <View style={styles.categoriesContainer}>
                                 <BusinessCategories categories={categories} />
@@ -81,6 +87,10 @@ const BusinessPage = (props) => {
 }
 
 const styles = StyleSheet.create({
+    coverPhoto: {
+        width: width,
+        height: height * 0.225,
+    },
     categoriesContainer: {
         backgroundColor: "white",
         paddingLeft: 15

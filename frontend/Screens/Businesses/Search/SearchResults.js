@@ -99,7 +99,13 @@ const SearchResults = (props) => {
                           (
                             results.businessMatches.map(business => {
                               return (
-                                <View style={[{ alignItems: "center" }, results.productMatches.length > 0 && { width: 0.9 * width }]}>
+                                <View
+                                  style={[
+                                    { alignItems: "center" },
+                                    (results.productMatches.length === 0 || results.businessMatches.length === 1) 
+                                    ? { width: width } : { width: 0.9 * width }
+                                  ]}
+                                >
                                   <BusinessCard key={business.name} business={business} navigation={props.navigation} />
                                 </View>
                               )

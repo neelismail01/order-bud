@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { View, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView } from "react-native";
+import { View, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, Text, Dimensions } from "react-native";
 import { useFocusEffect } from '@react-navigation/native'
 import axios from 'axios';
 
@@ -16,6 +16,8 @@ import ViewCartButton from "../Cart/ViewCartButton";
 import SearchBar from "../Search/SearchBar";
 
 import baseURL from "../../../assets/common/baseUrl";
+
+const { width, height } = Dimensions.get("window")
 
 const ProductContainer = (props) => {
   const [businesses, setBusinesses] = useState([]);
@@ -66,12 +68,12 @@ const ProductContainer = (props) => {
   return (
     <>
       {loading === false ? (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
             <Header
               delivery={delivery}
               toggleDelivery={toggleDelivery}
             />
-            <ScrollView contentContainerStyle={{backgroundColor: "white"}}>
+            <ScrollView>
               <Banner />
               <CategoryFilter
                 navigation={props.navigation}
@@ -85,6 +87,8 @@ const ProductContainer = (props) => {
                 navigation={props.navigation}
                 parent="home"
               />
+              <View style={styles.separator} />
+              <Text style={styles.header}>Your Local Dispensaries</Text>
               <View style={styles.listContainer}>
                 {showFilter &&
                   <HomeFilter showFilter={showFilter} handleFilter={handleFilter} />
@@ -116,14 +120,23 @@ const ProductContainer = (props) => {
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
-    marginTop: 10,
     alignItems: "center",
-    backgroundColor: "white",
     elevation: 8,
+    paddingVertical: 15
   },
   center: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  separator: {
+    backgroundColor: "#ededed",
+    height: 15
+  },
+  header: {
+    fontWeight: "bold",
+    fontSize: 25,
+    marginTop: 20,
+    marginLeft: (width - 0.925 * width) / 2
   }
 });
 
