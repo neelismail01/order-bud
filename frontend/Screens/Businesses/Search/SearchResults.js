@@ -16,7 +16,7 @@ import MenuCard from '../Business/MenuCard';
 import ViewCartButton from "../Cart/ViewCartButton";
 import Item from '../Item/Item';
 
-const { width } = Dimensions.get("window")
+const { width, height } = Dimensions.get("window")
 
 const SearchResults = (props) => {
   const [showFilter, setShowFilter] = useState(false);
@@ -69,7 +69,7 @@ const SearchResults = (props) => {
       {
         loading === false ?
           <View style={{ backgroundColor: "white", flex: 1 }}>
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{flex: 1}}>
               <SearchBar
                 placeholder={query}
                 handleFilter={handleFilter}
@@ -85,22 +85,21 @@ const SearchResults = (props) => {
                 <View style={styles.titleContainer}>
                   <Text style={styles.title}>{numMatches} {numMatches === 1 ? "Result" : "Results"} For "{query}"</Text>
                 </View>
-                <View style={{ backgroundColor: "#ededed" }}>
+                <View style={{backgroundColor: "#ededed"}}>
                   {
                     results.businessMatches.length > 0 &&
-                    <View>
+                    <View style={{backgroundColor: "white", marginTop: 10, paddingVertical: 20}}>
                       <View style={styles.matchesHeaderContainer}>
                         <Text style={styles.matchesHeader}>Business Matches</Text>
                       </View>
                       <ScrollView
                         horizontal={results.productMatches.length === 0 ? false : true}
-                        contentContainerStyle={results.productMatches.length > 0 && { paddingLeft: 5 }}
                       >
                         {
                           (
                             results.businessMatches.map(business => {
                               return (
-                                <View style={{ alignItems: "center" }}>
+                                <View style={[{ alignItems: "center" }, results.productMatches.length > 0 && { width: 0.9 * width }]}>
                                   <BusinessCard key={business.name} business={business} navigation={props.navigation} />
                                 </View>
                               )
@@ -112,8 +111,8 @@ const SearchResults = (props) => {
                   }
                   {
                     results.productMatches.length > 0 &&
-                    <View>
-                      <View style={[styles.matchesHeaderContainer, { marginTop: 2, marginBottom: -1 }]}>
+                    <View style={results.businessMatches.length > 0 && {marginTop: 15}}>
+                      <View style={[styles.matchesHeaderContainer, { marginBottom: -1, paddingTop: 20 }]}>
                         <Text style={styles.matchesHeader}>Product Matches</Text>
                       </View>
                       <View>
@@ -167,9 +166,8 @@ const styles = StyleSheet.create({
   matchesHeaderContainer: {
     width: width,
     backgroundColor: "white",
-    paddingVertical: 15,
+    paddingBottom: 10,
     paddingLeft: 25,
-    marginTop: 10
   },
   matchesHeader: {
     fontWeight: "bold",
