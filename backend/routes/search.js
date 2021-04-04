@@ -18,6 +18,14 @@ router.get('/', (req, res) => {
             }
         },
         {
+            $lookup: {
+                from: Business.collection.name,
+                localField: "business",
+                foreignField: "_id",
+                as: "business"
+            }
+        },
+        {
             $match: {
                 $or: [
                     {
@@ -36,11 +44,25 @@ router.get('/', (req, res) => {
             $sort: {
                 "rating": -1,
             }
+        },
+        {
+            $project: {
+                description: 1,
+                image: 1,
+                brand: 1,
+                price: 1,
+                rating: 1,
+                numReviews: 1,
+                name: 1,
+                business: { $arrayElemAt: ["$business", 0] },
+                category: 1,
+                countInStock: 1
+            }
         }
     ])
         .exec((err, productMatches) => {
             if (err) {
-                res.send(500).send({ msg: "Unable to reconcile categories" });
+                return res.send(500).send({ msg: "Unable to reconcile categories" });
             }
 
             Business.aggregate([
@@ -67,8 +89,6 @@ router.get('/', (req, res) => {
                     if (err) {
                         return res.status(500).send({ msg: "Unable to reconcile business names" });
                     }
-
-                    console.log(businessMatches)
                     return res.status(200).send({
                         productMatches,
                         businessMatches
@@ -90,15 +110,36 @@ router.get('/category', (req, res) => {
             }
         },
         {
+            $lookup: {
+                from: Business.collection.name,
+                localField: "business",
+                foreignField: "_id",
+                as: "business"
+            }
+        },
+        {
             $match: {
                 "category.name": query
+            }
+        },
+        {
+            $project: {
+                description: 1,
+                image: 1,
+                brand: 1,
+                price: 1,
+                rating: 1,
+                numReviews: 1,
+                name: 1,
+                business: { $arrayElemAt: ["$business", 0] },
+                category: 1,
+                countInStock: 1
             }
         }
     ]).exec((err, matches) => {
         if (err) {
             return res.send(500).send({ msg: "Unable to reconcile categories" });
         }
-        console.log(matches);
         res.status(200).send(matches);
     });
 })
