@@ -9,7 +9,7 @@ import { selectCartItems } from '../../../Redux/cartSlice';
 
 import baseURL from "../../../assets/common/baseUrl";
 
-import SearchBar from '../../../Shared/SearchBar';
+import SearchBar from "./SearchBar";
 import SearchFilter from './SearchFilter';
 import BusinessCard from '../Home/BusinessCard';
 import MenuCard from '../Business/MenuCard';
@@ -24,12 +24,11 @@ const SearchResults = (props) => {
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState();
   const [showItemModal, setShowItemModal] = useState(false);
-
-  const { query } = props.route.params;
+  const [query, setQuery] = useState(props.route.params.query);
 
   const cart = useSelector(selectCartItems);
 
-  let numMatches = !loading && results.businessMatches.length + results.productMatches.length;
+  const numMatches = !loading && results.businessMatches.length + results.productMatches.length;
 
   const handleFilter = () => {
     setShowFilter(!showFilter);
@@ -62,7 +61,7 @@ const SearchResults = (props) => {
           productMatches: []
         });
       }
-    }, [])
+    }, [query])
   )
   
   return (
@@ -71,7 +70,14 @@ const SearchResults = (props) => {
         loading === false ?
           <SafeAreaView>
             <ScrollView>
-              <SearchBar placeholder={query} handleFilter={handleFilter} showFilterIcon={true} />
+              <SearchBar
+                placeholder={query}
+                handleFilter={handleFilter}
+                showFilterIcon={true}
+                navigation={props.navigation}
+                parent="results"
+                handleQuery={setQuery}
+              />
               {
                 showFilter && <SearchFilter showFilter={showFilter} handleFilter={handleFilter} />
               }

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { selectCartItems } from '../../../Redux/cartSlice';
 
 import Header from "./Header";
-import Banner from "../../../Shared/Banner";
+import Banner from "./Banner";
 
 import CategoryFilter from "./CategoryFilter";
 import BusinessCard from "./BusinessCard";
@@ -83,6 +83,7 @@ const ProductContainer = (props) => {
               handleFilter={handleFilter}
               showFilterIcon={true}
               navigation={props.navigation}
+              parent="home"
             />
             <View style={styles.listContainer}>
               {showFilter &&

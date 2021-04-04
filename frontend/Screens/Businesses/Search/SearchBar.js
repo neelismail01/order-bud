@@ -6,6 +6,9 @@ const SearchBar = (props) => {
   const [query, setQuery] = useState('');
 
   const handleSubmit = () => {
+    if (props.parent === "results") {
+      props.handleQuery(query);
+    }
     setQuery('')
     props.navigation.navigate("Search Results", { query })
   }
