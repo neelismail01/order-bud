@@ -5,6 +5,7 @@ import axios from 'axios';
 
 import { useSelector } from 'react-redux';
 import { selectCartItems } from '../../../Redux/cartSlice';
+import { selectUserDetails } from '../../../Redux/userSlice';
 
 import Header from "./Header";
 import Banner from "./Banner";
@@ -72,6 +73,7 @@ const ProductContainer = (props) => {
             <Header
               delivery={delivery}
               toggleDelivery={toggleDelivery}
+              navigation={props.navigation}
             />
             <ScrollView>
               <Banner />
@@ -105,7 +107,6 @@ const ProductContainer = (props) => {
           }
         </SafeAreaView>
       ) : (
-          // Loading
           <View style={[styles.center, { backgroundColor: "#f2f2f2" }]}>
             <ActivityIndicator size="large" color="green" />
           </View>
