@@ -90,9 +90,6 @@ const ProductContainer = (props) => {
               <View style={styles.separator} />
               <Text style={styles.header}>Your Local Dispensaries</Text>
               <View style={styles.listContainer}>
-                {showFilter &&
-                  <HomeFilter showFilter={showFilter} handleFilter={handleFilter} />
-                }
                 {businesses.map(business => {
                   if (delivery && business.delivery || !delivery && business.pickup) {
                     return (

@@ -38,10 +38,6 @@ const Profile = (props) => {
                     <Text style={styles.name}>{userDetails.name}</Text>
                 </View>
                 <View style={styles.categoryContainer}>
-                    <TouchableOpacity style={styles.category} onPress={() => props.navigation.navigate('Friends')}>
-                        <Icon name="users" type="font-awesome-5" color="black" size={30} />
-                        <Text style={styles.categoryText}>Friends</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity style={styles.category}onPress={() => props.navigation.navigate('Payment')}>
                         <Icon name="wallet" type="font-awesome-5" color="black" size={30} />
                         <Text style={styles.categoryText}>Payment</Text>
@@ -53,14 +49,6 @@ const Profile = (props) => {
                     <TouchableOpacity style={styles.category} onPress={() => props.navigation.navigate('Addresses')}>
                         <Icon name="home" type="font-awesome-5" color="black" size={30} />
                         <Text style={styles.categoryText}>Addresses</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.category} onPress={() => props.navigation.navigate('Notifications')}>
-                        <Icon name="bell" type="font-awesome-5" color="black" size={30} />
-                        <Text style={styles.categoryText}>Notifications</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.category} onPress={() => props.navigation.navigate('Privacy')}>
-                        <Icon name="lock" type="font-awesome-5" color="black" size={30} />
-                        <Text style={styles.categoryText}>Privacy</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.category} onPress={handleLogoutUser}>
                         <Icon name="sign-out-alt" type="font-awesome-5" color="black" size={30} />

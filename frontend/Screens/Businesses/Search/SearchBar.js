@@ -26,9 +26,6 @@ const SearchBar = (props) => {
             onSubmitEditing={handleSubmit}
             autoCapitalize={false}
           />
-          <TouchableOpacity onPress={props.handleFilter} style={styles.filterBtn}>
-            <Icon name="sliders-h" type="font-awesome-5" size={30} />
-          </TouchableOpacity>
         </View>
         :
         <View style={styles.searchContainer}>
