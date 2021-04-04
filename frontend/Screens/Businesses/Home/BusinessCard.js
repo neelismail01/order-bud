@@ -1,14 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Image, Text, TouchableOpacity} from 'react-native';
+import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
 
 const BusinessCard = (props) => {
     const { coverImage, name, rating, address } = props.business;
 
     return (
         <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Business Page', props.business)}>
-            <Image 
+            <Image
                 style={styles.image}
-                source={{uri: coverImage}}
+                source={{ uri: coverImage }}
             />
             <View style={styles.businessDetails}>
                 <View style={styles.businessDetailsHeaderRow}>

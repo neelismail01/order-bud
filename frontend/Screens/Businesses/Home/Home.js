@@ -37,8 +37,8 @@ const ProductContainer = (props) => {
   useFocusEffect(
     useCallback(() => {
 
-        // Businesses
-        axios.get(`${baseURL}businesses`)
+      // Businesses
+      axios.get(`${baseURL}businesses`)
         .then((res) => {
           setBusinesses(res.data);
           setLoading(false)
@@ -47,8 +47,8 @@ const ProductContainer = (props) => {
           console.log('Api call error - businesses')
         })
 
-        // Categories
-        axios.get(`${baseURL}categories`)
+      // Categories
+      axios.get(`${baseURL}categories`)
         .then((res) => {
           setCategories(res.data)
         })
@@ -56,48 +56,48 @@ const ProductContainer = (props) => {
           console.log('Api call error - categories')
         })
 
-        return () => {
-          setBusinesses([]);
-          setCategories([]);
-        };
-      }, [])
+      return () => {
+        setBusinesses([]);
+        setCategories([]);
+      };
+    }, [])
   )
 
   return (
     <>
       {loading === false ? (
-        <SafeAreaView>
-          <ScrollView>
+        <SafeAreaView style={{flex: 1}}>
             <Header
               delivery={delivery}
               toggleDelivery={toggleDelivery}
             />
-            <Banner />
-            <CategoryFilter
-              navigation={props.navigation}
-              businesses={businesses}
-              categories={categories}
-            />
-            <SearchBar
-              placeholder="Search..."
-              handleFilter={handleFilter}
-              showFilterIcon={true}
-              navigation={props.navigation}
-              parent="home"
-            />
-            <View style={styles.listContainer}>
-              {showFilter &&
-                <HomeFilter showFilter={showFilter} handleFilter={handleFilter} />
-              }
-              {businesses.map(business => {
+            <ScrollView>
+              <Banner />
+              <CategoryFilter
+                navigation={props.navigation}
+                businesses={businesses}
+                categories={categories}
+              />
+              <SearchBar
+                placeholder="Search..."
+                handleFilter={handleFilter}
+                showFilterIcon={true}
+                navigation={props.navigation}
+                parent="home"
+              />
+              <View style={styles.listContainer}>
+                {showFilter &&
+                  <HomeFilter showFilter={showFilter} handleFilter={handleFilter} />
+                }
+                {businesses.map(business => {
                   if (delivery && business.delivery || !delivery && business.pickup) {
                     return (
                       <BusinessCard key={business.name} business={business} navigation={props.navigation} />
                     )
                   }
-              })}
-            </View>
-          </ScrollView>
+                })}
+              </View>
+            </ScrollView>
           {
             cart.length > 0 &&
             <ViewCartButton navigation={props.navigation} />
@@ -115,7 +115,7 @@ const ProductContainer = (props) => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    flex: 4,
+    flex: 1,
     marginTop: 10,
     alignItems: "center",
     backgroundColor: "#ededed",

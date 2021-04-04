@@ -96,7 +96,7 @@ const CategoryFilterResults = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        height: height,
+        flex: 1,
     },
     categoryFilterHeader: {
         width: width,
