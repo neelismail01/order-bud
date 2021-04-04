@@ -71,7 +71,7 @@ const ProductContainer = (props) => {
               delivery={delivery}
               toggleDelivery={toggleDelivery}
             />
-            <ScrollView>
+            <ScrollView contentContainerStyle={{backgroundColor: "white"}}>
               <Banner />
               <CategoryFilter
                 navigation={props.navigation}
@@ -118,9 +118,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 10,
     alignItems: "center",
-    backgroundColor: "#ededed",
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
+    backgroundColor: "white",
     elevation: 8,
   },
   center: {
