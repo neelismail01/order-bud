@@ -4,11 +4,13 @@ import { Icon } from 'react-native-elements';
 
 import { useSelector } from 'react-redux';
 import { selectAddress, selectIsDelivery } from '../../../Redux/orderDetailsSlice';
+import { selectCartBusinessAddress } from '../../../Redux/cartSlice';
 
 const Address = props => {
 
     const address = useSelector(selectAddress);
     const isDelivery = useSelector(selectIsDelivery);
+    const businessAddress = useSelector(selectCartBusinessAddress);
 
     return (
         <View style={styles.addressContainer}>
@@ -17,12 +19,15 @@ const Address = props => {
                     <Icon name="map-pin" type="font-awesome-5" color="black" size={28} />
                 </View>
                 <View style={styles.addressTextContainer}>
-                    <Text style={styles.street}>{address}</Text>
+                    <Text style={styles.street}>{isDelivery ? address : businessAddress}</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.editContainer}>
-                <Text style={styles.editText}>Edit</Text>
-            </TouchableOpacity>
+            {
+                isDelivery &&
+                <TouchableOpacity style={styles.editContainer} onPress={() => props.navigation.navigate('Enter Address')}>
+                    <Text style={styles.editText}>Edit</Text>
+                </TouchableOpacity>
+            }
         </View>
     )
 }

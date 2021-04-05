@@ -3,9 +3,9 @@ import { View, StyleSheet, ActivityIndicator, ScrollView, SafeAreaView, Text, Di
 import { useFocusEffect } from '@react-navigation/native'
 import axios from 'axios';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectCartItems } from '../../../Redux/cartSlice';
-import { setIsDelivery, selectIsDelivery } from '../../../Redux/orderDetailsSlice';
+import { selectIsDelivery } from '../../../Redux/orderDetailsSlice';
 
 import Header from "./Header";
 import Banner from "./Banner";
@@ -17,7 +17,7 @@ import SearchBar from "../Search/SearchBar";
 
 import baseURL from "../../../assets/common/baseUrl";
 
-const { width, height } = Dimensions.get("window")
+const { width } = Dimensions.get("window")
 
 const ProductContainer = (props) => {
   const [businesses, setBusinesses] = useState([]);

@@ -3,7 +3,6 @@ import { View, Dimensions, ScrollView, Text, StyleSheet, TouchableOpacity, SafeA
 import { Icon } from 'react-native-elements';
 
 import CheckoutHeader from './CheckoutHeader';
-import DeliverPickupSelector from './DeliverPickupSelector';
 import OrderLogistics from './OrderLogistics';
 import OrderSummary from './OrderSummary';
 import PurchaseButton from './PurchaseButton';
@@ -22,8 +21,7 @@ const Checkout = props => {
             <View style={{ height: height }}>
                 <ScrollView>
                     <CheckoutHeader />
-                    <DeliverPickupSelector />
-                    <OrderLogistics />
+                    <OrderLogistics navigation={props.navigation} />
                     <OrderSummary />
                 </ScrollView>
                 <PurchaseButton />

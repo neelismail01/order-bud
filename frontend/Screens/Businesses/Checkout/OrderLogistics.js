@@ -15,7 +15,7 @@ const OrderLogistics = props => {
     return (
         <View style={styles.checkoutContainer}>
             <Text style={styles.header}>{isDelivery ? 'Delivery Details' : 'Pickup Details'}</Text>
-            <Address />
+            <Address navigation={props.navigation} />
         </View>
     )
 }
