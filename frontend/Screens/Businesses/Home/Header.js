@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text } from "react-native";
 
+import { useSelector } from 'react-redux';
+import { selectAddress } from '../../../Redux/orderDetailsSlice';
+
 import { Icon } from 'react-native-elements';
 
 const Header = (props) => {
+
+    const address = useSelector(selectAddress);
 
     return (
         <SafeAreaView style={styles.header}>
@@ -18,7 +23,7 @@ const Header = (props) => {
                 </View>
             </View>
             <TouchableOpacity style={styles.address} onPress={() => props.navigation.navigate('Enter Address')}>
-                <Text style={styles.addressText}>400B Albert Street</Text>
+                <Text style={styles.addressText}>{address === undefined ? 'Enter Address' : address}</Text>
                 <Icon name="angle-down" type="font-awesome-5" color="green" size={20} />
             </TouchableOpacity>
         </SafeAreaView>
