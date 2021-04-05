@@ -12,6 +12,7 @@ import ErrorMessage from './ErrorMessage';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../../Redux/userSlice';
+import { setAddress } from '../../../Redux/orderDetailsSlice';
 import { selectAddress } from '../../../Redux/orderDetailsSlice';
 
 import baseURL from "../../../assets/common/baseUrl";
@@ -41,6 +42,7 @@ const LoginRegister = (props) => {
             .then(response => {
                 if (response.data.auth) {
                     dispatch(setUser(response.data));
+                    dispatch(setAddress(response.data.user.address));
                     if (props.route.params !== undefined) {
                         props.navigation.goBack();
                     }
@@ -73,9 +75,11 @@ const LoginRegister = (props) => {
         .then(response => {
             if (response.data.auth && props.route.params !== undefined) {
                 dispatch(setUser(response.data));
+                dispatch(setAddress(response.data.user.address));
                 props.navigation.goBack();
             } else if (response.data.auth) {
                 dispatch(setUser(response.data));
+                dispatch(setAddress(response.data.user.address));
             } else {
                 setError('An error occurred adding this address. Please try again.')
             }
