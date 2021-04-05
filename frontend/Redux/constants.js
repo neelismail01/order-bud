@@ -8,3 +8,4 @@ export const CLEAR_USER = "CLEAR_USER";
 
 export const SET_ADDRESS = "SET_ADDRESS";
 export const CLEAR_ADDRESS = "CLEAR_ADDRESS"
+export const SET_IS_DELIVERY = "SET_IS_DELIVERY"

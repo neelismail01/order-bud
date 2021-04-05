@@ -3,11 +3,12 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { Icon } from 'react-native-elements';
 
 import { useSelector } from 'react-redux';
-import { selectCartItems } from '../../../Redux/cartSlice';
+import { selectAddress, selectIsDelivery } from '../../../Redux/orderDetailsSlice';
 
 const Address = props => {
 
-    const address = useSelector(selectCartItems)[0];
+    const address = useSelector(selectAddress);
+    const isDelivery = useSelector(selectIsDelivery);
 
     return (
         <View style={styles.addressContainer}>
@@ -16,8 +17,7 @@ const Address = props => {
                     <Icon name="map-pin" type="font-awesome-5" color="black" size={28} />
                 </View>
                 <View style={styles.addressTextContainer}>
-                    <Text style={styles.street}>123 Anywhere Street</Text>
-                    <Text style={styles.city}>Toronto, ON</Text>
+                    <Text style={styles.street}>{address}</Text>
                 </View>
             </View>
             <TouchableOpacity style={styles.editContainer}>

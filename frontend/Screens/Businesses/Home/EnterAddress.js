@@ -49,7 +49,11 @@ const EnterAddress = (props) => {
                     {
                         predictions.map(prediction => {
                             return (
-                                <TouchableOpacity key={prediction.id} style={styles.predictionContainer} onPress={() => handleAddAddress(prediction.structured_formatting.main_text)}>
+                                <TouchableOpacity
+                                    key={prediction.id}
+                                    style={styles.predictionContainer}
+                                    onPress={() => handleAddAddress(prediction.structured_formatting.main_text)}
+                                >
                                     <Icon name="map-marker-alt" type="font-awesome-5" color="black" size={26} />
                                     <View style={styles.destinationDetails}>
                                         <Text style={styles.addressMain}>{prediction.structured_formatting.main_text}</Text>

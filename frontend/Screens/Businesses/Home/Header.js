@@ -1,24 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, SafeAreaView, View, TouchableOpacity, Text } from "react-native";
 
-import { useSelector } from 'react-redux';
-import { selectAddress } from '../../../Redux/orderDetailsSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAddress, setIsDelivery, selectIsDelivery } from '../../../Redux/orderDetailsSlice';
 
 import { Icon } from 'react-native-elements';
 
 const Header = (props) => {
 
     const address = useSelector(selectAddress);
+    const isDelivery = useSelector(selectIsDelivery);
+    const dispatch = useDispatch();
+
+    const handleToggle = (type) => {
+        if (type !== isDelivery) {
+            dispatch(setIsDelivery(type));
+        }
+    }
 
     return (
         <SafeAreaView style={styles.header}>
             <View>
                 <View style={styles.pickUpDelivery}>
-                    <TouchableOpacity onPress={props.toggleDelivery}>
-                        <Text style={props.delivery ? styles.textSelected : styles.textUnselected}>Deliver</Text>
+                    <TouchableOpacity onPress={() => handleToggle(true)}>
+                        <Text style={isDelivery ? styles.textSelected : styles.textUnselected}>Deliver</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={props.toggleDelivery}>
-                        <Text style={!props.delivery ? styles.textSelected : styles.textUnselected}>Pick-Up</Text>
+                    <TouchableOpacity onPress={() => handleToggle(false)}>
+                        <Text style={!isDelivery ? styles.textSelected : styles.textUnselected}>Pick-Up</Text>
                     </TouchableOpacity>
                 </View>
             </View>
