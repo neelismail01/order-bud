@@ -1,27 +1,15 @@
 const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
-    orderItems: [{
+    business: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'OrderItem',
+        ref: 'Business',
+    },
+    orderItems: [{
+        type: mongoose.Schema.Types.Mixed,
         required:true
     }],
     shippingAddress1: {
-        type: String,
-        required: true,
-    },
-    shippingAddress2: {
-        type: String,
-    },
-    city: {
-        type: String,
-        required: true,
-    },
-    zip: {
-        type: String,
-        required: true,
-    },
-    country: {
         type: String,
         required: true,
     },
@@ -34,7 +22,14 @@ const orderSchema = mongoose.Schema({
         required: true,
         default: 'Pending',
     },
+    isDelivery: {
+        type: Boolean,
+        required: true,
+    },
     totalPrice: {
+        type: Number,
+    },
+    totalQuantity: {
         type: Number,
     },
     user: {
