@@ -19,23 +19,25 @@ const OrderCard = (props) => {
 
     return (
         <TouchableOpacity style={styles.productContainer} onPress={() => props.navigation.navigate('Receipt', { order: order, ordersCount: ordersCount })}>
-            <Image
-                style={styles.coverImage}
-                source={{ uri: order.business.coverImage }}
-            />
-            <View style={{width: "70%", flexDirection: "row", justifyContent: "space-between"}}>
-                <View style={styles.contentContainer}>
-                    <Text style={styles.header}>{order.business.name.length < 15 ? order.business.name : order.business.name.substring(0, 14) + '...'}</Text>
-                    <View style={{ flexDirection: "row", width: "70%" }}>
-                        <Text style={styles.subText}>${order.totalPrice}</Text>
-                        <Text style={styles.subText}>{order.totalQuantity} {order.totalQuantity === 1 ? 'Item' : 'Items'}</Text>
+            <View style={styles.innerContainer}>
+                <Image
+                    style={styles.coverImage}
+                    source={{ uri: order.business.coverImage }}
+                />
+                <View style={{ width: "70%", flexDirection: "row", justifyContent: "space-between" }}>
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.header}>{order.business.name.length < 15 ? order.business.name : order.business.name.substring(0, 14) + '...'}</Text>
+                        <View style={{ flexDirection: "row", width: "70%" }}>
+                            <Text style={styles.subText}>${order.totalPrice}</Text>
+                            <Text style={styles.subText}>{order.totalQuantity} {order.totalQuantity === 1 ? 'Item' : 'Items'}</Text>
+                        </View>
+                        <Text style={styles.subText}>{formattedDate}</Text>
                     </View>
-                    <Text style={styles.subText}>{formattedDate}</Text>
-                </View>
-                <View style={styles.viewMenuContainer}>
-                    <TouchableOpacity style={styles.viewMenu} onPress={() => props.navigation.navigate('Business Page', menu[0])}>
-                        <Text style={{ fontSize: 16 }}>Menu</Text>
-                    </TouchableOpacity>
+                    <View style={styles.viewMenuContainer}>
+                        <TouchableOpacity style={styles.viewMenu} onPress={() => props.navigation.navigate('Business Page', menu[0])}>
+                            <Text style={{ fontSize: 16 }}>Menu</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -45,13 +47,15 @@ const OrderCard = (props) => {
 const styles = StyleSheet.create({
     productContainer: {
         width: '100%',
-        marginVertical: 10,
         paddingHorizontal: 15,
+        backgroundColor: 'white'
+    },
+    innerContainer: {
+        paddingVertical: 10,
+        borderBottomWidth: 0.4,
+        borderBottomColor: "grey",
         flexDirection: "row",
         alignItems: 'center',
-        backgroundColor: 'white',
-        borderBottomWidth: 0.4,
-        borderBottomColor: "grey"
     },
     coverImage: {
         height: width * 0.25,

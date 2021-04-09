@@ -72,7 +72,7 @@ const Orders = (props) => {
                 {
                   pendingOrders.length > 0 &&
                   <View style={{ backgroundColor: "white", marginTop: 10 }}>
-                    <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 17, marginBottom: 20 }}>Current</Text>
+                    <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 17, marginBottom: 10 }}>Current</Text>
                     {pendingOrders.map(order => {
                       return <OrderCard
                         navigation={props.navigation}
