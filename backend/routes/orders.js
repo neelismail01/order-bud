@@ -8,13 +8,25 @@ router.get(`/:userId`, async (req, res) => {
     const orderList = await Order.find({ "user": mongoose.Types.ObjectId(req.params.userId)})
     .populate({ 
         path: 'orderItems',
-        populate: { path: 'product' }
+        populate: { 
+            path: 'product', 
+            select: {
+                'name': 1,
+                'price': 1
+            }
+        }
     })
     .populate('user', 'name')
+    .populate('business', {
+        coverImage: 1,
+        name: 1
+    })
 
     if(!orderList) {
         res.status(500).json({success: false})
     }
+
+    console.log(orderList);
 
     res.send(orderList);
 })

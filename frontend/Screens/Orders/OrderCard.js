@@ -4,36 +4,50 @@ import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity } from 'rea
 var { width } = Dimensions.get("window");
 
 const OrderCard = (props) => {
-    const { totalPrice, totalQuantity, business, businesses, coverImage, date, order, ordersCount } = props;
+    const { businesses, order, ordersCount } = props;
 
-    const menu = businesses.filter(dispense => dispense.name === business);
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const date = order.dateOrdered.toString().substring(0, order.dateOrdered.toString().indexOf('T'));
+    let dateParts = date.split('-');
+    dateParts = dateParts.map(datePart => {
+        return parseInt(datePart);
+    })
+    const formattedDate = `${monthNames[dateParts[1]]} ${dateParts[2]}, ${dateParts[0]}`;
+
+    const menu = businesses.filter(dispense => dispense.name === order.business.name);
 
     return (
         <View>
-            <TouchableOpacity style={styles.productContainer} onPress={() => props.navigation.navigate('Receipt', {order: order, ordersCount: ordersCount})}>
+            <TouchableOpacity style={styles.productContainer} onPress={() => props.navigation.navigate('Receipt', { order: order, ordersCount: ordersCount })}>
                 <Image
                     style={styles.coverImage}
-                    source={{ uri: coverImage }}
+                    source={{ uri: order.business.coverImage }}
                 />
                 <View style={styles.productDetails}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={styles.title}>{business}</Text>
-                    </View>
+                    <Text style={styles.title}>{order.business.name}</Text>
                     <View style={{ marginVertical: 10 }}>
-                        <Text style={[styles.subText, {marginBottom: 5}]}>${totalPrice} • {totalQuantity} Items</Text>
-                        <Text style={[styles.subText ,{marginTop: 2}]}>April 7, 2021</Text>
+                        <Text style={[styles.subText, { marginBottom: 5 }]}>${order.totalPrice} • {order.totalQuantity} {order.totalQuantity === 1 ? 'Item' : 'Items'}</Text>
+                        <Text style={[styles.subText, { marginTop: 2 }]}>{formattedDate}</Text>
                     </View>
                 </View>
-                <TouchableOpacity 
-                    style={styles.viewMenu} onPress={() => props.navigation.navigate('Business Page', menu[0])}>
-                    <Text>View Menu</Text>
-                </TouchableOpacity>
+                <View>
+                    <TouchableOpacity
+                        style={styles.viewMenu} onPress={() => props.navigation.navigate('Business Page', menu[0])}>
+                        <Text>View Menu</Text>
+                    </TouchableOpacity>
+                </View>
             </TouchableOpacity>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    coverImage: {
+        marginLeft: 17,
+        height: "100%",
+        width: "25%"
+    },
     productContainer: {
         width: '100%',
         marginVertical: 1,
@@ -47,9 +61,6 @@ const styles = StyleSheet.create({
         borderBottomColor: "grey"
     },
     productDetails: {
-        flexGrow: 1,
-        flexWrap: "wrap",
-        flex: 1,
         marginLeft: 25,
     },
     title: {
@@ -59,11 +70,6 @@ const styles = StyleSheet.create({
     subText: {
         color: "grey",
         fontWeight: "bold"
-    },
-    coverImage: {
-        marginLeft: 17,
-        height: "100%",
-        width: "27%"
     },
     viewMenu: {
         backgroundColor: "#E8E8E8",
