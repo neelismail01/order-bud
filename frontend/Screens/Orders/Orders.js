@@ -63,7 +63,7 @@ const Orders = (props) => {
     <>
       {
         loading === false ?
-          <View style={{ backgroundColor: "white" }}>
+          <View style={{ backgroundColor: "white", height: height, flex: 1 }}>
             <SafeAreaView>
               <ScrollView>
                 <View style={styles.headerContainer}>
@@ -72,7 +72,7 @@ const Orders = (props) => {
                 {
                   pendingOrders.length > 0 &&
                   <View style={{ backgroundColor: "white", marginTop: 10 }}>
-                    <Text style={{ fontSize: 21, fontWeight: "bold", marginLeft: 17 }}>Current</Text>
+                    <Text style={{ fontSize: 24, fontWeight: "bold", marginLeft: 17, marginBottom: 20 }}>Current</Text>
                     {pendingOrders.map(order => {
                       return <OrderCard
                         navigation={props.navigation}
