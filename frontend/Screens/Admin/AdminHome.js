@@ -42,7 +42,7 @@ const AdminHome = (props) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
-        height: height,
+        height: height
     },
     businessCoverPhoto: {
         backgroundColor: "grey",
