@@ -13,20 +13,37 @@ const { width, height } = Dimensions.get("window")
 const AdminHome = (props) => {
     const [business, setBusiness] = useState();
     const [loading, setLoading] = useState(true);
+    const [orders, setOrders] = useState([]);
+    const [salesVolume, setSalesVolume] = useState();
+    const [orderVolume, setOrderVolume] = useState();
 
     const userId = useSelector(selectUserId);
 
     useFocusEffect(
         useCallback(() => {
+
+            // Get business details
             axios.get(`${baseURL}businesses/${userId}`)
-            .then(res => {
-                setBusiness(res.data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.log(err);
-                console.log('error occurred retrieving business details')
-            })
+                .then(res => {
+                    setBusiness(res.data);
+
+                    // Get key metrics
+                    axios.get(`${baseURL}orders/business/${res.data.id}`)
+                        .then(res => {
+                            setOrders(res.data.orders);
+                            setSalesVolume(res.data.salesVolume);
+                            setOrderVolume(res.data.orderVolume);
+                            setLoading(false);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            console.log('error occurred retrieving business details')
+                        })
+                })
+                .catch(err => {
+                    console.log(err);
+                    console.log('error occurred retrieving business details')
+                })
         }, [])
     )
 
@@ -45,11 +62,11 @@ const AdminHome = (props) => {
                                 <View style={styles.metricsContainer}>
                                     <View style={[styles.salesVolume, styles.metrics]}>
                                         <Text style={styles.metricsIntroText}>Sales Volume</Text>
-                                        <Text style={styles.metricsMainText}>$1500</Text>
+                                        <Text style={styles.metricsMainText}>{`$${salesVolume.toFixed(2)}`}</Text>
                                     </View>
                                     <View style={[styles.orderVolume, styles.metrics]}>
                                         <Text style={styles.metricsIntroText}>Order Volume</Text>
-                                        <Text style={styles.metricsMainText}>45 Orders</Text>
+                                        <Text style={styles.metricsMainText}>{`${orderVolume}`}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -115,12 +132,18 @@ const styles = StyleSheet.create({
     salesVolume: {
         borderTopLeftRadius: 5,
         borderBottomLeftRadius: 5,
-        borderRightWidth: 1.25,
-        borderRightColor: "rgba(11, 156, 49, 1)"
+        borderTopWidth: 1.25,
+        borderBottomWidth: 1.25,
+        borderLeftWidth: 1.25,
+        borderColor: "rgba(11, 156, 49, 1)"
     },
     orderVolume: {
         borderTopRightRadius: 5,
-        borderBottomRightRadius: 5
+        borderBottomRightRadius: 5,
+        borderTopWidth: 1.25,
+        borderBottomWidth: 1.25,
+        borderRightWidth: 1.25,
+        borderColor: "rgba(11, 156, 49, 1)"
     },
     metricsIntroText: {
         color: "grey",
