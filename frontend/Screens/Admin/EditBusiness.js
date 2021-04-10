@@ -60,7 +60,6 @@ const EditBusiness = (props) => {
     }
 
     const handleUpdateBusiness = () => {
-        console.log(business);
         axios.put(`${baseURL}businesses/${business.id}`, { 
             coverPhoto: image,
             name: businessName,

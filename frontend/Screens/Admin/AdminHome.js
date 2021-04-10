@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
         height: 100,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "green",
         width: "50%"
     },
     salesVolume: {
@@ -124,11 +123,11 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 5
     },
     metricsIntroText: {
-        color: "white",
+        color: "grey",
         fontSize: 16
     },
     metricsMainText: {
-        color: "white",
+        color: "green",
         fontWeight: "bold",
         fontSize: 24
     },

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react"
 import { View, SafeAreaView, ScrollView, StyleSheet, Dimensions, Text, TouchableOpacity, TextInput, Platform, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Icon } from 'react-native-elements';
+import axios from 'axios';
+
+import baseURL from "../../assets/common/baseUrl";
 
 const { width, height } = Dimensions.get("window")
 
@@ -12,9 +15,8 @@ const AddProduct = (props) => {
     const [price, setPrice] = useState();
     const [stock, setStock] = useState();
     const [description, setDescription] = useState();
-    const [categorySearch, setCategorySearch] = useState();
+    const [categorySearch, setCategorySearch] = useState('');
     const [selectedCategory, setSelectedCategory] = useState();
-    const [categories, setCategories] = useState([]);
 
     const [productNameFocus, setProductNameFocus] = useState(false);
     const [brandFocus, setBrandFocus] = useState(false);
@@ -23,6 +25,8 @@ const AddProduct = (props) => {
     const [descriptionFocus, setDescriptionFocus] = useState(false);
     const [categorySearchFocus, setCategorySearchFocus] = useState(false);
 
+    const { business } = props.route.params;
+    const categories = business.categories.map(category => category.name);
 
     useEffect(() => {
         (async () => {
@@ -49,6 +53,25 @@ const AddProduct = (props) => {
             setImage(result.uri);
         }
     };
+
+    const handleAddItem = () => {
+        axios.post(`${baseURL}products`, { 
+            image: image,
+            name: productName,
+            brand,
+            price,
+            stock,
+            description,
+            category: selectedCategory,
+            business: business.id
+        })
+        .then(res => {
+            props.navigation.goBack();
+        })
+        .catch(err => {
+            console.log('error adding the item')
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -125,7 +148,23 @@ const AddProduct = (props) => {
                             </View>
                             <View style={styles.categoryTagsContainer}>
                                 {
+                                    categorySearch.length === 0
+                                    ?
                                     categories.map(category => {
+                                        return (
+                                            <TouchableOpacity
+                                                style={
+                                                    selectedCategory === category ?
+                                                    styles.selectedCategoryTag : styles.categoryTag
+                                                }
+                                                onPress={() => setSelectedCategory(category)}
+                                            >
+                                                <Text style={selectedCategory === category ? styles.selectedCategoryTagText : styles.categoryTagText}>{category}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })
+                                    :
+                                    categories.filter(category => category.includes(categorySearch)).map(category => {
                                         return (
                                             <TouchableOpacity
                                                 style={
@@ -145,7 +184,7 @@ const AddProduct = (props) => {
                 </ScrollView>
             </SafeAreaView>
             <View style={styles.button}>
-                <TouchableOpacity style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.buttonContainer} onPress={handleAddItem}>
                     <Text style={styles.buttonText}>Add Item</Text>
                 </TouchableOpacity>
             </View>
