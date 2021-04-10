@@ -1,42 +1,80 @@
-import React from "react"
-import { View, StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
+import React, { useState, useCallback } from "react"
+import { View, StyleSheet, Dimensions, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native'
+import axios from "axios";
+
+import { useSelector } from 'react-redux';
+import { selectUserId } from '../../Redux/userSlice';
+
+import baseURL from "../../assets/common/baseUrl";
 
 const { width, height } = Dimensions.get("window")
 
 const AdminHome = (props) => {
+    const [business, setBusiness] = useState();
+    const [loading, setLoading] = useState(true);
+
+    const userId = useSelector(selectUserId);
+
+    useFocusEffect(
+        useCallback(() => {
+            axios.get(`${baseURL}businesses/${userId}`)
+            .then(res => {
+                setBusiness(res.data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+                console.log('error occurred retrieving business details')
+            })
+        }, [])
+    )
+
     return (
-        <View style={styles.container}>
-            <View style={styles.businessCoverPhoto} />
-            <View style={{ padding: 15 }}>
-                <View style={styles.sectionContainer}>
-                    <Text style={[styles.header]}>Performance</Text>
-                    <View style={styles.metricsContainer}>
-                        <View style={[styles.salesVolume, styles.metrics]}>
-                            <Text style={styles.metricsIntroText}>Sales Volume</Text>
-                            <Text style={styles.metricsMainText}>$1500</Text>
-                        </View>
-                        <View style={[styles.orderVolume, styles.metrics]}>
-                        <Text style={styles.metricsIntroText}>Order Volume</Text>
-                            <Text style={styles.metricsMainText}>45 Orders</Text>
+        <>
+            {
+                loading === false ?
+                    <View style={styles.container}>
+                        <Image
+                            style={business.coverImage ? styles.businessCoverPhoto : styles.businessCoverPhotoPlaceholder}
+                            source={{ uri: business.coverImage }}
+                        />
+                        <View style={{ padding: 15 }}>
+                            <View style={styles.sectionContainer}>
+                                <Text style={[styles.header]}>Performance</Text>
+                                <View style={styles.metricsContainer}>
+                                    <View style={[styles.salesVolume, styles.metrics]}>
+                                        <Text style={styles.metricsIntroText}>Sales Volume</Text>
+                                        <Text style={styles.metricsMainText}>$1500</Text>
+                                    </View>
+                                    <View style={[styles.orderVolume, styles.metrics]}>
+                                        <Text style={styles.metricsIntroText}>Order Volume</Text>
+                                        <Text style={styles.metricsMainText}>45 Orders</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={styles.sectionContainer}>
+                                <Text style={[styles.header]}>Manage Your Business</Text>
+                                <View style={styles.actionsContainer}>
+                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Edit Business', { business })}>
+                                        <Text style={styles.actionText}>Edit Business</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Add Product', { business })}>
+                                        <Text style={styles.actionText}>Add Product</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Manage Products')}>
+                                        <Text style={styles.actionText}>View Products</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                         </View>
                     </View>
-                </View>
-                <View style={styles.sectionContainer}>
-                    <Text style={[styles.header]}>Manage Your Business</Text>
-                    <View style={styles.actionsContainer}>
-                        <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Edit Business')}>
-                            <Text style={styles.actionText}>Edit Business</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Add Product')}>
-                            <Text style={styles.actionText}>Add Product</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Manage Products')}>
-                            <Text style={styles.actionText}>Manage Products</Text>
-                        </TouchableOpacity>
+                    :
+                    <View style={{ backgroundColor: "#f2f2f2", justifyContent: "center", alignItems: "center" }}>
+                        <ActivityIndicator size="large" color="green" />
                     </View>
-                </View>
-            </View>
-        </View>
+            }
+        </>
     )
 }
 
@@ -46,6 +84,11 @@ const styles = StyleSheet.create({
         height: height
     },
     businessCoverPhoto: {
+        backgroundColor: "grey",
+        width: width,
+        height: height * 0.225,
+    },
+    businessCoverPhotoPlaceholder: {
         backgroundColor: "grey",
         width: width,
         height: height * 0.225,
@@ -97,7 +140,7 @@ const styles = StyleSheet.create({
     actionBox: {
         backgroundColor: "green",
         width: width * 0.3,
-        height: width * 0.2    ,
+        height: width * 0.2,
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 10,

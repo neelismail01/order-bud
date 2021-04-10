@@ -3,16 +3,22 @@ import { View, StyleSheet, Dimensions, Text, Switch, TouchableOpacity, TextInput
 import * as ImagePicker from 'expo-image-picker';
 import { Icon } from 'react-native-elements';
 
+import axios from 'axios';
+
+import baseURL from "../../assets/common/baseUrl";
+
 const { width, height } = Dimensions.get("window")
 
 const EditBusiness = (props) => {
-    const [image, setImage] = useState();
-    const [businessName, setBusinessName] = useState('');
-    const [address, setAddress] = useState('');
-    const [offerDelivery, setOfferDelivery] = useState(false);
-    const [offerPickup, setOfferPickup] = useState(false);
+    const { business } = props.route.params;
+
+    const [image, setImage] = useState(business && business.coverImage);
+    const [businessName, setBusinessName] = useState(business && business.name);
+    const [address, setAddress] = useState(business && business.address);
+    const [offerDelivery, setOfferDelivery] = useState(business ? business.delivery : false);
+    const [offerPickup, setOfferPickup] = useState(business ? business.pickup : false);
     const [category, setCategory] = useState('');
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState(business ? business.categories.map(category => category.name) : []);
 
     const [businessNameFocus, setBusinessNameFocus] = useState(false);
     const [addressFocus, setAddressFocus] = useState(false);
@@ -53,6 +59,25 @@ const EditBusiness = (props) => {
         setCategories(categories.filter(category => category !== categoryToRemove));
     }
 
+    const handleUpdateBusiness = () => {
+        console.log(business);
+        axios.put(`${baseURL}businesses/${business.id}`, { 
+            coverPhoto: image,
+            name: businessName,
+            address,
+            delivery: offerDelivery,
+            pickup: offerPickup,
+            categories,
+            rating: business.rating
+        })
+        .then(res => {
+            props.navigation.goBack();
+        })
+        .catch(err => {
+            console.log('error updating the business')
+        })
+    }
+
     return (
         <View style={styles.container}>
             <View>
@@ -69,7 +94,7 @@ const EditBusiness = (props) => {
                 <TextInput
                     placeholder="Business Name"
                     style={[styles.textInput, businessNameFocus && styles.focusInputStyle]}
-                    value={category}
+                    value={businessName}
                     onChangeText={text => setBusinessName(text)}
                     onFocus={() => setBusinessNameFocus(true)}
                     onBlur={() => setBusinessNameFocus(false)}
@@ -77,7 +102,7 @@ const EditBusiness = (props) => {
                 <TextInput
                     placeholder="Address"
                     style={[styles.textInput, addressFocus && styles.focusInputStyle]}
-                    value={category}
+                    value={address}
                     onChangeText={text => setAddress(text)}
                     onFocus={() => setAddressFocus(true)}
                     onBlur={() => setAddressFocus(false)}
@@ -136,7 +161,7 @@ const EditBusiness = (props) => {
                 </View>
             </View>
             <View style={styles.button}>
-                <TouchableOpacity style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.buttonContainer} onPress={handleUpdateBusiness}>
                     <Text style={styles.buttonText}>Update</Text>
                 </TouchableOpacity>
             </View>

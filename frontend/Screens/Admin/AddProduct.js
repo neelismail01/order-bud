@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { View, SafeAreaView, StyleSheet, Dimensions, Text, Switch, TouchableOpacity, TextInput, Platform, Image } from 'react-native';
+import { View, SafeAreaView, ScrollView, StyleSheet, Dimensions, Text, TouchableOpacity, TextInput, Platform, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Icon } from 'react-native-elements';
 
@@ -7,16 +7,22 @@ const { width, height } = Dimensions.get("window")
 
 const AddProduct = (props) => {
     const [image, setImage] = useState();
-    const [businessName, setBusinessName] = useState('');
-    const [address, setAddress] = useState('');
-    const [offerDelivery, setOfferDelivery] = useState(false);
-    const [offerPickup, setOfferPickup] = useState(false);
-    const [category, setCategory] = useState('');
+    const [productName, setProductName] = useState();
+    const [brand, setBrand] = useState();
+    const [price, setPrice] = useState();
+    const [stock, setStock] = useState();
+    const [description, setDescription] = useState();
+    const [categorySearch, setCategorySearch] = useState();
+    const [selectedCategory, setSelectedCategory] = useState();
     const [categories, setCategories] = useState([]);
 
-    const [businessNameFocus, setBusinessNameFocus] = useState(false);
-    const [addressFocus, setAddressFocus] = useState(false);
-    const [categoryFocus, setCategoryFocus] = useState(false);
+    const [productNameFocus, setProductNameFocus] = useState(false);
+    const [brandFocus, setBrandFocus] = useState(false);
+    const [priceFocus, setPriceFocus] = useState(false);
+    const [stockFocus, setStockFocus] = useState(false);
+    const [descriptionFocus, setDescriptionFocus] = useState(false);
+    const [categorySearchFocus, setCategorySearchFocus] = useState(false);
+
 
     useEffect(() => {
         (async () => {
@@ -44,102 +50,99 @@ const AddProduct = (props) => {
         }
     };
 
-    const addCategory = () => {
-        setCategories([...categories, category]);
-        setCategory('');
-    }
-
-    const removeCategory = (categoryToRemove) => {
-        setCategories(categories.filter(category => category !== categoryToRemove));
-    }
-
     return (
         <View style={styles.container}>
             <SafeAreaView>
-                <View style={styles.imageContainer}>
-                    <Image
-                        style={image ? styles.businessCoverPhoto : styles.businessCoverPhotoPlaceholder}
-                        source={{ uri: image }}
-                    />
-                    <TouchableOpacity style={styles.cameraIconContainer} onPress={pickImage}>
-                        <Icon name="camera" type="font-awesome-5" color="green" size={22} />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.businessDetails}>
-                    <TextInput
-                        placeholder="Product Name"
-                        style={[styles.textInput, businessNameFocus && styles.focusInputStyle]}
-                        value={category}
-                        onChangeText={text => setBusinessName(text)}
-                        onFocus={() => setBusinessNameFocus(true)}
-                        onBlur={() => setBusinessNameFocus(false)}
-                    />
-                    <TextInput
-                        placeholder="Brand"
-                        style={[styles.textInput, addressFocus && styles.focusInputStyle]}
-                        value={category}
-                        onChangeText={text => setAddress(text)}
-                        onFocus={() => setAddressFocus(true)}
-                        onBlur={() => setAddressFocus(false)}
-                    />
-                    <View style={styles.priceStockContainer}>
-                        <TextInput
-                            placeholder="Price"
-                            style={[styles.textInput, styles.priceStockInput, addressFocus && styles.focusInputStyle]}
-                            value={category}
-                            onChangeText={text => setAddress(text)}
-                            onFocus={() => setAddressFocus(true)}
-                            onBlur={() => setAddressFocus(false)}
+                <ScrollView contentContainerStyle={{height: height - 20}}>
+                    <View style={styles.imageContainer}>
+                        <Image
+                            style={image ? styles.businessCoverPhoto : styles.businessCoverPhotoPlaceholder}
+                            source={{ uri: image }}
                         />
-                        <TextInput
-                            placeholder="Number In Stock"
-                            style={[styles.textInput, styles.priceStockInput, addressFocus && styles.focusInputStyle]}
-                            value={category}
-                            onChangeText={text => setAddress(text)}
-                            onFocus={() => setAddressFocus(true)}
-                            onBlur={() => setAddressFocus(false)}
-                        />
+                        <TouchableOpacity style={styles.cameraIconContainer} onPress={pickImage}>
+                            <Icon name="camera" type="font-awesome-5" color="green" size={22} />
+                        </TouchableOpacity>
                     </View>
-                    <TextInput
-                        placeholder="Description"
-                        multiline={true}
-                        style={[styles.textInput, styles.descriptionInput, addressFocus && styles.focusInputStyle]}
-                        onChangeText={text => setAddress(text)}
-                        onFocus={() => setAddressFocus(true)}
-                        onBlur={() => setAddressFocus(false)}
-                    />
-                    <View style={styles.separator} />
-                    <View style={styles.categoriesContainer}>
-                        <Text style={styles.categoryHeaderText}>What category will this product fall under?</Text>
-                        <View style={styles.addCategoryInputContainer}>
+                    <View style={styles.businessDetails}>
+                        <TextInput
+                            placeholder="Product Name"
+                            style={[styles.textInput, productNameFocus && styles.focusInputStyle]}
+                            value={productName}
+                            onChangeText={text => setProductName(text)}
+                            onFocus={() => setProductNameFocus(true)}
+                            onBlur={() => setProductNameFocus(false)}
+                        />
+                        <TextInput
+                            placeholder="Brand"
+                            style={[styles.textInput, brandFocus && styles.focusInputStyle]}
+                            value={brand}
+                            onChangeText={text => setBrand(text)}
+                            onFocus={() => setBrandFocus(true)}
+                            onBlur={() => setBrandFocus(false)}
+                        />
+                        <View style={styles.priceStockContainer}>
                             <TextInput
-                                placeholder="Add Category"
-                                style={[styles.categoryTextInput, categoryFocus && styles.focusInputStyle]}
-                                value={category}
-                                onChangeText={text => setCategory(text)}
-                                onFocus={() => setCategoryFocus(true)}
-                                onBlur={() => setCategoryFocus(false)}
+                                placeholder="Price"
+                                style={[styles.textInput, styles.priceStockInput, priceFocus && styles.focusInputStyle]}
+                                value={price}
+                                onChangeText={text => setPrice(text)}
+                                onFocus={() => setPriceFocus(true)}
+                                onBlur={() => setPriceFocus(false)}
                             />
-                            <TouchableOpacity style={styles.addCategoryButton} onPress={addCategory}>
-                                <Text style={styles.addCategoryButtonText}>Add</Text>
-                            </TouchableOpacity>
+                            <TextInput
+                                placeholder="Number In Stock"
+                                style={[styles.textInput, styles.priceStockInput, stockFocus && styles.focusInputStyle]}
+                                value={stock}
+                                onChangeText={text => setStock(text)}
+                                onFocus={() => setStockFocus(true)}
+                                onBlur={() => setStockFocus(false)}
+                            />
                         </View>
-                        <View style={styles.categoryTagsContainer}>
-                            {
-                                categories.map(category => {
-                                    return (
-                                        <View style={styles.categoryTag}>
-                                            <Text style={styles.categoryTagText}>{category}</Text>
-                                            <TouchableOpacity style={{ marginLeft: 7.5 }} onPress={() => removeCategory(category)}>
-                                                <Icon name="times" type="font-awesome-5" color="green" size={16} />
+                        <TextInput
+                            placeholder="Description"
+                            multiline={true}
+                            style={[styles.textInput, styles.descriptionInput, descriptionFocus && styles.focusInputStyle]}
+                            value={description}
+                            onChangeText={text => setDescription(text)}
+                            onFocus={() => setDescriptionFocus(true)}
+                            onBlur={() => setDescriptionFocus(false)}
+                        />
+                        <View style={styles.separator} />
+                        <View style={styles.categoriesContainer}>
+                            <Text style={styles.categoryHeaderText}>What category will this product fall under?</Text>
+                            <View style={styles.addCategoryInputContainer}>
+                                <TextInput
+                                    placeholder="Search Categories"
+                                    style={[styles.categoryTextInput, categorySearchFocus && styles.focusInputStyle]}
+                                    value={categorySearch}
+                                    onChangeText={text => setCategorySearch(text)}
+                                    onFocus={() => setCategorySearchFocus(true)}
+                                    onBlur={() => setCategorySearchFocus(false)}
+                                />
+                                <TouchableOpacity style={styles.addCategoryButton}>
+                                    <Text style={styles.addCategoryButtonText}>Search</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.categoryTagsContainer}>
+                                {
+                                    categories.map(category => {
+                                        return (
+                                            <TouchableOpacity
+                                                style={
+                                                    selectedCategory === category ?
+                                                    styles.selectedCategoryTag : styles.categoryTag
+                                                }
+                                                onPress={() => setSelectedCategory(category)}
+                                            >
+                                                <Text style={selectedCategory === category ? styles.selectedCategoryTagText : styles.categoryTagText}>{category}</Text>
                                             </TouchableOpacity>
-                                        </View>
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
+                            </View>
                         </View>
                     </View>
-                </View>
+                </ScrollView>
             </SafeAreaView>
             <View style={styles.button}>
                 <TouchableOpacity style={styles.buttonContainer}>
@@ -270,7 +273,16 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     categoryTag: {
-        flexDirection: "row",
+        borderColor: "green",
+        borderWidth: 1.5,
+        borderRadius: 30,
+        padding: 10,
+        margin: 5,
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    selectedCategoryTag: {
+        backgroundColor: "green",
         borderColor: "green",
         borderWidth: 1.5,
         borderRadius: 30,
@@ -281,6 +293,11 @@ const styles = StyleSheet.create({
     },
     categoryTagText: {
         color: "green",
+        fontSize: 16,
+        fontWeight: "bold"
+    },
+    selectedCategoryTagText: {
+        color: "white",
         fontSize: 16,
         fontWeight: "bold"
     },
