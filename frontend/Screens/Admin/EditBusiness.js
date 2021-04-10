@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { View, StyleSheet, Dimensions, Text, Switch, TouchableOpacity, TextInput, Platform, ImageBackground, Image, TouchableWithoutFeedbackComponent } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, Switch, TouchableOpacity, TextInput, Platform, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Icon } from 'react-native-elements';
 
@@ -7,11 +7,15 @@ const { width, height } = Dimensions.get("window")
 
 const EditBusiness = (props) => {
     const [image, setImage] = useState();
+    const [businessName, setBusinessName] = useState('');
+    const [address, setAddress] = useState('');
     const [offerDelivery, setOfferDelivery] = useState(false);
     const [offerPickup, setOfferPickup] = useState(false);
     const [category, setCategory] = useState('');
     const [categories, setCategories] = useState([]);
 
+    const [businessNameFocus, setBusinessNameFocus] = useState(false);
+    const [addressFocus, setAddressFocus] = useState(false);
     const [categoryFocus, setCategoryFocus] = useState(false);
 
     useEffect(() => {
@@ -64,11 +68,19 @@ const EditBusiness = (props) => {
             <View style={styles.businessDetails}>
                 <TextInput
                     placeholder="Business Name"
-                    style={styles.textInput}
+                    style={[styles.textInput, businessNameFocus && styles.focusInputStyle]}
+                    value={category}
+                    onChangeText={text => setBusinessName(text)}
+                    onFocus={() => setBusinessNameFocus(true)}
+                    onBlur={() => setBusinessNameFocus(false)}
                 />
                 <TextInput
                     placeholder="Address"
-                    style={styles.textInput}
+                    style={[styles.textInput, addressFocus && styles.focusInputStyle]}
+                    value={category}
+                    onChangeText={text => setAddress(text)}
+                    onFocus={() => setAddressFocus(true)}
+                    onBlur={() => setAddressFocus(false)}
                 />
                 <View style={styles.separator} />
                 <View style={styles.switchContainer}>
@@ -154,7 +166,7 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     businessCoverPhotoPlaceholder: {
-        backgroundColor: "green",
+        backgroundColor: "grey",
         width: width,
         height: height * 0.225,
     },

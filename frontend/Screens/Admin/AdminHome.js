@@ -9,6 +9,7 @@ const AdminHome = (props) => {
             <View style={styles.businessCoverPhoto} />
             <View style={{ padding: 15 }}>
                 <View style={styles.sectionContainer}>
+                    <Text style={[styles.header]}>Performance</Text>
                     <View style={styles.metricsContainer}>
                         <View style={[styles.salesVolume, styles.metrics]}>
                             <Text style={styles.metricsIntroText}>Sales Volume</Text>
@@ -24,7 +25,7 @@ const AdminHome = (props) => {
                     <Text style={[styles.header]}>Manage Your Business</Text>
                     <View style={styles.actionsContainer}>
                         <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Edit Business')}>
-                            <Text style={styles.actionText}>Edit Your Business</Text>
+                            <Text style={styles.actionText}>Edit Business</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Add Product')}>
                             <Text style={styles.actionText}>Add Product</Text>
@@ -54,31 +55,30 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 28,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginLeft: 5
     },
     metricsContainer: {
         flexDirection: "row",
         width: "100%",
-        shadowColor: 'black',
-        shadowOffset: { width: 2, height: 2 },
-        shadowOpacity: 0.5
+        marginTop: 10
     },
     metrics: {
         height: 100,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "rgba(11, 156, 49, 0.7)",
+        backgroundColor: "green",
         width: "50%"
     },
     salesVolume: {
-        borderTopLeftRadius: 30,
-        borderBottomLeftRadius: 30,
-        borderRightWidth: 0.5,
-        borderRightColor: "green"
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderRightWidth: 1.25,
+        borderRightColor: "rgba(11, 156, 49, 1)"
     },
     orderVolume: {
-        borderTopRightRadius: 30,
-        borderBottomRightRadius: 30
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5
     },
     metricsIntroText: {
         color: "white",
@@ -95,9 +95,9 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     actionBox: {
-        backgroundColor: "grey",
+        backgroundColor: "green",
         width: width * 0.3,
-        height: width * 0.3,
+        height: width * 0.2    ,
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 10,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     actionText: {
         color: "white",
         textAlign: "center",
-        fontSize: 15,
+        fontSize: 17,
         fontWeight: "bold"
     }
 })
