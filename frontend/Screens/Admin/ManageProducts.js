@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react"
-import { SafeAreaView, StyleSheet, Dimensions, Text, View, ScrollView, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Dimensions, Text, View, ScrollView, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native'
 
 import axios from 'axios';
@@ -14,23 +14,34 @@ const ManageProducts = (props) => {
     const [topProducts, setTopProducts] = useState([]);
     const [currentProducts, setCurrentProducts] = useState();
     const [loading, setLoading] = useState(true);
+    const [filteredCategories, setFilteredCategories] = useState([]);
 
     useFocusEffect(
         useCallback(() => {
             axios.get(`${baseURL}products/topProducts/${business.id}`)
                 .then(res => {
                     setTopProducts(res.data);
-                    console.log(res.data);
                 })
-                .then(() => {
-                    axios.get(`${baseURL}products/${business.id}`)
-                        .then(res => {
-                            setCurrentProducts(res.data);
-                            setLoading(false);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        })
+                .catch(err => {
+                    console.log(err);
+                })
+
+            axios.get(`${baseURL}products/${business.id}`)
+                .then(res => {
+                    let filters = []
+
+                    for (let i = 0; i < business.categories.length; i++) {
+                        for (let j = 0; j < res.data.length; j++) {
+                            if (res.data[j].category.name === business.categories[i].name) {
+                                filters.push(business.categories[i]);
+                                break;
+                            }
+                        }
+                    }
+
+                    setFilteredCategories(filters);
+                    setCurrentProducts(res.data);
+                    setLoading(false);
                 })
                 .catch(err => {
                     console.log(err);
@@ -43,23 +54,20 @@ const ManageProducts = (props) => {
             {
                 loading === false ?
                     <View style={styles.container}>
-                        <SafeAreaView>
+                        <SafeAreaView style={styles.safeContainer}>
                             <ScrollView>
                                 {
                                     topProducts.length > 0 &&
-                                    <View style={styles.sectionContainer}>
-                                        <Text style={styles.topSellingHeader}>Your Top Selling Products</Text>
-                                        <ScrollView
-                                            horizontal={true}
-                                        >
+                                    <View>
+                                        <Text style={styles.header}>Your Top Selling Products</Text>
+                                        <ScrollView horizontal={true}>
                                             {
                                                 topProducts.map(topProduct => {
                                                     return (
-                                                        <View style={{ backgroundColor: "orange", height: 100, width: 200, marginRight: 5 }}>
-                                                            <Text style={{ color: "white", fontWeight: "bold" }}>{topProduct.product.name}</Text>
-                                                            <Text style={{ color: "white", fontWeight: "bold" }}>{topProduct.product.brand}</Text>
-                                                            <Text style={{ color: "white", fontWeight: "bold" }}>{topProduct.product.price}</Text>
-                                                            <Text style={{ color: "white", fontWeight: "bold" }}>{topProduct.count}</Text>
+                                                        <View style={styles.topProductsContainer}>
+                                                            <Text style={styles.productName}>{topProduct.product.name}</Text>
+                                                            <Text style={styles.subText}>{topProduct.product.brand}</Text>
+                                                            <Text style={styles.numberSold}>{topProduct.count} Sold</Text>
                                                         </View>
                                                     )
                                                 })
@@ -67,21 +75,46 @@ const ManageProducts = (props) => {
                                         </ScrollView>
                                     </View>
                                 }
-                                <View style={styles.sectionContainer}>
-                                    <Text style={styles.topSellingHeader}>Current Inventory</Text>
+                                <View>
+                                    <Text style={styles.header}>Current Inventory</Text>
                                     {
-                                        currentProducts.map(product => {
+                                        filteredCategories.map(category => {
                                             return (
-                                                <View style={{ backgroundColor: "orange", height: 100, width: 200, marginTop: 5 }}>
-                                                    <Text style={{ color: "white", fontWeight: "bold" }}>{product.name}</Text>
-                                                    <Text style={{ color: "white", fontWeight: "bold" }}>{product.brand}</Text>
-                                                    <Text style={{ color: "white", fontWeight: "bold" }}>{product.countInStock}</Text>
-                                                    <TouchableOpacity
-                                                        style={{ backgroundColor: "black" }}
-                                                        onPress={() => props.navigation.navigate('Edit Product', { business, product })}
-                                                    >
-                                                        <Text style={{ color: "white" }}>Edit</Text>
-                                                    </TouchableOpacity>
+                                                <View style={styles.categorySection}>
+                                                    <Text style={styles.categoryHeader}>{category.name}</Text>
+                                                    {
+                                                        currentProducts.map(product => {
+                                                            return (
+                                                                <View>
+                                                                    {
+                                                                        product.category.name === category.name &&
+                                                                        <View>
+                                                                            <View style={styles.currentProductsCard}>
+                                                                                <View style={styles.productDetailsContainer}>
+                                                                                    <Image
+                                                                                        style={product.image ? styles.productImage : styles.productImagePlaceholder}
+                                                                                        source={{ uri: product.image }}
+                                                                                    />
+                                                                                    <View style={{marginLeft: 10}}>
+                                                                                        <Text style={styles.productName}>{product.name}</Text>
+                                                                                        <Text style={styles.subText}>{product.brand}</Text>
+                                                                                        <Text style={[styles.subText, { fontWeight: "bold" }]}>{product.countInStock} In Stock</Text>
+                                                                                    </View>
+                                                                                </View>
+                                                                                <TouchableOpacity
+                                                                                    onPress={() => props.navigation.navigate('Edit Product', { business, product })}
+                                                                                    style={styles.editButtonContainer}
+                                                                                >
+                                                                                    <Text style={styles.editButtonText}>Edit</Text>
+                                                                                </TouchableOpacity>
+                                                                            </View>
+                                                                            <View style={styles.separator} />
+                                                                        </View>
+                                                                    }
+                                                                </View>
+                                                            )
+                                                        })
+                                                    }
                                                 </View>
                                             )
                                         })
@@ -100,18 +133,93 @@ const ManageProducts = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: "white",
-        height: height,
-        padding: 20
+        flex: 1,
+        paddingHorizontal: 15
     },
-    sectionContainer: {
-        marginVertical: 20
+    safeContainer: {
+        flex: 1
     },
-    topSellingHeader: {
-        fontSize: 24,
+    topProductsContainer: {
+        width: width * 0.5,
+        marginRight: 10,
+        padding: 10,
+        backgroundColor: '#fcfcfc',
+        shadowColor: '#a6a6a6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        marginTop: 10,
+        marginBottom: 40
+    },
+    header: {
+        marginTop: 20,
+        marginBottom: 10,
+        fontSize: 28,
+        fontWeight: "bold"
+    },
+    productName: {
+        fontSize: 18,
+        fontWeight: "bold"
+    },
+    subText: {
+        color: "grey",
+        fontSize: 18,
+        marginVertical: 5
+    },
+    numberSold: {
+        color: "green",
         fontWeight: "bold",
-        marginBottom: 10
+        fontSize: 18,
+    },
+    categorySection: {
+        marginVertical: 10
+    },
+    categoryHeader: {
+        fontSize: 22,
+        fontWeight: "bold",
+        marginBottom: 10,
+        color: "grey"
+    },
+    currentProductsCard: {
+        marginVertical: 10,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    productDetailsContainer: {
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    productImage: {
+        height: 100,
+        width: 100,
+        borderRadius: 5
+    },
+    productImagePlaceholder: {
+        height: 100,
+        width: 100,
+        borderRadius: 5,
+        backgroundColor: "grey"
+    },
+    editButtonContainer: {
+        backgroundColor: "black",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 5,
+        height: 40,
+        width: 60
+    },
+    editButtonText: {
+        color: "white",
+        fontSize: 15,
+        fontWeight: "bold"
+    },
+    separator: {
+        borderWidth: 0.75,
+        borderColor: "#d9d9d9",
+        marginBottom: 15
     }
 })
 
