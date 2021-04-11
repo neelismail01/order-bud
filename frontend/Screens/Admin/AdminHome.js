@@ -1,10 +1,14 @@
 import React, { useState, useCallback } from "react"
-import { View, StyleSheet, Dimensions, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, TouchableOpacity, Image, ActivityIndicator, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native'
 import axios from "axios";
 
 import { useSelector } from 'react-redux';
 import { selectUserId } from '../../Redux/userSlice';
+
+import Orders from './Orders';
+import Actions from './Actions';
+import Metrics from './Metrics';
 
 import baseURL from "../../assets/common/baseUrl";
 
@@ -30,16 +34,16 @@ const AdminHome = (props) => {
                 })
                 .then(businessId => {
                     axios.get(`${baseURL}orders/business/${businessId}`)
-                    .then(res => {
-                        setOrders(res.data.orders);
-                        setSalesVolume(res.data.salesVolume);
-                        setOrderVolume(res.data.orderVolume);
-                        setLoading(false);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        console.log('error occurred retrieving business details')
-                    })
+                        .then(res => {
+                            setOrders(res.data.orders);
+                            setSalesVolume(res.data.salesVolume);
+                            setOrderVolume(res.data.orderVolume);
+                            setLoading(false);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            console.log('error occurred retrieving business details')
+                        })
                 })
                 .catch(err => {
                     console.log(err);
@@ -53,39 +57,17 @@ const AdminHome = (props) => {
             {
                 loading === false ?
                     <View style={styles.container}>
-                        <Image
-                            style={business.coverImage ? styles.businessCoverPhoto : styles.businessCoverPhotoPlaceholder}
-                            source={{ uri: business.coverImage }}
-                        />
-                        <View style={{ padding: 15 }}>
-                            <View style={styles.sectionContainer}>
-                                <Text style={[styles.header]}>Performance</Text>
-                                <View style={styles.metricsContainer}>
-                                    <View style={[styles.salesVolume, styles.metrics]}>
-                                        <Text style={styles.metricsIntroText}>Sales Volume</Text>
-                                        <Text style={styles.metricsMainText}>{`$${salesVolume.toFixed(2)}`}</Text>
-                                    </View>
-                                    <View style={[styles.orderVolume, styles.metrics]}>
-                                        <Text style={styles.metricsIntroText}>Order Volume</Text>
-                                        <Text style={styles.metricsMainText}>{`${orderVolume}`}</Text>
-                                    </View>
-                                </View>
+                        <ScrollView>
+                            <Image
+                                style={business.coverImage ? styles.businessCoverPhoto : styles.businessCoverPhotoPlaceholder}
+                                source={{ uri: business.coverImage }}
+                            />
+                            <View style={{ padding: 10 }}>
+                                <Metrics salesVolume={salesVolume} orderVolume={orderVolume} />
+                                <Actions navigation={props.navigation} business={business} />
+                                <Orders orders={orders} />
                             </View>
-                            <View style={styles.sectionContainer}>
-                                <Text style={[styles.header]}>Manage Your Business</Text>
-                                <View style={styles.actionsContainer}>
-                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Edit Business', { business })}>
-                                        <Text style={styles.actionText}>Edit Business</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Add Product', { business })}>
-                                        <Text style={styles.actionText}>Add Product</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Manage Products', { business })}>
-                                        <Text style={styles.actionText}>View Products</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        </View>
+                        </ScrollView>
                     </View>
                     :
                     <View style={{ backgroundColor: "#f2f2f2", justifyContent: "center", alignItems: "center" }}>
@@ -99,7 +81,8 @@ const AdminHome = (props) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
-        height: height
+        height: height,
+        flex: 1
     },
     businessCoverPhoto: {
         backgroundColor: "grey",
@@ -112,68 +95,12 @@ const styles = StyleSheet.create({
         height: height * 0.225,
     },
     sectionContainer: {
-        marginVertical: 15
+        marginBottom: 40
     },
     header: {
         fontSize: 28,
         fontWeight: "bold",
         marginLeft: 5
-    },
-    metricsContainer: {
-        flexDirection: "row",
-        width: "100%",
-        marginTop: 10
-    },
-    metrics: {
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: "50%"
-    },
-    salesVolume: {
-        borderTopLeftRadius: 5,
-        borderBottomLeftRadius: 5,
-        borderTopWidth: 1.25,
-        borderBottomWidth: 1.25,
-        borderLeftWidth: 1.25,
-        borderColor: "rgba(11, 156, 49, 1)"
-    },
-    orderVolume: {
-        borderTopRightRadius: 5,
-        borderBottomRightRadius: 5,
-        borderTopWidth: 1.25,
-        borderBottomWidth: 1.25,
-        borderRightWidth: 1.25,
-        borderColor: "rgba(11, 156, 49, 1)"
-    },
-    metricsIntroText: {
-        color: "grey",
-        fontSize: 16
-    },
-    metricsMainText: {
-        color: "green",
-        fontWeight: "bold",
-        fontSize: 24
-    },
-    actionsContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 10
-    },
-    actionBox: {
-        backgroundColor: "green",
-        width: width * 0.3,
-        height: width * 0.2,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingHorizontal: 10,
-        borderRadius: 5
-    },
-    actionText: {
-        color: "white",
-        textAlign: "center",
-        fontSize: 17,
-        fontWeight: "bold"
     }
 })
 

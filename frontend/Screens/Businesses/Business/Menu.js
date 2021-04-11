@@ -6,8 +6,6 @@ import MenuCard from './MenuCard';
 
 const Menu = (props) => {
 
-    console.log(props.categories);
-
     return (
         <View style={styles.listContainer}>
             {props.categories.map(category => {
