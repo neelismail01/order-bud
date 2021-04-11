@@ -1,5 +1,6 @@
 const { Business } = require('../models/business');
 const { Category } = require('../models/category');
+const { User } = require('../models/user');
 
 const express = require('express');
 const router = express.Router();
@@ -43,16 +44,28 @@ router.get(`/`, async (req, res) => {
 })
 
 router.get('/:userId', async (req, res) => {
-    let business = await Business.find({"owner": mongoose.Types.ObjectId(req.params.userId)})
-    .populate('categories', {
-        'name': 1,
-        "_id": 0
-    })
+    const user = await User.findById(mongoose.Types.ObjectId(req.params.userId));
+    let business;
+
+    if (user.isAdmin) {
+        business = await Business.findOneAndUpdate(
+            { "owner": req.params.userId },
+            {   },
+            { upsert: true, new: true }
+        )
+        .populate('categories', {
+            'name': 1,
+            "_id": 0
+        })
+    } else {
+        return res.status(500).send({msg: "You are not a store owner"})
+    }
 
     if (!business) {
         return res.status(500).json({ message: 'The business with the given ID was not found.' })
     }
-    return res.status(200).send(business[0]);
+
+    return res.status(200).send(business);
 })
 
 router.post('/', multipleFieldUpload, async (req, res) => {

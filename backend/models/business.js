@@ -35,8 +35,8 @@ const businessSchema = mongoose.Schema({
         default: false
     },
     owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: 'User',
+        type: String,
+        required: true
     }
 })
 

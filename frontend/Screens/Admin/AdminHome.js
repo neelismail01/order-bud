@@ -49,7 +49,7 @@ const AdminHome = (props) => {
                         })
                         .catch(err => {
                             console.log(err);
-                            console.log('error occurred retrieving business details')
+                            console.log('error occurred retrieving orders for your business')
                         })
                 })
                 .catch(err => {
