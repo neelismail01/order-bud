@@ -4,7 +4,7 @@ import { useFocusEffect } from '@react-navigation/native'
 import axios from "axios";
 
 import { useSelector } from 'react-redux';
-import { selectUserId } from '../../Redux/userSlice';
+import { selectUserId, selectIsLoggedIn } from '../../Redux/userSlice';
 
 import Orders from './Orders';
 import Actions from './Actions';
@@ -22,7 +22,9 @@ const AdminHome = (props) => {
     const [orderVolume, setOrderVolume] = useState();
     const [reloadNums, setReloadNums] = useState(0);
 
-    const userId = useSelector(selectUserId);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+
+    const userId = isLoggedIn && useSelector(selectUserId);
 
     const handleSetReloadNums = () => {
         setReloadNums(reloadNums + 1);
@@ -87,7 +89,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
         height: height,
-        flex: 1
     },
     businessCoverPhoto: {
         backgroundColor: "grey",

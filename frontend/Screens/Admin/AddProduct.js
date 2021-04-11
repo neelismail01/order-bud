@@ -64,8 +64,8 @@ const AddProduct = (props) => {
             category: selectedCategory,
             business: business.id
         })
-            .then(res => {
-                props.navigation.navigate('Admin Home');
+            .then(() => {
+                props.navigation.goBack();
             })
             .catch(err => {
                 console.log('error adding the item')
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
         color: "#404040"
     },
     businessDetails: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         marginTop: 25
     },
     textInput: {

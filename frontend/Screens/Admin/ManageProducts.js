@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
         flex: 1,
-        paddingHorizontal: 15
+        paddingHorizontal: 10
     },
     safeContainer: {
         flex: 1
