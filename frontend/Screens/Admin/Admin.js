@@ -11,7 +11,7 @@ const Admin = (props) => {
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             {
                 isLoggedIn
                 ?

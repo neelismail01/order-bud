@@ -89,6 +89,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: "white",
         height: height,
+        flex: 1
     },
     createAccountButton: {
         backgroundColor: "green",

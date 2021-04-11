@@ -32,7 +32,8 @@ const Orders = (props) => {
 
 const styles = StyleSheet.create({
     sectionContainer: {
-        marginBottom: 25
+        marginBottom: 25,
+        flex: 1
     },
     header: {
         fontSize: 28,

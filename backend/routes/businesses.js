@@ -43,11 +43,8 @@ router.get(`/`, async (req, res) => {
 })
 
 router.get('/:userId', async (req, res) => {
-    let business = await Business.findOneAndUpdate(
-        { "name": "Hello" },
-        {  },
-        { upsert: true, new: true }
-    ).populate('categories', {
+    let business = await Business.find({"owner": mongoose.Types.ObjectId(req.params.userId)})
+    .populate('categories', {
         'name': 1,
         "_id": 0
     })
