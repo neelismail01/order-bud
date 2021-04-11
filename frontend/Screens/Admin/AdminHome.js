@@ -26,19 +26,20 @@ const AdminHome = (props) => {
             axios.get(`${baseURL}businesses/${userId}`)
                 .then(res => {
                     setBusiness(res.data);
-
-                    // Get key metrics
-                    axios.get(`${baseURL}orders/business/${res.data.id}`)
-                        .then(res => {
-                            setOrders(res.data.orders);
-                            setSalesVolume(res.data.salesVolume);
-                            setOrderVolume(res.data.orderVolume);
-                            setLoading(false);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            console.log('error occurred retrieving business details')
-                        })
+                    return res.data.id;
+                })
+                .then(businessId => {
+                    axios.get(`${baseURL}orders/business/${businessId}`)
+                    .then(res => {
+                        setOrders(res.data.orders);
+                        setSalesVolume(res.data.salesVolume);
+                        setOrderVolume(res.data.orderVolume);
+                        setLoading(false);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        console.log('error occurred retrieving business details')
+                    })
                 })
                 .catch(err => {
                     console.log(err);
@@ -79,7 +80,7 @@ const AdminHome = (props) => {
                                     <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Add Product', { business })}>
                                         <Text style={styles.actionText}>Add Product</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Manage Products')}>
+                                    <TouchableOpacity style={styles.actionBox} onPress={() => props.navigation.navigate('Manage Products', { business })}>
                                         <Text style={styles.actionText}>View Products</Text>
                                     </TouchableOpacity>
                                 </View>
