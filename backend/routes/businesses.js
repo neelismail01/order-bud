@@ -57,15 +57,15 @@ router.get('/:userId', async (req, res) => {
             'name': 1,
             "_id": 0
         })
-    } else {
-        return res.status(500).send({msg: "You are not a store owner"})
-    }
 
-    if (!business) {
-        return res.status(500).json({ message: 'The business with the given ID was not found.' })
-    }
+        if (!business) {
+            return res.status(500).json({ message: 'The business with the given ID was not found.' })
+        }
 
-    return res.status(200).send(business);
+        return res.status(200).send(business);
+    }
+    
+    return res.status(500).send({msg: "You are not a store owner"})
 })
 
 router.post('/', multipleFieldUpload, async (req, res) => {
