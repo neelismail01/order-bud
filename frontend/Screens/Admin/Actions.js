@@ -24,64 +24,13 @@ const AdminHome = (props) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "white",
-        height: height,
-        flex: 1
-    },
-    businessCoverPhoto: {
-        backgroundColor: "grey",
-        width: width,
-        height: height * 0.225,
-    },
-    businessCoverPhotoPlaceholder: {
-        backgroundColor: "grey",
-        width: width,
-        height: height * 0.225,
-    },
     sectionContainer: {
-        marginBottom: 40
+        marginBottom: 50
     },
     header: {
         fontSize: 28,
         fontWeight: "bold",
         marginLeft: 5
-    },
-    metricsContainer: {
-        flexDirection: "row",
-        width: "100%",
-        marginTop: 10
-    },
-    metrics: {
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: "50%"
-    },
-    salesVolume: {
-        borderTopLeftRadius: 5,
-        borderBottomLeftRadius: 5,
-        borderTopWidth: 1.25,
-        borderBottomWidth: 1.25,
-        borderLeftWidth: 1.25,
-        borderColor: "rgba(11, 156, 49, 1)"
-    },
-    orderVolume: {
-        borderTopRightRadius: 5,
-        borderBottomRightRadius: 5,
-        borderTopWidth: 1.25,
-        borderBottomWidth: 1.25,
-        borderRightWidth: 1.25,
-        borderColor: "rgba(11, 156, 49, 1)"
-    },
-    metricsIntroText: {
-        color: "grey",
-        fontSize: 16
-    },
-    metricsMainText: {
-        color: "green",
-        fontWeight: "bold",
-        fontSize: 24
     },
     actionsContainer: {
         flexDirection: "row",
@@ -89,16 +38,21 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     actionBox: {
-        backgroundColor: "green",
+        borderColor: "green",
+        borderWidth: 1,
         width: width * 0.3,
         height: width * 0.2,
         justifyContent: "center",
         alignItems: "center",
         paddingHorizontal: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        backgroundColor: '#fcfcfc',
+        shadowColor: '#a6a6a6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5
     },
     actionText: {
-        color: "white",
+        color: "green",
         textAlign: "center",
         fontSize: 17,
         fontWeight: "bold"

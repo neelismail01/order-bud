@@ -22,7 +22,12 @@ const AdminHome = (props) => {
 
 const styles = StyleSheet.create({
     sectionContainer: {
-        marginBottom: 40
+        marginTop: 10,
+        marginBottom: 50,
+        backgroundColor: '#fcfcfc',
+        shadowColor: '#a6a6a6',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5
     },
     header: {
         fontSize: 28,
@@ -46,7 +51,8 @@ const styles = StyleSheet.create({
         borderTopWidth: 1.25,
         borderBottomWidth: 1.25,
         borderLeftWidth: 1.25,
-        borderColor: "rgba(11, 156, 49, 1)"
+        borderColor: "rgba(11, 156, 49, 1)",
+        borderRightWidth: 1.5
     },
     orderVolume: {
         borderTopRightRadius: 5,

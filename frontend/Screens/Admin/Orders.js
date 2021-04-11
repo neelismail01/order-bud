@@ -9,12 +9,12 @@ const Orders = (props) => {
 
     return (
         <View style={styles.sectionContainer}>
-            <Text style={[styles.header, { marginBottom: 10 }]}>Orders To Your Business</Text>
+            <Text style={[styles.header, { marginBottom: 10 }]}>Orders</Text>
             <Text style={[styles.subHeader, { marginBottom: 10 }]}>Pending Orders</Text>
             {
                 props.orders.filter(order => order.status === 'Pending').map(order => {
                     return (
-                        <OrderCard order={order} />
+                        <OrderCard order={order} handleSetReloadNums={props.handleSetReloadNums} />
                     )
                 })
             }
@@ -22,7 +22,7 @@ const Orders = (props) => {
             {
                 props.orders.filter(order => order.status === 'Completed').map(order => {
                     return (
-                        <OrderCard order={order} />
+                        <OrderCard order={order} handleSetReloadNums={props.handleSetReloadNums} />
                     )
                 })
             }

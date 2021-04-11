@@ -9,6 +9,9 @@ const OrderCard = (props) => {
 
     const handleMarkComplete = () => {
         axios.put(`${baseURL}orders/${props.order.id}`, { status: 'Completed' })
+        .then(() => {
+            props.handleSetReloadNums()
+        })
     }
 
     const handleShowItems = () => {

@@ -20,8 +20,13 @@ const AdminHome = (props) => {
     const [orders, setOrders] = useState([]);
     const [salesVolume, setSalesVolume] = useState();
     const [orderVolume, setOrderVolume] = useState();
+    const [reloadNums, setReloadNums] = useState(0);
 
     const userId = useSelector(selectUserId);
+
+    const handleSetReloadNums = () => {
+        setReloadNums(reloadNums + 1);
+    }
 
     useFocusEffect(
         useCallback(() => {
@@ -49,7 +54,7 @@ const AdminHome = (props) => {
                     console.log(err);
                     console.log('error occurred retrieving business details')
                 })
-        }, [])
+        }, [reloadNums])
     )
 
     return (
@@ -65,7 +70,7 @@ const AdminHome = (props) => {
                             <View style={{ padding: 10 }}>
                                 <Metrics salesVolume={salesVolume} orderVolume={orderVolume} />
                                 <Actions navigation={props.navigation} business={business} />
-                                <Orders orders={orders} />
+                                <Orders orders={orders} handleSetReloadNums={handleSetReloadNums} />
                             </View>
                         </ScrollView>
                     </View>
