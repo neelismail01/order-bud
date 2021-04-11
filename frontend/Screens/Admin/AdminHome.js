@@ -21,6 +21,7 @@ const AdminHome = (props) => {
     const [salesVolume, setSalesVolume] = useState();
     const [orderVolume, setOrderVolume] = useState();
     const [reloadNums, setReloadNums] = useState(0);
+    const [noAccount, setNoAccount] = useState(false);
 
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -32,7 +33,6 @@ const AdminHome = (props) => {
 
     useFocusEffect(
         useCallback(() => {
-
             // Get business details
             axios.get(`${baseURL}businesses/${userId}`)
                 .then(res => {
@@ -77,7 +77,7 @@ const AdminHome = (props) => {
                         </ScrollView>
                     </View>
                     :
-                    <View style={{ backgroundColor: "#f2f2f2", justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ backgroundColor: "#f2f2f2", justifyContent: "center", alignItems: "center", height: height }}>
                         <ActivityIndicator size="large" color="green" />
                     </View>
             }
@@ -90,6 +90,16 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         height: height,
     },
+    createAccountButton: {
+        backgroundColor: "green",
+        width: 150,
+        height: 40
+    },
+    createAccountButtonText: {
+        color: "white",
+        fontSize: 18,
+        fontWeight: "bold"
+    },
     businessCoverPhoto: {
         backgroundColor: "grey",
         width: width,
@@ -99,14 +109,6 @@ const styles = StyleSheet.create({
         backgroundColor: "grey",
         width: width,
         height: height * 0.225,
-    },
-    sectionContainer: {
-        marginBottom: 40
-    },
-    header: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginLeft: 5
     }
 })
 
