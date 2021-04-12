@@ -180,7 +180,6 @@ router.put('/:productId', uploadOptions.single('image'), async (req, res) => {
             description: req.body.description,
             category: mongoose.Types.ObjectId(category._id),
             business: mongoose.Types.ObjectId(req.body.business),
-            showOnMenu: req.body.showOnMenu
         },
         { new: true }
     )

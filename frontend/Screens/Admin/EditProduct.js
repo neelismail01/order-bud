@@ -20,6 +20,8 @@ const EditProduct = (props) => {
     const [description, setDescription] = useState(product.description);
     const [selectedCategory, setSelectedCategory] = useState(product.category.name);
 
+    const [imageUploaded, setImageUploaded] = useState(false);
+
     const [productNameFocus, setProductNameFocus] = useState(false);
     const [brandFocus, setBrandFocus] = useState(false);
     const [priceFocus, setPriceFocus] = useState(false);
@@ -52,6 +54,7 @@ const EditProduct = (props) => {
 
         if (!result.cancelled) {
             setImage(result.uri);
+            setImageUploaded(true);
         }
     };
 
@@ -60,11 +63,13 @@ const EditProduct = (props) => {
 
         const newImageUri = "file:///" + image.split("file:/").join("");
 
-        formData.append('image', {
-            uri: newImageUri,
-            type: mime.getType(newImageUri),
-            name: newImageUri.split('/').pop()
-        });
+        if (imageUploaded) {
+            formData.append('image', {
+                uri: newImageUri,
+                type: mime.getType(newImageUri),
+                name: newImageUri.split('/').pop()
+            });
+        }
         formData.append('name', productName);
         formData.append('brand', brand);
         formData.append('price', price);
