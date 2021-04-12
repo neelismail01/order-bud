@@ -12,10 +12,6 @@ const ItemDetails = (props) => {
             </View>
             <View style={styles.subItemDetailsContainer}>
                 <Text style={styles.subItemDetailsText}>{brand}</Text>
-                <Text style={styles.subItemDetailsText}>·</Text>
-                <Text style={styles.subItemDetailsText}>15% THC</Text>
-                <Text style={styles.subItemDetailsText}>·</Text>
-                <Text style={styles.subItemDetailsText}>0.2% CBD</Text>
             </View>
             <Text style={styles.itemDescription}>{description}</Text>
         </View>
