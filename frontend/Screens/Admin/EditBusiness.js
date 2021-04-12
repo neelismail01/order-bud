@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react"
 import { View, StyleSheet, Dimensions, Text, Switch, TouchableOpacity, TextInput, Platform, Image } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Icon } from 'react-native-elements';
-
 import axios from 'axios';
+import mime from 'mime';
 
 import baseURL from "../../assets/common/baseUrl";
 
@@ -60,15 +60,24 @@ const EditBusiness = (props) => {
     }
 
     const handleUpdateBusiness = () => {
-        axios.put(`${baseURL}businesses/${business.id}`, { 
-            coverPhoto: image,
-            name: businessName,
-            address,
-            delivery: offerDelivery,
-            pickup: offerPickup,
-            categories,
-            rating: business.rating
-        })
+        let formData = new FormData();
+
+        const newImageUri = "file:///" + image.split("file:/").join("");
+
+        formData.append('image', {
+            uri: newImageUri,
+            type: mime.getType(newImageUri),
+            name: newImageUri.split('/').pop()
+        });
+        formData.append('name', businessName);
+        formData.append('address', address);
+        formData.append('delivery', offerDelivery);
+        formData.append('pickup', offerPickup);
+        formData.append('categories', JSON.stringify(categories));
+
+        console.log(categories);
+
+        axios.put(`${baseURL}businesses/${business.id}`, formData)
         .then(() => {
             props.navigation.goBack();
         })
