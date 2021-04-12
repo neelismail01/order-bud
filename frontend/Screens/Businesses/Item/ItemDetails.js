@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
-        paddingHorizontal: 20,
+        paddingHorizontal: 15,
     },
     itemNameContainer: {
         alignItems: "center",
@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
     },
     subItemDetailsText: {
         color: "grey",
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: "bold",
         padding: 5
     },
     itemDescription: {
-        fontSize: 16,
+        fontSize: 18,
         color: "grey",
         marginTop: 10
     }

@@ -163,7 +163,7 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
         const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`;
         imagePath = `${basePath}${fileName}`;
     } else {
-        imagePath = business.coverPhoto
+        imagePath = business.coverImage
     }
 
     const updatedBusiness = await Business.findByIdAndUpdate(

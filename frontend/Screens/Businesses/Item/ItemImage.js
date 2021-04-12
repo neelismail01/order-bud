@@ -5,15 +5,8 @@ import { Icon } from 'react-native-elements';
 var { height, width } = Dimensions.get("window");
 
 const ItemImage = (props) => {
-    const [imageWidth, setImageWidth] = useState();
-    const [aspectRatio, setAspectRatio] = useState();
 
     const { image } = props;
-
-    Image.getSize(image, (width, height) => {
-        setAspectRatio(parseInt((height / width).toFixed(2)));
-    })
-
 
     return (
         <View>
@@ -35,11 +28,7 @@ const ItemImage = (props) => {
 
 const styles = StyleSheet.create({
     cartBackBtn: {
-        position: "absolute",
         zIndex: 100,
-        backgroundColor: "white",
-        borderColor: "black",
-        borderWidth: 1,
         height: 50,
         width: 50,
         top: 10,
@@ -53,11 +42,13 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderTopRightRadius: 15,
         borderTopLeftRadius: 15,
-        marginBottom: 20
+        marginBottom: 10,
+        padding: 15
     },
     image: {
-        width: width,
-        height: 300
+        width: width - 30,
+        height: 300,
+        borderRadius: 5
     }
 });
 
