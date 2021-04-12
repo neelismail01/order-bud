@@ -2,12 +2,12 @@ import React from "react";
 import { View } from "react-native";
 
 import LoginPrompt from './LoginPrompt';
-import AdminHome from './AdminHome';
+import Orders from './Orders';
 
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../Redux/userSlice";
 
-const Admin = (props) => {
+const OrderHome = (props) => {
     const isLoggedIn = useSelector(selectIsLoggedIn);
 
     return (
@@ -15,7 +15,7 @@ const Admin = (props) => {
             {
                 isLoggedIn
                 ?
-                <AdminHome navigation={props.navigation} />
+                <Orders navigation={props.navigation} />
                 :
                 <LoginPrompt />
             }
@@ -23,4 +23,4 @@ const Admin = (props) => {
     )
 }
 
-export default Admin;
+export default OrderHome;

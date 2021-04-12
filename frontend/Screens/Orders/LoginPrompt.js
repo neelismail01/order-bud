@@ -5,7 +5,7 @@ const LoginPrompt = (props) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.prompt}>Please Login To Your Account To View Your Business</Text>
+            <Text style={styles.prompt}>Please Login To Your Account To View Your Orders</Text>
         </SafeAreaView>
     )
 }
