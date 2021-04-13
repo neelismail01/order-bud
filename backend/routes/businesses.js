@@ -165,6 +165,7 @@ router.put('/:id', uploadOptions.single('image'), async (req, res) => {
     } else {
         imagePath = business.coverImage
     }
+    console.log(req.body.pickup);
 
     const updatedBusiness = await Business.findByIdAndUpdate(
         mongoose.Types.ObjectId(req.params.id),

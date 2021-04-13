@@ -29,6 +29,14 @@ const businessSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
+    delivery: {
+        type: Boolean,
+        default: false,
+    },
+    pickup: {
+        type: Boolean,
+        default: false,
+    },
     categories: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
