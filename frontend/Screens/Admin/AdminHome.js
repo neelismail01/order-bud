@@ -4,6 +4,8 @@ import { useFocusEffect } from '@react-navigation/native'
 import axios from "axios";
 
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setBusinessAddress } from '../../Redux/businessSlice';
 import { selectUserId, selectIsLoggedIn } from '../../Redux/userSlice';
 
 import Orders from './Orders';
@@ -21,9 +23,9 @@ const AdminHome = (props) => {
     const [salesVolume, setSalesVolume] = useState();
     const [orderVolume, setOrderVolume] = useState();
     const [reloadNums, setReloadNums] = useState(0);
-    const [noAccount, setNoAccount] = useState(false);
 
     const isLoggedIn = useSelector(selectIsLoggedIn);
+    const dispatch = useDispatch();
 
     const userId = isLoggedIn && useSelector(selectUserId);
 
@@ -37,6 +39,14 @@ const AdminHome = (props) => {
             axios.get(`${baseURL}businesses/${userId}`)
                 .then(res => {
                     setBusiness(res.data);
+                    if (res.data.address !== undefined) {
+                        dispatch(setBusinessAddress({
+                            fullAddress: res.data.address.fullAddress,
+                            mainText: res.data.address.mainText,
+                            secondaryText: res.data.address.secondaryText,
+                            placeId: res.data.address.placeId
+                        }))
+                    }
                     return res.data.id;
                 })
                 .then(businessId => {

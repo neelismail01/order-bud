@@ -91,6 +91,8 @@ router.post('/register', async (req, res) => {
         return res.status(400).send('A user with this email already exists');
     }
 
+    console.log(req.body.address);
+
     let user = new User({
         name: req.body.name,
         email: req.body.email,

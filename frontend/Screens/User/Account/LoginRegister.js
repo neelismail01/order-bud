@@ -64,6 +64,10 @@ const LoginRegister = (props) => {
         }
     }
 
+    const goBack = () => {
+        setRegisterStep(1);
+    }
+
     const handleAddAddress = () => {
         axios.post(`${baseURL}users/register`, { 
             email: userInfo.email,
@@ -111,7 +115,7 @@ const LoginRegister = (props) => {
                                     ?
                                     <Register handleRegister={handleRegister} registerStep={registerStep} />
                                     :
-                                    <AddAddress handleAddAddress={handleAddAddress} navigation={props.navigation} />
+                                    <AddAddress handleAddAddress={handleAddAddress} navigation={props.navigation} goBack={goBack} />
                             )
                     }
                     {error.length > 0 && <ErrorMessage error={error} />}

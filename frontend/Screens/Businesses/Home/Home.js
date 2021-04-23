@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     elevation: 8,
-    paddingVertical: 15
+    paddingVertical: 15,
+    paddingHorizontal: 5
   },
   center: {
     justifyContent: 'center',

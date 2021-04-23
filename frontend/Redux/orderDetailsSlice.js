@@ -23,13 +23,18 @@ export const clearAddress = () => {
 
 
 // REDUCER
-const initialState = {delivery: true};
+const initialState = { delivery: true };
 export const orderDetailsReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_ADDRESS:
             return {
                 ...state,
-                address: action.payload
+                address: {
+                    fullAddress: action.payload.fullAddress,
+                    mainText: action.payload.mainText,
+                    secondaryText: action.payload.secondaryText,
+                    placeId: action.payload.placeId
+                }
             }
         case SET_IS_DELIVERY:
             return {
@@ -37,7 +42,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
                 delivery: action.payload
             }
         case CLEAR_ADDRESS:
-            return state = {delivery: true}
+            return state = { delivery: true }
     }
     return state;
 }

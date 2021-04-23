@@ -6,8 +6,8 @@ const businessSchema = mongoose.Schema({
         default: '',
     },
     address: {
-        type: String,
-        default: ''
+        type: Object,
+        default: {}
     },
     coverImage: {
         type: String,

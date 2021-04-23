@@ -4,9 +4,9 @@ import { Icon } from 'react-native-elements';
 import axios from 'axios';
 
 import { useDispatch } from 'react-redux';
-import { setAddress } from '../../../Redux/orderDetailsSlice';
+import { setBusinessAddress } from '../../Redux/businessSlice';
 
-import { googlePlacesApiKey } from "../../../assets/common/api_key";
+import { googlePlacesApiKey } from "../../assets/common/api_key";
 
 const EnterAddress = (props) => {
     const [dest, setDest] = useState('');
@@ -15,7 +15,7 @@ const EnterAddress = (props) => {
     const dispatch = useDispatch();
 
     const handleAddAddress = (prediction) => {
-        dispatch(setAddress({
+        dispatch(setBusinessAddress({
             fullAddress: prediction.description,
             mainText: prediction.structured_formatting.main_text,
             secondaryText: prediction.structured_formatting.secondary_text,
@@ -29,7 +29,6 @@ const EnterAddress = (props) => {
         try {
             const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googlePlacesApiKey}&input=${destination}`;
             const result = await axios.get(apiUrl);
-            console.log(result);
             setPredictions(result.data.predictions);
         } catch (err) {
             console.log(err);
