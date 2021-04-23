@@ -19,7 +19,6 @@ const EditBusiness = (props) => {
 
     const [image, setImage] = useState(business && business.coverImage);
     const [businessName, setBusinessName] = useState(business && business.name);
-    const [address, setAddress] = useState(businessAddress && businessAddress);
     const [offerDelivery, setOfferDelivery] = useState(business ? business.delivery : false);
     const [offerPickup, setOfferPickup] = useState(business ? business.pickup : false);
     const [category, setCategory] = useState('');
@@ -29,8 +28,6 @@ const EditBusiness = (props) => {
 
     const [businessNameFocus, setBusinessNameFocus] = useState(false);
     const [categoryFocus, setCategoryFocus] = useState(false);
-
-    console.log(address);
 
     useEffect(() => {
         (async () => {
@@ -79,13 +76,15 @@ const EditBusiness = (props) => {
             });
         }
         formData.append('name', businessName);
-        formData.append('fullAddress', address.fullAddress);
-        formData.append('mainText', address.mainText);
-        formData.append('secondaryText', address.secondaryText);
-        formData.append('placeId', address.placeId);
+        formData.append('fullAddress', businessAddress.fullAddress);
+        formData.append('addressPrimaryText', businessAddress.mainText);
+        formData.append('addressSecondaryText', businessAddress.secondaryText);
+        formData.append('addressPlaceId', businessAddress.placeId);
         formData.append('delivery', offerDelivery);
         formData.append('pickup', offerPickup);
         formData.append('categories', JSON.stringify(categories));
+
+        console.log(formData);
 
         axios.put(`${baseURL}businesses/${business.id}`, formData)
             .then(() => {
@@ -121,7 +120,7 @@ const EditBusiness = (props) => {
                     style={styles.textInput}
                     onFocus={() => props.navigation.navigate('Enter Address')}
                     placeholder="Address"
-                    value={address.fullAddress}
+                    value={businessAddress.fullAddress}
                 />
                 <View style={styles.separator} />
                 <View style={styles.switchContainer}>

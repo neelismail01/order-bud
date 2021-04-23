@@ -39,14 +39,12 @@ const AdminHome = (props) => {
             axios.get(`${baseURL}businesses/${userId}`)
                 .then(res => {
                     setBusiness(res.data);
-                    if (res.data.address !== undefined) {
-                        dispatch(setBusinessAddress({
-                            fullAddress: res.data.address.fullAddress,
-                            mainText: res.data.address.mainText,
-                            secondaryText: res.data.address.secondaryText,
-                            placeId: res.data.address.placeId
-                        }))
-                    }
+                    dispatch(setBusinessAddress({
+                        fullAddress: res.data.fullAddress,
+                        mainText: res.data.addressPrimaryText,
+                        secondaryText: res.data.addressSecondaryText,
+                        placeId: res.data.addressPlaceId
+                    }))
                     return res.data.id;
                 })
                 .then(businessId => {

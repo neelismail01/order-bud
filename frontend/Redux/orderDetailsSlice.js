@@ -31,9 +31,9 @@ export const orderDetailsReducer = (state = initialState, action) => {
                 ...state,
                 address: {
                     fullAddress: action.payload.fullAddress,
-                    mainText: action.payload.mainText,
-                    secondaryText: action.payload.secondaryText,
-                    placeId: action.payload.placeId
+                    mainText: action.payload.addressPrimaryText,
+                    secondaryText: action.payload.addressSecondaryText,
+                    placeId: action.payload.addressPlaceId
                 }
             }
         case SET_IS_DELIVERY:

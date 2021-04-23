@@ -40,10 +40,6 @@ const Profile = (props) => {
                     <Text style={styles.name}>{userDetails.name}</Text>
                 </View>
                 <View style={styles.categoryContainer}>
-                    <TouchableOpacity style={styles.category}onPress={() => props.navigation.navigate('Payment')}>
-                        <Icon name="wallet" type="font-awesome-5" color="black" size={30} />
-                        <Text style={styles.categoryText}>Payment</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity style={styles.category} onPress={() => props.navigation.navigate('Personal Information')}>
                         <Icon name="user" type="font-awesome-5" color="black" size={30} />
                         <Text style={styles.categoryText}>Personal Information</Text>

@@ -14,7 +14,7 @@ const AddAddress = (props) => {
                     style={styles.textInput}
                     onFocus={() => props.navigation.navigate('Enter Address')}
                     placeholder="Enter Address"
-                    value={address.fullAddress}
+                    value={address && address.fullAddress}
                 />
             </View>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => props.handleAddAddress()}>

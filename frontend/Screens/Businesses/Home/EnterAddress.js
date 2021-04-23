@@ -29,7 +29,6 @@ const EnterAddress = (props) => {
         try {
             const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${googlePlacesApiKey}&input=${destination}`;
             const result = await axios.get(apiUrl);
-            console.log(result);
             setPredictions(result.data.predictions);
         } catch (err) {
             console.log(err);

@@ -12,8 +12,7 @@ import ErrorMessage from './ErrorMessage';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../../Redux/userSlice';
-import { setAddress } from '../../../Redux/orderDetailsSlice';
-import { selectAddress } from '../../../Redux/orderDetailsSlice';
+import { setAddress, selectAddress } from '../../../Redux/orderDetailsSlice';
 
 import baseURL from "../../../assets/common/baseUrl";
 
@@ -37,12 +36,16 @@ const LoginRegister = (props) => {
         setError('');
     }
 
+    const goBack = () => {
+        setRegisterStep(1);
+    }
+
     const handleLogin = (email, password) => {
         axios.post(`${baseURL}users/login`, { email, password })
             .then(response => {
                 if (response.data.auth) {
                     dispatch(setUser(response.data));
-                    dispatch(setAddress(response.data.user.address));
+                    dispatch(setAddress(response.data.user));
                     if (props.route.params !== undefined) {
                         props.navigation.goBack();
                     }
@@ -50,7 +53,7 @@ const LoginRegister = (props) => {
                     setError('Unable to log in. Please try again.');
                 }
             })
-            .catch(err => {
+            .catch(() => {
                 setError('An error occurred while logging in. Please try again.')
             });
     }
@@ -64,33 +67,32 @@ const LoginRegister = (props) => {
         }
     }
 
-    const goBack = () => {
-        setRegisterStep(1);
-    }
-
     const handleAddAddress = () => {
-        axios.post(`${baseURL}users/register`, { 
+        axios.post(`${baseURL}users/register`, {
             email: userInfo.email,
             name: userInfo.name,
             phone: userInfo.phone,
             password: userInfo.password,
-            address: address
-         })
-        .then(response => {
-            if (response.data.auth && props.route.params !== undefined) {
-                dispatch(setUser(response.data));
-                dispatch(setAddress(response.data.user.address));
-                props.navigation.goBack();
-            } else if (response.data.auth) {
-                dispatch(setUser(response.data));
-                dispatch(setAddress(response.data.user.address));
-            } else {
-                setError('An error occurred adding this address. Please try again.')
-            }
+            fullAddress: address.fullAddress,
+            addressPrimaryText: address.mainText,
+            addressSecondaryText: address.secondaryText,
+            addressPlaceId: address.placeId,
         })
-        .catch(err => {
-            setError('An error occurred while registering. Please try again.')
-        });
+            .then(response => {
+                if (response.data.auth && props.route.params !== undefined) {
+                    dispatch(setUser(response.data));
+                    dispatch(setAddress(response.data.user));
+                    props.navigation.goBack();
+                } else if (response.data.auth) {
+                    dispatch(setUser(response.data));
+                    dispatch(setAddress(response.data.user));
+                } else {
+                    setError('An error occurred adding this address. Please try again.')
+                }
+            })
+            .catch(() => {
+                setError('An error occurred while registering. Please try again.')
+            });
     }
 
     return (

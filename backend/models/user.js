@@ -21,8 +21,20 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    address: {
-        type: Object,
+    fullAddress: {
+        type: String,
+        required: true
+    },
+    addressPrimaryText: {
+        type: String,
+        required: true
+    },
+    addressSecondaryText: {
+        type: String,
+        required: true
+    },
+    addressPlaceId: {
+        type: String,
         required: true
     }
 });
