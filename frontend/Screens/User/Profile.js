@@ -14,16 +14,6 @@ const Profile = (props) => {
     const userDetails = useSelector(selectUserDetails);
     const dispatch = useDispatch();
 
-    const handleDeleteUser = () => {
-        axios.delete(`${baseURL}users/${userDetails.id}`)
-        .then((res) => {
-          dispatch(clearUser());
-        })
-        .catch((error) => {
-          console.log('Api call error - user could not be deleted');
-        })
-    }
-
     const handleLogoutUser = () => {
         dispatch(clearCart());
         dispatch(clearUser());

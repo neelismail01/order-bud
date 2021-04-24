@@ -8,7 +8,7 @@ const BusinessCard = (props) => {
         <TouchableOpacity style={styles.container} onPress={() => props.navigation.navigate('Business Page', props.business)}>
             <Image
                 style={styles.image}
-                source={{ uri: coverImage }}
+                source={{ uri: coverImage !== '' ? coverImage :"https://www.cnu.org/sites/default/files/storefront-proportions.jpg"}}
             />
             <View style={styles.businessDetails}>
                 <View style={styles.businessDetailsHeaderRow}>

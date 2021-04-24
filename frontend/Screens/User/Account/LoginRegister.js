@@ -68,6 +68,7 @@ const LoginRegister = (props) => {
     }
 
     const handleAddAddress = () => {
+        console.log(address);
         axios.post(`${baseURL}users/register`, {
             email: userInfo.email,
             name: userInfo.name,

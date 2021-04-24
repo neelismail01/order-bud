@@ -17,9 +17,9 @@ const EnterAddress = (props) => {
     const handleAddAddress = (prediction) => {
         dispatch(setAddress({
             fullAddress: prediction.description,
-            mainText: prediction.structured_formatting.main_text,
-            secondaryText: prediction.structured_formatting.secondary_text,
-            placeId: prediction.place_id
+            addressPrimaryText: prediction.structured_formatting.main_text,
+            addressSecondaryText: prediction.structured_formatting.secondary_text,
+            addressPlaceId: prediction.place_id
         }));
         props.navigation.goBack();
     }
