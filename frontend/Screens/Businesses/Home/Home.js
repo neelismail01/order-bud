@@ -26,16 +26,11 @@ const ProductContainer = (props) => {
   const [businesses, setBusinesses] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showFilter, setShowFilter] = useState(false);
 
   const cart = useSelector(selectCartItems);
   const address = useSelector(selectAddress);
   const isDelivery = useSelector(selectIsDelivery);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  const handleFilter = () => {
-    setShowFilter(!showFilter);
-  }
 
   useFocusEffect(
     useCallback(() => {
@@ -43,7 +38,6 @@ const ProductContainer = (props) => {
       // Businesses
       axios.get(`${baseURL}businesses`)
         .then(async (res) => {
-          console.log(address);
           if (address !== undefined) {
             const origin = 'origins=place_id:' + address.placeId;
 
@@ -71,11 +65,19 @@ const ProductContainer = (props) => {
                 })
               }
             }
-
             setBusinesses(nearbyBusinesses);
             setLoading(false);
           } else {
-            setBusinesses(res.data);
+            const featuredBusinesses = res.data.map(business => {
+              return {
+                businessDetails: business,
+                travelDetails: {
+                  distance: '',
+                  duration: ''
+                }
+              }
+            })
+            setBusinesses(featuredBusinesses);
             setLoading(false);
           }
         })
@@ -96,10 +98,8 @@ const ProductContainer = (props) => {
         setBusinesses([]);
         setCategories([]);
       };
-    }, [])
+    }, [address])
   )
-
-  console.log(businesses.length)
 
   return (
     <>
@@ -117,8 +117,6 @@ const ProductContainer = (props) => {
             />
             <SearchBar
               placeholder="Search..."
-              handleFilter={handleFilter}
-              showFilterIcon={true}
               navigation={props.navigation}
               parent="home"
             />
@@ -133,9 +131,14 @@ const ProductContainer = (props) => {
             }
             <View style={styles.listContainer}>
               {businesses.map(business => {
-                if (isDelivery && business.delivery || !isDelivery && business.pickup) {
+                if (isDelivery && business.businessDetails.delivery || !isDelivery && business.businessDetails.pickup) {
                   return (
-                    <BusinessCard key={business.name} business={business} navigation={props.navigation} />
+                    <BusinessCard
+                      key={business.businessDetails.name}
+                      businessDetails={business.businessDetails}
+                      travelDetails={business.travelDetails}
+                      navigation={props.navigation}
+                    />
                   )
                 }
               })}
