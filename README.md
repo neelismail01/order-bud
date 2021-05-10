@@ -13,6 +13,5 @@ I also thought it was important for business owners to be able to manage their b
 store profiles, add and remove products, manage inventory, and view sales performance.
 
 ## Technologies
-I built the frontend of this application using **React Native** and used **Redux** to manage state in the app. I built the backend of this application using
-**Node.js** and **Express.js** and used **MongoDB** as my database technology. In order to serve geographically relevant content, I used the **Google Distance Matrix API**
-and the **Google Places API**.
+I built the frontend of this application using **React Native** and used **Redux** to manage application state. I built the backend of this application using
+**Node.js** and **Express.js** and used **MongoDB** as my database technology. In order to serve geographically relevant content, I used the **Google Distance Matrix API** and **Google Places API**.
