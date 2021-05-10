@@ -1,10 +1,9 @@
 # Order-bud
 
 ## Inspiration & Description
-During this pandemic as businesses were being forced to shut down, it became increasingly important to support the small businesses in our neighbourhood. 
+As businesses were being forced to shut down during the pandemic, it became increasingly important to support the small businesses in our neighbourhoods. 
 I thought this was an important and impactful action we could all take to support the entrepreneurs in our community who were struggling due to no fault of
-their own. As I needed new goods, such as sporting equipment and clothes, throughout the pandemic, I found it difficult to find small businesses near me that
-sold the goods I was looking for. This inspired me to build OrderBud, a mobile app marketplace exclusively designed for small businesses.
+their own. As I needed new goods, such as sporting equipment and clothes, throughout the pandemic, I found it difficult, however, to find small businesses near me that sold the goods I was looking for. This inspired me to build OrderBud, a mobile app marketplace exclusively designed for small businesses.
 
 Users of OrderBud can enter their address and discover all small businesses on the platform within a 30km radius of them. Users can explore the menus of all
 the businesses and purchase products from their store through the app. I also developed extensive search capabilities to enable users to easily find the 
