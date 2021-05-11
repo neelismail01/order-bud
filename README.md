@@ -16,4 +16,10 @@ I built the frontend of this application using **React Native** and used **Redux
 **Node.js** and **Express.js** and used **MongoDB** as my database technology. In order to serve geographically relevant content, I used the **Google Distance Matrix API** and **Google Places API**.
 
 ## Preview
+<<<<<<< HEAD
 <img width="250" alt="Screen Shot 2021-05-10 at 9 43 59 PM" src="https://user-images.githubusercontent.com/23081661/117745650-e2241580-b1d8-11eb-8668-8c856a8172aa.png">
+=======
+| Purchasing A Product      |
+| --------------------------------------|
+|<img width="200" height="425" alt="Screen Shot 2021-05-10 at 11 41 33 PM" src="https://user-images.githubusercontent.com/23081661/117754918-451da880-b1e9-11eb-8971-5ac248611fd1.png">&nbsp;&nbsp;&nbsp;<img width="200" height="425" alt="Screen Shot 2021-05-11 at 12 12 18 AM" src="https://user-images.githubusercontent.com/23081661/117757187-9b8ce600-b1ed-11eb-9f45-ddd0f73467b2.png">&nbsp;&nbsp;&nbsp;<img width="200" height="425" alt="Screen Shot 2021-05-11 at 12 14 18 AM" src="https://user-images.githubusercontent.com/23081661/117757300-d7c04680-b1ed-11eb-8a20-1b6af4f2c93a.png">&nbsp;&nbsp;&nbsp;<img width="200" height="425" alt="Screen Shot 2021-05-11 at 12 15 08 AM" src="https://user-images.githubusercontent.com/23081661/117757350-f45c7e80-b1ed-11eb-8164-f10e2eeed3c8.png">&nbsp;&nbsp;&nbsp;<img width="200" height="425" alt="Screen Shot 2021-05-11 at 12 15 46 AM" src="https://user-images.githubusercontent.com/23081661/117757391-0b9b6c00-b1ee-11eb-8f18-9045ed0459fc.png">&nbsp;&nbsp;&nbsp;<img width="200" height="425" alt="Screen Shot 2021-05-11 at 12 16 23 AM" src="https://user-images.githubusercontent.com/23081661/117757445-21109600-b1ee-11eb-90e7-0e079c7bf6b3.png">&nbsp;&nbsp;&nbsp;<img width="200" height="425" alt="Screen Shot 2021-05-11 at 12 16 54 AM" src="https://user-images.githubusercontent.com/23081661/117757488-34236600-b1ee-11eb-999e-9935eadf4ee3.png">|
+>>>>>>> 143ab986077fed112f1287df0f3599ed050bb718
