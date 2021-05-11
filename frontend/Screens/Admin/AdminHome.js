@@ -73,10 +73,15 @@ const AdminHome = (props) => {
                 loading === false ?
                     <View style={styles.container}>
                         <ScrollView>
-                            <Image
-                                style={business.coverImage ? styles.businessCoverPhoto : styles.businessCoverPhotoPlaceholder}
-                                source={{ uri: business.coverImage }}
-                            />
+                            <View>
+                                <Image
+                                    style={business.coverImage ? styles.businessCoverPhoto : styles.businessCoverPhotoPlaceholder}
+                                    source={{ uri: business.coverImage }}
+                                />
+                                <View style={styles.businessName}>
+                                    <Text style={styles.businessNameText}>{business.name}</Text>
+                                </View>
+                            </View>
                             <View style={{ padding: 10 }}>
                                 <Metrics salesVolume={salesVolume} orderVolume={orderVolume} />
                                 <Actions navigation={props.navigation} business={business} />
@@ -118,6 +123,27 @@ const styles = StyleSheet.create({
         backgroundColor: "grey",
         width: width,
         height: height * 0.225,
+    },
+    businessName: {
+        position: "absolute",
+        top: height * 0.225 - 40,
+        left: (width - 0.8 * width) / 2,
+        borderRadius: 5,
+        borderColor: "white",
+        borderWidth: 1,
+        justifyContent: "space-evenly",
+        alignItems: "center",
+        backgroundColor: "white",
+        shadowColor: 'black',
+        shadowOffset: { width: 2, height: 2 },
+        shadowOpacity: 0.8,
+        flexDirection: "row",
+        width: "80%",
+        paddingVertical: 7.5
+    },
+    businessNameText: {
+        fontSize: 30,
+        fontWeight: "bold"
     }
 })
 

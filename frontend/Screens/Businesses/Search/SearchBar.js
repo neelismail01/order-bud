@@ -22,7 +22,7 @@ const SearchBar = (props) => {
             value={query}
             onChangeText={text => setQuery(text)}
             onSubmitEditing={handleSubmit}
-            autoCapitalize={false}
+            autoCapitalize="none"
           />
         </View>
     </View>
