@@ -7,7 +7,7 @@ their own. As I needed new goods, such as sporting equipment and clothes, throug
 
 Users of OrderBud can enter their address and discover all small businesses on the platform within a 30km radius of them. Users can explore the menus of all
 the businesses and purchase products from their store through the app. I also developed extensive search capabilities to enable users to easily find the 
-products they are looking for. The search features in the app supported queries for product categories, business names, and individual products on the platform. 
+products they are looking for. The search features in the app support queries for product categories, business names, and individual products on the platform. 
 I also thought it was important for business owners to be able to manage their business through the app, so I built capabilities for them to create 
 store profiles, add and remove products, manage inventory, and view sales performance.
 
