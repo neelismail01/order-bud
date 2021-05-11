@@ -1,8 +1,5 @@
 # Order-bud
 
-## Preview
-<img width="343" alt="Screen Shot 2021-05-10 at 9 41 41 PM" src="https://user-images.githubusercontent.com/23081661/117745522-a38e5b00-b1d8-11eb-91a6-5775ad382b78.png">
-
 ## Inspiration & Description
 As businesses were being forced to shut down during the pandemic, it became increasingly important to support the small businesses in our neighbourhoods. 
 I thought this was an important and impactful action we could all take to support the entrepreneurs in our community who were struggling due to no fault of
@@ -17,3 +14,6 @@ store profiles, add and remove products, manage inventory, and view sales perfor
 ## Technologies
 I built the frontend of this application using **React Native** and used **Redux** to manage application state. I built the backend of this application using
 **Node.js** and **Express.js** and used **MongoDB** as my database technology. In order to serve geographically relevant content, I used the **Google Distance Matrix API** and **Google Places API**.
+
+## Preview
+<img width="250" alt="Screen Shot 2021-05-10 at 9 43 59 PM" src="https://user-images.githubusercontent.com/23081661/117745650-e2241580-b1d8-11eb-8668-8c856a8172aa.png">
