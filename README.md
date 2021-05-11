@@ -13,7 +13,7 @@ store profiles, add and remove products, manage inventory, and view sales perfor
 
 ## Technologies
 I built the frontend of this application using **React Native** and used **Redux** to manage application state. I built the backend of this application using
-**Node.js** and **Express.js** and used **MongoDB** as my database technology. In order to serve geographically relevant content, I used the **Google Distance Matrix API** and **Google Places API**.
+**Node.js** and **Express.js** and used **MongoDB** as my database technology. In order to serve geographically relevant content, I utilized the **Google Distance Matrix API** and **Google Places API**.
 
 ## Preview
 | Purchasing A Product                  |
