@@ -51,14 +51,13 @@ const SearchResults = (props) => {
     useCallback(() => {
       axios.get(`${baseURL}search/?searchTerm=${query}`)
         .then(async res => {
-          if (address !== undefined) {
+          if (address !== undefined && res.data.businessMatches.length > 0) {
             const origin = 'origins=place_id:' + address.placeId;
 
             let destinations = 'destinations=';
             for (let i = 0; i < res.data.businessMatches.length; i++) {
               destinations += i === res.data.businessMatches.length - 1 ? 'place_id:' + res.data.businessMatches[i].addressPlaceId : 'place_id:' + res.data.businessMatches[i].addressPlaceId + '|';
             }
-
             const key = 'key=' + googleDistanceMatrixApiKey;
 
             const apiResponse = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json?${origin}&${destinations}&${key}`)
@@ -78,6 +77,7 @@ const SearchResults = (props) => {
                 })
               }
             }
+
             setResults({
               businessMatches: nearbyBusinesses,
               productMatches: res.data.productMatches
