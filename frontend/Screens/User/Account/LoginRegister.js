@@ -45,7 +45,7 @@ const LoginRegister = (props) => {
             .then(response => {
                 if (response.data.auth) {
                     dispatch(setUser(response.data));
-                    dispatch(setAddress(response.data.user));
+                    dispatch(setAddress(response.data.user.address[response.data.user.address.length - 1]));
                     if (props.route.params !== undefined) {
                         props.navigation.goBack();
                     }
@@ -68,7 +68,6 @@ const LoginRegister = (props) => {
     }
 
     const handleAddAddress = () => {
-        console.log(address);
         axios.post(`${baseURL}users/register`, {
             email: userInfo.email,
             name: userInfo.name,
@@ -79,21 +78,23 @@ const LoginRegister = (props) => {
             addressSecondaryText: address.secondaryText,
             addressPlaceId: address.placeId,
         })
-            .then(response => {
-                if (response.data.auth && props.route.params !== undefined) {
-                    dispatch(setUser(response.data));
-                    dispatch(setAddress(response.data.user));
-                    props.navigation.goBack();
-                } else if (response.data.auth) {
-                    dispatch(setUser(response.data));
-                    dispatch(setAddress(response.data.user));
-                } else {
-                    setError('An error occurred adding this address. Please try again.')
-                }
-            })
-            .catch(() => {
-                setError('An error occurred while registering. Please try again.')
-            });
+        .then(response => {
+            if (response.data.auth && props.route.params !== undefined) {
+                dispatch(setUser(response.data));
+                console.log('----USER RESPONSE DATA-----',response.data.user);
+                //dispatch(setAddress(response.data.user.address[0]));
+                props.navigation.goBack();
+            } else if (response.data.auth) {
+                console.log('----USER RESPONSE DATA-----', response.data.user);
+                dispatch(setUser(response.data));
+                //dispatch(setAddress(response.data.user.address[0]));
+            } else {
+                setError('An error occurred adding this address. Please try again.')
+            }
+        })
+        .catch(() => {
+            setError('An error occurred while registering. Please try again.')
+        });
     }
 
     return (
