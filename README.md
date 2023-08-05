@@ -1,14 +1,5 @@
 # Order-bud
 
-## Inspiration & Description
-As businesses were being forced to shut down during the pandemic, it became increasingly important to support small businesses in our communities. As I needed new goods throughout the pandemic, such as sporting equipment and clothes, I found it difficult to find local businesses that sold items I was looking for. This inspired me to build OrderBud, a mobile marketplace app aimed at making the process of discovering and transacting with the right small business as easy as possible.
-
-Users of OrderBud can enter their address and discover all small businesses on the platform within a 30km radius of them. Users can explore the menus of all
-the businesses and purchase products from their store through the app. I also developed extensive search capabilities to enable users to easily find the 
-products they are looking for. The search features in the app support queries for product categories, business names, and individual products on the platform. 
-I also thought it was important for business owners to be able to manage their business through the app, so I built capabilities for them to create 
-store profiles, add and remove products, manage inventory, and view sales performance.
-
 ## Technologies
 I built the frontend of this application using **React Native** and used **Redux** to manage application state. I built the backend of this application using
 **Node.js** and **Express.js** and used **MongoDB** as my database technology. In order to serve geographically relevant content, I utilized the **Google Distance Matrix API** and **Google Places API**.
